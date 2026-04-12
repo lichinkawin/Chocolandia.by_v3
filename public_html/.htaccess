@@ -4,6 +4,7 @@ RewriteBase /
 
 # Serve existing files and directories directly
 RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_URI} !^/api/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 

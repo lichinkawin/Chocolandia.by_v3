@@ -316,35 +316,67 @@ function toggleCheckout(toCheckout) {
   }
 }
 
-function sendOrderTelegram() {
-  const name = document.getElementById('checkout-name')?.value.trim();
-  const phone = document.getElementById('checkout-phone')?.value.trim();
+async function sendOrderTelegram() {
+  const name    = document.getElementById('checkout-name')?.value.trim();
+  const phone   = document.getElementById('checkout-phone')?.value.trim();
   const address = document.getElementById('checkout-address')?.value.trim();
-  const comment = document.getElementById('checkout-comment')?.value.trim();
+  const comment = document.getElementById('checkout-comment')?.value.trim() || '';
 
   if (!name || !phone || !address) {
-    showToast('Пожалуйста, заполните обязательные поля');
+    showToast('\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0437\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u043f\u043e\u043b\u044f');
     return;
   }
 
-  const itemsLines = State.cart.map(item => {
+  // Build items array for PHP backend (no raw Telegram formatting here)
+  const items = State.cart.map(item => {
     const p = State.data.products.find(pr => pr.id === item.productId);
-    if (!p) return '';
-    return `• ${p.name}${p.weight ? ' (' + p.weight + ')' : ''} × ${item.qty} = ${(p.price * item.qty).toFixed(2).replace('.', ',')} BYN`;
+    if (!p) return null;
+    return {
+      name:      p.name,
+      weight:    p.weight || '',
+      qty:       item.qty,
+      lineTotal: (p.price * item.qty).toFixed(2).replace('.', ','),
+    };
   }).filter(Boolean);
 
   const total = getCartTotal().toFixed(2).replace('.', ',');
-  const msg = `🛍 *НОВЫЙ ЗАКАЗ*\n\n`;
-  msg += `👤 *Имя:* ${name}\n`;
-  msg += `📞 *Тел:* ${phone}\n`;
-  msg += `📍 *Адрес:* ${address}\n`;
-  if (comment) msg += `💬 *Комментарий:* ${comment}\n`;
-  msg += `\n🍰 *ТОВАРЫ:*\n${itemsLines.join('\n')}\n`;
-  msg += `\n💰 *ИТОГО:* ${total} BYN`;
 
-  const tgUrl = `https://t.me/maryiskrova?text=${encodeURIComponent(msg)}`;
-  window.open(tgUrl, '_blank');
+  // Show loading state on submit button
+  const btn = document.querySelector('[onclick*="sendOrderTelegram"]');
+  const originalHTML = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">' +
+                    'hourglass_empty</span> \u041e\u0442\u043f\u0440\u0430\u0432\u043b\u044f\u0435\u043c...';
+  }
+
+  try {
+    const res = await fetch('/api/order.php', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ name, phone, address, comment, items, total }),
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+      // Success — clear cart and show confirmation
+      State.cart = [];
+      State.checkoutMode = false;
+      saveCart();
+      updateCartBadge();
+      closeCartDrawer();
+      showToast('\u2705 \u0417\u0430\u043a\u0430\u0437 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d! \u041c\u044b \u0441\u0432\u044f\u0436\u0435\u043c\u0441\u044f \u0441 \u0432\u0430\u043c\u0438.');
+    } else {
+      showToast('\u274c \u041e\u0448\u0438\u0431\u043a\u0430: ' + (data.error || '\u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0441\u043d\u043e\u0432\u0430'));
+      if (btn) { btn.disabled = false; btn.innerHTML = originalHTML; }
+    }
+  } catch (err) {
+    showToast('\u274c \u041d\u0435\u0442 \u0441\u043e\u0435\u0434\u0438\u043d\u0435\u043d\u0438\u044f. \u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0438\u043d\u0442\u0435\u0440\u043d\u0435\u0442 \u0438 \u043f\u043e\u0432\u0442\u043e\u0440\u0438\u0442\u0435 \u043f\u043e\u043f\u044b\u0442\u043a\u0443.');
+    if (btn) { btn.disabled = false; btn.innerHTML = originalHTML; }
+  }
 }
+
 
 function updateCheckoutLinks() {
   if (!State.data || State.cart.length === 0) return;
