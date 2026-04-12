@@ -271,15 +271,15 @@ function renderCheckoutForm(body, footer) {
     <h3 class="checkout-title">Данные для заказа</h3>
     <div class="checkout-form">
       <div class="form-group">
-        <label for="checkout-name">Ваше имя</label>
+        <label for="checkout-name">Ваше имя <span class="required-asterisk">*</span></label>
         <input type="text" id="checkout-name" class="form-input" placeholder="Иван Иванов" required>
       </div>
       <div class="form-group">
-        <label for="checkout-phone">Телефон</label>
+        <label for="checkout-phone">Телефон <span class="required-asterisk">*</span></label>
         <input type="tel" id="checkout-phone" class="form-input" placeholder="+375 (__) ___-__-__" required>
       </div>
       <div class="form-group">
-        <label for="checkout-address">Адрес доставки</label>
+        <label for="checkout-address">Адрес доставки <span class="required-asterisk">*</span></label>
         <textarea id="checkout-address" class="form-textarea" placeholder="Город, улица, дом, квартира" required></textarea>
       </div>
       <div class="form-group">
@@ -317,13 +317,33 @@ function toggleCheckout(toCheckout) {
 }
 
 async function sendOrderTelegram() {
-  const name    = document.getElementById('checkout-name')?.value.trim();
-  const phone   = document.getElementById('checkout-phone')?.value.trim();
-  const address = document.getElementById('checkout-address')?.value.trim();
-  const comment = document.getElementById('checkout-comment')?.value.trim() || '';
+  const nameEl    = document.getElementById('checkout-name');
+  const phoneEl   = document.getElementById('checkout-phone');
+  const addressEl = document.getElementById('checkout-address');
+  const commentEl = document.getElementById('checkout-comment');
 
-  if (!name || !phone || !address) {
-    showToast('\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0437\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u043f\u043e\u043b\u044f');
+  const name    = nameEl?.value.trim() || '';
+  const phone   = phoneEl?.value.trim() || '';
+  const address = addressEl?.value.trim() || '';
+  const comment = commentEl?.value.trim() || '';
+
+  let hasError = false;
+
+  [nameEl, phoneEl, addressEl].forEach(el => {
+    if (el) {
+      if (!el.value.trim()) {
+        el.classList.add('error');
+        hasError = true;
+        // remove error when user types
+        el.addEventListener('input', () => el.classList.remove('error'), { once: true });
+      } else {
+        el.classList.remove('error');
+      }
+    }
+  });
+
+  if (hasError) {
+    showToast('\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0437\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u043f\u043e\u043b\u044f, \u0432\u044b\u0434\u0435\u043b\u0435\u043d\u043d\u044b\u0435 \u043a\u0440\u0430\u0441\u043d\u044b\u043c.');
     return;
   }
 

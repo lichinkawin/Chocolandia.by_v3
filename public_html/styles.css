@@ -2386,6 +2386,22 @@ footer {
   background: white;
 }
 
+.form-input.error,
+.form-textarea.error {
+  border-color: var(--color-error);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+}
+
+.form-input.error:focus,
+.form-textarea.error:focus {
+  box-shadow: 0 0 0 4px rgba(186, 26, 26, 0.15);
+}
+
+.required-asterisk {
+  color: var(--color-error);
+  margin-left: 2px;
+}
 .form-textarea {
   min-height: 80px;
   resize: vertical;
