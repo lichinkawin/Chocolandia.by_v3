@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Chocolandia.by — Шоколад ручной работы</title>
+  <meta name="description" content="Chocolandia.by — авторский шоколад ручной работы в Беларуси. Дубайский шоколад, клубника в шоколаде, трюфели, пасхальные фигурки и подарочные наборы." />
+  <meta name="keywords" content="шоколад ручной работы, Беларусь, дубайский шоколад, клубника в шоколаде, трюфели, подарки, Chocolandia" />
+  <meta name="author" content="Chocolandia.by" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://chocolandia.by/" />
+  <meta property="og:title"       content="Chocolandia.by — Шоколад ручной работы" />
+  <meta property="og:description" content="Авторский шоколад ручной работы: дубайский шоколад, клубника, трюфели, фигурки и наборы в подарок." />
+  <meta property="og:image"       content="assets/images/hero_banner.png" />
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍫</text></svg>" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════
+       TOP NAVIGATION
+  ════════════════════════════════════════════════ -->
+  <nav class="top-nav" id="top-nav" role="navigation" aria-label="Главная навигация">
+    <div class="nav-inner">
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger nav-icon-btn" id="hamburger-btn" aria-label="Меню">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+
+      <!-- Logo -->
+      <a href="/" class="nav-logo" id="nav-logo" data-route="/">Chocolandia</a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/collections/strawberry"  data-route="/collections/strawberry"  id="nav-strawberry">Клубника</a></li>
+        <li><a href="/collections/dubai"        data-route="/collections/dubai"        id="nav-dubai">Дубайский шоколад</a></li>
+        <li><a href="/collections/truffles"     data-route="/collections/truffles"     id="nav-truffles">Трюфели</a></li>
+        <li><a href="/collections/gifts"        data-route="/collections/gifts"        id="nav-gifts">Подарки</a></li>
+        <li><a href="/collections"              data-route="/collections"              id="nav-all">Все&nbsp;коллекции</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button class="nav-icon-btn" id="search-btn" aria-label="Поиск">
+          <span class="material-symbols-outlined">search</span>
+        </button>
+        <button class="nav-icon-btn nav-cart-btn" id="cart-btn" aria-label="Корзина">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="nav-cart-badge" id="cart-badge" style="display:none">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════
+       PAGE CONTENT (SPA target)
+  ════════════════════════════════════════════════ -->
+  <div id="app" role="main" aria-live="polite"></div>
+
+  <!-- ════════════════════════════════════════════════
+       FOOTER (static)
+  ════════════════════════════════════════════════ -->
+  <footer id="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div>
+          <div class="footer-brand-name">Chocolandia</div>
+          <p class="footer-desc">Авторский шоколад ручной работы. Создаём сладкие впечатления в Беларуси.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/chocolandia.by/" target="_blank" rel="noopener"
+               class="footer-social-btn" aria-label="Instagram">
+              <span class="material-symbols-outlined" style="font-size:18px">photo_camera</span>
+            </a>
+            <a href="https://t.me/chocolandia_by" target="_blank" rel="noopener"
+               class="footer-social-btn" aria-label="Telegram">
+              <span class="material-symbols-outlined" style="font-size:18px">send</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Collections -->
+        <div>
+          <p class="footer-col-title">Коллекции</p>
+          <ul class="footer-links">
+            <li><a href="/collections/strawberry" data-route="/collections/strawberry">Клубника</a></li>
+            <li><a href="/collections/dubai"       data-route="/collections/dubai">Дубайский шоколад</a></li>
+            <li><a href="/collections/truffles"    data-route="/collections/truffles">Трюфели</a></li>
+            <li><a href="/collections/gifts"       data-route="/collections/gifts">Подарочные наборы</a></li>
+            <li><a href="/collections/easter"      data-route="/collections/easter">Пасхальная коллекция</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div>
+          <p class="footer-col-title">Информация</p>
+          <ul class="footer-links">
+            <li><a href="/#about" data-route="/">О нас</a></li>
+            <li><a href="/#contact">Контакты</a></li>
+            <li><a href="/#delivery">Доставка</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <p class="footer-col-title">Связаться</p>
+          <p class="footer-contact">
+            г. Могилёв, Беларусь<br />
+            <a href="https://www.instagram.com/chocolandia.by/" target="_blank" rel="noopener"
+               style="color:inherit;text-decoration:none;opacity:1;">@chocolandia.by</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-legal">&copy; 2025 Chocolandia.by — Все права защищены</p>
+        <div class="footer-legal-links">
+          <a href="#">Политика конфиденциальности</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════
+       MOBILE BOTTOM NAV
+  ════════════════════════════════════════════════ -->
+  <nav class="bottom-nav" id="bottom-nav" aria-label="Нижняя навигация">
+    <a href="/" data-route="/" class="bottom-nav-item" id="bnav-home">
+      <span class="material-symbols-outlined" style="font-size:22px">home</span>
+      <span class="bottom-nav-label">Главная</span>
+    </a>
+    <a href="/collections" data-route="/collections" class="bottom-nav-item" id="bnav-collections">
+      <span class="material-symbols-outlined" style="font-size:22px">storefront</span>
+      <span class="bottom-nav-label">Каталог</span>
+    </a>
+    <a href="/collections/gifts" data-route="/collections/gifts" class="bottom-nav-item" id="bnav-gifts">
+      <span class="material-symbols-outlined" style="font-size:22px">card_giftcard</span>
+      <span class="bottom-nav-label">Подарки</span>
+    </a>
+    <button class="bottom-nav-item" id="bnav-cart">
+      <span class="material-symbols-outlined" style="font-size:22px">shopping_bag</span>
+      <span class="bottom-nav-label">Корзина</span>
+    </button>
+  </nav>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- App script -->
+  <script src="app.js"></script>
+</body>
+</html>
