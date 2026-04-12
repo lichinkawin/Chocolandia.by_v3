@@ -342,7 +342,7 @@ function sendOrderTelegram() {
   msg += `\n🍰 *ТОВАРЫ:*\n${itemsLines.join('\n')}\n`;
   msg += `\n💰 *ИТОГО:* ${total} BYN`;
 
-  const tgUrl = `https://t.me/chocolandia_by?text=${encodeURIComponent(msg)}`;
+  const tgUrl = `https://t.me/maryiskrova?text=${encodeURIComponent(msg)}`;
   window.open(tgUrl, '_blank');
 }
 
@@ -360,10 +360,10 @@ function updateCheckoutLinks() {
   const tgBtn = document.getElementById('cart-checkout-telegram');
 
   if (tgBtn) {
-    tgBtn.href = `https://t.me/chocolandia_by?text=${encodeURIComponent(msg)}`;
+    tgBtn.href = `https://t.me/maryiskrova?text=${encodeURIComponent(msg)}`;
   }
   if (igBtn) {
-    igBtn.href = 'https://www.instagram.com/chocolandia_by/';
+    igBtn.href = 'https://www.instagram.com/chocolandia.by/';
   }
 }
 
@@ -675,18 +675,21 @@ function buildProductCard(product) {
            loading="lazy"
            onerror="this.src='${fallback}'" />
       ${product.badge ? `<div class="product-card-badge">${buildBadge(product.badge)}</div>` : ''}
-      <button class="product-card-add-btn"
-              data-add-to-cart="${escapeHtml(product.id)}"
-              aria-label="Добавить в корзину">
-        <span class="material-symbols-outlined" style="font-size:18px">add</span>
-      </button>
     </div>
-    <div class="product-card-name">${escapeHtml(product.name)}</div>
-    ${product.weight ? `<div class="product-card-sub">${escapeHtml(product.weight)}</div>` : ''}
-    <div class="product-card-footer">
-      <div class="product-card-price">
-        ${product.price.toFixed(2).replace('.', ',')}
-        <span class="currency">BYN</span>
+    <div class="product-card-body">
+      <div class="product-card-name">${escapeHtml(product.name)}</div>
+      ${product.weight ? `<div class="product-card-sub">${escapeHtml(product.weight)}</div>` : ''}
+      <div class="product-card-footer">
+        <div class="product-card-price">
+          ${product.price.toFixed(2).replace('.', ',')}
+          <span class="currency">BYN</span>
+        </div>
+        <button class="product-card-action-btn"
+                data-add-to-cart="${escapeHtml(product.id)}"
+                aria-label="Добавить в корзину">
+          <span class="material-symbols-outlined" style="font-size:18px">add_shopping_cart</span>
+          <span>В корзину</span>
+        </button>
       </div>
     </div>
   </a>`;
