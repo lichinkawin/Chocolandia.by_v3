@@ -23,6 +23,7 @@ const State = {
   data: null,         // loaded from products.json
   cart: [],           // { productId, qty }
   currentPath: '/',
+  checkoutMode: false, // UI toggle for order form
 };
 
 /* ============================================================
@@ -127,6 +128,292 @@ async function loadData() {
     return null;
   }
 }
+
+/* ============================================================
+   CART DRAWER
+   ============================================================ */
+function openCartDrawer() {
+  const drawer = document.getElementById('cart-drawer');
+  const overlay = document.getElementById('cart-overlay');
+  if (!drawer || !overlay) return;
+
+  // Ensure data is loaded before rendering cart items
+  const doOpen = () => {
+    renderCartDrawer();
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    bindCartDrawerEvents();
+  };
+
+  if (!State.data && State.cart.length > 0) {
+    loadData().then(doOpen);
+  } else {
+    doOpen();
+  }
+}
+
+function closeCartDrawer() {
+  const drawer = document.getElementById('cart-drawer');
+  const overlay = document.getElementById('cart-overlay');
+  if (!drawer || !overlay) return;
+  drawer.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  // Reset checkout mode when closed
+  State.checkoutMode = false;
+}
+
+function renderCartDrawer() {
+  const body   = document.getElementById('cart-drawer-body');
+  const footer = document.getElementById('cart-drawer-footer');
+  const countEl = document.getElementById('cart-drawer-count');
+  const totalEl = document.getElementById('cart-summary-total');
+
+  const count = getCartCount();
+  if (countEl) countEl.textContent = count;
+
+  if (!body) return;
+
+  if (State.cart.length === 0) {
+    // Empty state
+    State.checkoutMode = false; // reset
+    body.innerHTML = `
+    <div class="cart-empty">
+      <div class="cart-empty-icon">
+        <span class="material-symbols-outlined" style="font-size:32px">shopping_bag</span>
+      </div>
+      <div>
+        <p class="cart-empty-title">Корзина пуста</p>
+        <p class="cart-empty-desc">Добавьте что-нибудь вкусное из нашего каталога 🍫</p>
+      </div>
+      <a href="/collections" data-route="/collections"
+         class="btn btn-outline"
+         onclick="closeCartDrawer()"
+         style="margin-top:0.5rem">
+        Перейти в каталог
+      </a>
+    </div>`;
+    if (footer) footer.classList.add('hidden');
+  } else if (State.checkoutMode) {
+    // Checkout form view
+    renderCheckoutForm(body, footer);
+  } else {
+    // Items list
+    body.innerHTML = State.cart.map(item => {
+      const product = State.data?.products.find(p => p.id === item.productId);
+      if (!product) return '';
+      const imgSrc = imgPath(product.image);
+      const lineTotal = (product.price * item.qty).toFixed(2).replace('.', ',');
+      return `
+      <div class="cart-item" data-cart-item="${escapeHtml(item.productId)}">
+        <div class="cart-item-img">
+          <img src="${imgSrc}"
+               alt="${escapeHtml(product.name)}"
+               onerror="this.src='/assets/images/hero_banner.png'" />
+        </div>
+        <div class="cart-item-info">
+          <span class="cart-item-name"
+                data-route="/product/${escapeHtml(product.slug)}"
+                onclick="closeCartDrawer();navigate('/product/${escapeHtml(product.slug)}')">
+            ${escapeHtml(product.name)}
+          </span>
+          ${product.weight ? `<span class="cart-item-weight">${escapeHtml(product.weight)}</span>` : ''}
+          <div class="cart-item-price-row">
+            <span class="cart-item-price">${lineTotal} BYN</span>
+          </div>
+          <div class="cart-item-qty">
+            <button class="cart-item-qty-btn"
+                    data-cart-dec="${escapeHtml(item.productId)}"
+                    aria-label="Уменьшить количество">−</button>
+            <span class="cart-item-qty-val">${item.qty}</span>
+            <button class="cart-item-qty-btn"
+                    data-cart-inc="${escapeHtml(item.productId)}"
+                    aria-label="Увеличить количество">+</button>
+          </div>
+        </div>
+        <button class="cart-item-remove"
+                data-cart-remove="${escapeHtml(item.productId)}"
+                aria-label="Удалить из корзины">
+          <span class="material-symbols-outlined" style="font-size:18px">delete_outline</span>
+        </button>
+      </div>`;
+    }).join('');
+
+    if (footer) {
+      footer.classList.remove('hidden');
+      footer.innerHTML = `
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span class="cart-summary-label">Итого</span>
+          <span class="cart-summary-total" id="cart-summary-total">
+            ${getCartTotal().toFixed(2).replace('.', ',')} BYN
+          </span>
+        </div>
+        <p class="cart-summary-note">Доставка рассчитывается при оформлении заказа</p>
+      </div>
+      <div class="cart-checkout-actions">
+        <button class="btn btn-primary cart-checkout-btn" onclick="toggleCheckout(true)">
+          Оформить заказ
+        </button>
+      </div>`;
+    }
+  }
+}
+
+function renderCheckoutForm(body, footer) {
+  body.innerHTML = `
+  <div class="checkout-view">
+    <div class="checkout-back-btn" onclick="toggleCheckout(false)">
+      <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+      Назад к покупкам
+    </div>
+    <h3 class="checkout-title">Данные для заказа</h3>
+    <div class="checkout-form">
+      <div class="form-group">
+        <label for="checkout-name">Ваше имя</label>
+        <input type="text" id="checkout-name" class="form-input" placeholder="Иван Иванов" required>
+      </div>
+      <div class="form-group">
+        <label for="checkout-phone">Телефон</label>
+        <input type="tel" id="checkout-phone" class="form-input" placeholder="+375 (__) ___-__-__" required>
+      </div>
+      <div class="form-group">
+        <label for="checkout-address">Адрес доставки</label>
+        <textarea id="checkout-address" class="form-textarea" placeholder="Город, улица, дом, квартира" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="checkout-comment">Комментарий</label>
+        <textarea id="checkout-comment" class="form-textarea" placeholder="Ваши пожелания"></textarea>
+      </div>
+    </div>
+  </div>`;
+
+  if (footer) {
+    footer.innerHTML = `
+    <div class="cart-summary" style="margin-bottom: 0.5rem">
+      <div class="cart-summary-row">
+        <span class="cart-summary-label">К оплате (без доставки)</span>
+        <span class="cart-summary-total" style="font-size: 1.25rem">
+          ${getCartTotal().toFixed(2).replace('.', ',')} BYN
+        </span>
+      </div>
+    </div>
+    <div class="cart-checkout-actions">
+      <button class="btn btn-primary cart-checkout-btn" onclick="sendOrderTelegram()">
+        <span class="material-symbols-outlined" style="font-size:18px">send</span>
+        Отправить заказ
+      </button>
+    </div>`;
+  }
+}
+
+function toggleCheckout(toCheckout) {
+  State.checkoutMode = toCheckout;
+  renderCartDrawer();
+  if (!toCheckout) {
+    bindCartDrawerEvents();
+  }
+}
+
+function sendOrderTelegram() {
+  const name = document.getElementById('checkout-name')?.value.trim();
+  const phone = document.getElementById('checkout-phone')?.value.trim();
+  const address = document.getElementById('checkout-address')?.value.trim();
+  const comment = document.getElementById('checkout-comment')?.value.trim();
+
+  if (!name || !phone || !address) {
+    showToast('Пожалуйста, заполните обязательные поля');
+    return;
+  }
+
+  const itemsLines = State.cart.map(item => {
+    const p = State.data.products.find(pr => pr.id === item.productId);
+    if (!p) return '';
+    return `• ${p.name}${p.weight ? ' (' + p.weight + ')' : ''} × ${item.qty} = ${(p.price * item.qty).toFixed(2).replace('.', ',')} BYN`;
+  }).filter(Boolean);
+
+  const total = getCartTotal().toFixed(2).replace('.', ',');
+
+  let msg = `🛍 *НОВЫЙ ЗАКАЗ*\n\n`;
+  msg += `👤 *Имя:* ${name}\n`;
+  msg += `📞 *Тел:* ${phone}\n`;
+  msg += `📍 *Адрес:* ${address}\n`;
+  if (comment) msg += `💬 *Комментарий:* ${comment}\n`;
+  msg += `\n🍰 *ТОВАРЫ:*\n${itemsLines.join('\n')}\n`;
+  msg += `\n💰 *ИТОГО:* ${total} BYN`;
+
+  const tgUrl = `https://t.me/chocolandia_by?text=${encodeURIComponent(msg)}`;
+  window.open(tgUrl, '_blank');
+}
+
+function updateCheckoutLinks() {
+  if (!State.data || State.cart.length === 0) return;
+  const lines = State.cart.map(item => {
+    const p = State.data.products.find(pr => pr.id === item.productId);
+    if (!p) return '';
+    return `• ${p.name}${p.weight ? ' (' + p.weight + ')' : ''} × ${item.qty} = ${(p.price * item.qty).toFixed(2).replace('.', ',')} BYN`;
+  }).filter(Boolean);
+  const total = getCartTotal().toFixed(2).replace('.', ',');
+  const msg = `Добрый день! Хочу сделать заказ:\n\n${lines.join('\n')}\n\nИтого: ${total} BYN`;
+
+  const igBtn = document.getElementById('cart-checkout-instagram');
+  const tgBtn = document.getElementById('cart-checkout-telegram');
+
+  if (tgBtn) {
+    tgBtn.href = `https://t.me/chocolandia_by?text=${encodeURIComponent(msg)}`;
+  }
+  if (igBtn) {
+    // Instagram doesn't support prefilled text via URL — link to DM
+    igBtn.href = 'https://www.instagram.com/chocolandia.by/';
+  }
+}
+
+function bindCartDrawerEvents() {
+  const body = document.getElementById('cart-drawer-body');
+  if (!body) return;
+  // Event delegation on the drawer body
+  body.querySelectorAll('[data-cart-dec]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-cart-dec');
+      cartChangeQty(id, -1);
+    });
+  });
+  body.querySelectorAll('[data-cart-inc]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-cart-inc');
+      cartChangeQty(id, 1);
+    });
+  });
+  body.querySelectorAll('[data-cart-remove]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-cart-remove');
+      cartRemoveItem(id);
+    });
+  });
+}
+
+function cartChangeQty(productId, delta) {
+  const item = State.cart.find(i => i.productId === productId);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    State.cart = State.cart.filter(i => i.productId !== productId);
+  }
+  saveCart();
+  updateCartBadge();
+  renderCartDrawer();
+  bindCartDrawerEvents();
+}
+
+function cartRemoveItem(productId) {
+  State.cart = State.cart.filter(i => i.productId !== productId);
+  saveCart();
+  updateCartBadge();
+  renderCartDrawer();
+  bindCartDrawerEvents();
+}
+
 
 /* ============================================================
    ROUTER
@@ -241,13 +528,19 @@ function initRouter() {
     navigate(window.location.pathname, false);
   });
 
-  // Bottom nav cart button
-  document.getElementById('bnav-cart')?.addEventListener('click', () => {
-    showToast('Корзина пока в разработке 🍫');
+  // Cart buttons — open drawer
+  document.getElementById('bnav-cart')?.addEventListener('click', openCartDrawer);
+  document.getElementById('cart-btn')?.addEventListener('click', openCartDrawer);
+
+  // Close drawer
+  document.getElementById('cart-drawer-close')?.addEventListener('click', closeCartDrawer);
+  document.getElementById('cart-overlay')?.addEventListener('click', closeCartDrawer);
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCartDrawer();
   });
-  document.getElementById('cart-btn')?.addEventListener('click', () => {
-    showToast('Корзина пока в разработке 🍫');
-  });
+
   document.getElementById('hamburger-btn')?.addEventListener('click', () => {
     showToast('Меню навигации открыто в верхней панели');
   });

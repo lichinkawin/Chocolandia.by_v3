@@ -155,6 +155,59 @@
     </button>
   </nav>
 
+  <!-- ════════════════════════════════════════════════
+       CART DRAWER
+  ════════════════════════════════════════════════ -->
+  <!-- Overlay backdrop -->
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+
+  <!-- Drawer panel -->
+  <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Корзина">
+    <!-- Header -->
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-row">
+        <span class="material-symbols-outlined" style="font-size:22px;color:var(--color-secondary)">shopping_bag</span>
+        <h2 class="cart-drawer-title">Корзина</h2>
+        <span class="cart-drawer-count" id="cart-drawer-count">0</span>
+      </div>
+      <button class="cart-drawer-close" id="cart-drawer-close" aria-label="Закрыть корзину">
+        <span class="material-symbols-outlined" style="font-size:22px">close</span>
+      </button>
+    </div>
+
+    <!-- Items list -->
+    <div class="cart-drawer-body" id="cart-drawer-body">
+      <!-- Filled dynamically -->
+    </div>
+
+    <!-- Footer: summary + checkout -->
+    <div class="cart-drawer-footer" id="cart-drawer-footer">
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span class="cart-summary-label">Итого</span>
+          <span class="cart-summary-total" id="cart-summary-total">0,00 BYN</span>
+        </div>
+        <p class="cart-summary-note">Доставка рассчитывается при оформлении заказа</p>
+      </div>
+      <div class="cart-checkout-actions">
+        <a href="https://www.instagram.com/chocolandia.by/"
+           target="_blank" rel="noopener"
+           class="btn btn-primary cart-checkout-btn"
+           id="cart-checkout-instagram">
+          <span class="material-symbols-outlined" style="font-size:18px">photo_camera</span>
+          Оформить в Instagram
+        </a>
+        <a href="https://t.me/chocolandia_by"
+           target="_blank" rel="noopener"
+           class="btn btn-secondary cart-checkout-btn"
+           id="cart-checkout-telegram">
+          <span class="material-symbols-outlined" style="font-size:18px">send</span>
+          Написать в Telegram
+        </a>
+      </div>
+    </div>
+  </aside>
+
   <!-- Toast notification -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
