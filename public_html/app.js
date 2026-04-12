@@ -334,8 +334,7 @@ function sendOrderTelegram() {
   }).filter(Boolean);
 
   const total = getCartTotal().toFixed(2).replace('.', ',');
-
-  let msg = `🛍 *НОВЫЙ ЗАКАЗ*\n\n`;
+  const msg = `🛍 *НОВЫЙ ЗАКАЗ*\n\n`;
   msg += `👤 *Имя:* ${name}\n`;
   msg += `📞 *Тел:* ${phone}\n`;
   msg += `📍 *Адрес:* ${address}\n`;
@@ -364,9 +363,29 @@ function updateCheckoutLinks() {
     tgBtn.href = `https://t.me/chocolandia_by?text=${encodeURIComponent(msg)}`;
   }
   if (igBtn) {
-    // Instagram doesn't support prefilled text via URL — link to DM
-    igBtn.href = 'https://www.instagram.com/chocolandia.by/';
+    igBtn.href = 'https://www.instagram.com/chocolandia_by/';
   }
+}
+
+/* ============================================================
+   MOBILE SIDEBAR
+   ============================================================ */
+function openSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (!sidebar || !overlay) return;
+  sidebar.classList.add('open');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (!sidebar || !overlay) return;
+  sidebar.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function bindCartDrawerEvents() {
@@ -462,8 +481,10 @@ async function navigate(path, pushState = true) {
     app.firstElementChild?.classList.add('page-transition-enter');
   }
 
-  // Scroll to top
   window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Close mobile sidebar if open
+  closeSidebar();
 
   // Update SEO title
   updatePageTitle(path);
@@ -536,13 +557,17 @@ function initRouter() {
   document.getElementById('cart-drawer-close')?.addEventListener('click', closeCartDrawer);
   document.getElementById('cart-overlay')?.addEventListener('click', closeCartDrawer);
 
-  // Close on Escape
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeCartDrawer();
-  });
+  // Mobile sidebar
+  document.getElementById('hamburger-btn')?.addEventListener('click', openSidebar);
+  document.getElementById('sidebar-close')?.addEventListener('click', closeSidebar);
+  document.getElementById('sidebar-overlay')?.addEventListener('click', closeSidebar);
 
-  document.getElementById('hamburger-btn')?.addEventListener('click', () => {
-    showToast('Меню навигации открыто в верхней панели');
+  // Close all on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeCartDrawer();
+      closeSidebar();
+    }
   });
 }
 
