@@ -371,7 +371,7 @@ async function sendOrderTelegram() {
   }
 
   try {
-    const res = await fetch('/api/order.php', {
+    const res = await fetch('/send-order.php', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ name, phone, address, comment, items, total }),
@@ -379,7 +379,7 @@ async function sendOrderTelegram() {
 
     const data = await res.json();
 
-    if (data.ok) {
+    if (data.status === 'success') {
       // Success — clear cart and show confirmation
       State.cart = [];
       State.checkoutMode = false;
@@ -388,7 +388,7 @@ async function sendOrderTelegram() {
       closeCartDrawer();
       showToast('\u2705 \u0417\u0430\u043a\u0430\u0437 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d! \u041c\u044b \u0441\u0432\u044f\u0436\u0435\u043c\u0441\u044f \u0441 \u0432\u0430\u043c\u0438.');
     } else {
-      showToast('\u274c \u041e\u0448\u0438\u0431\u043a\u0430: ' + (data.error || '\u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0441\u043d\u043e\u0432\u0430'));
+      showToast('\u274c \u041e\u0448\u0438\u0431\u043a\u0430: ' + (data.message || '\u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0441\u043d\u043e\u0432\u0430'));
       if (btn) { btn.disabled = false; btn.innerHTML = originalHTML; }
     }
   } catch (err) {

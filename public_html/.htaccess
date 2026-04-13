@@ -2,6 +2,12 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
+# Security: Deny public access to .env files
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
 # Serve existing files and directories directly
 RewriteRule ^index\.html$ - [L]
 RewriteCond %{REQUEST_URI} !^/api/
