@@ -541,6 +541,21 @@
       "inStock": true,
       "tastingNotes": [],
       "ingredients": "Молочный или тёмный шоколад, пищевой декор"
+    },
+    {
+      "id": "figure-children-set",
+      "slug": "figure-children-set",
+      "collectionId": "figures",
+      "name": "Детский шоколадный набор",
+      "description": "Набор шоколадных фигурок для детей: мишки, зайки и буквы. Вкусный и весёлый подарок.",
+      "price": 25.00,
+      "unit": "BYN",
+      "weight": "~150 г",
+      "image": "/assets/images/hero_banner.png",
+      "badge": "Детям",
+      "inStock": true,
+      "tastingNotes": ["Молочный шоколад", "Цветной декор"],
+      "ingredients": "Бельгийский шоколад, пищевые красители"
     }
   ]
 }
