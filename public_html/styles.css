@@ -269,7 +269,7 @@ input, select, textarea {
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 1rem;
+  padding: 0 0.75rem;
 }
 
 @media (min-width: 768px) {
@@ -279,7 +279,7 @@ input, select, textarea {
 .nav-logo {
   font-family: var(--font-headline);
   font-style: italic;
-  font-size: clamp(1.15rem, 5vw, 1.5rem);
+  font-size: clamp(1rem, 4.5vw, 1.25rem);
   color: var(--color-primary);
   letter-spacing: -0.02em;
   transition: opacity var(--transition-fast);
@@ -1067,10 +1067,10 @@ input, select, textarea {
   gap: 0.5rem;
   background: var(--color-surface-container-high);
   color: var(--color-primary);
-  padding: 0.5rem 0.875rem;
+  padding: 0.4rem 0.6rem;
   border-radius: var(--radius-sm);
   font-family: var(--font-label);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   transition: all var(--transition-fast);
   white-space: nowrap;
