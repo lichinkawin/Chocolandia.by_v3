@@ -356,6 +356,7 @@ async function sendOrderTelegram() {
       weight:    p.weight || '',
       qty:       item.qty,
       lineTotal: (p.price * item.qty).toFixed(2).replace('.', ','),
+      url:       `${window.location.origin}/product/${p.slug}`
     };
   }).filter(Boolean);
 

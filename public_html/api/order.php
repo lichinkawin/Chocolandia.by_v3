@@ -89,8 +89,11 @@ foreach ($items as $item) {
     $weight = clean((string)($item['weight']    ?? ''), 50);
     $qty    = (int)($item['qty']                ?? 1);
     $price  = clean((string)($item['lineTotal'] ?? ''), 20);
+    $url    = filter_var($item['url'] ?? '', FILTER_VALIDATE_URL) ? $item['url'] : '';
+    
     $suffix = $weight !== '' ? " ({$weight})" : '';
-    $lines[] = "• <b>{$iname}</b>{$suffix} × {$qty} = {$price} BYN";
+    $link   = $url !== '' ? " (<a href=\"{$url}\">ссылка</a>)" : '';
+    $lines[] = "• <b>{$iname}</b>{$suffix}{$link} × {$qty} = {$price} BYN";
 }
 
 $items_html = implode("\n", $lines);
