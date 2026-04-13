@@ -37,12 +37,13 @@ function loadEnv($path) {
 }
 
 $env = loadEnv(dirname(__DIR__) . '/.env');
-$bot_token = $env['TELEGRAM_BOT_TOKEN'] ?? '';
-$chat_id   = $env['CHAT_ID'] ?? '';
+$bot_token = isset($env['TELEGRAM_BOT_TOKEN']) ? (string)$env['TELEGRAM_BOT_TOKEN'] : '';
+$chat_id   = isset($env['CHAT_ID']) ? (string)$env['CHAT_ID'] : '';
 
-if (!$bot_token || !$chat_id) {
+// Ensure CHAT_ID preserves its string representation (important for large IDs and negative group IDs)
+if ($bot_token === '' || $chat_id === '') {
     http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => 'Server configuration error']);
+    echo json_encode(['status' => 'error', 'message' => 'Server configuration error: Missing Token or Chat ID']);
     exit;
 }
 
