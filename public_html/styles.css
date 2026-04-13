@@ -947,6 +947,11 @@ input, select, textarea {
   .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
+.product-grid > * {
+  display: flex;
+  flex-direction: column;
+}
+
 /* ============================================================
    PRODUCT CARD
    ============================================================ */
@@ -959,6 +964,7 @@ input, select, textarea {
   width: 100%;
   overflow: hidden;
   height: 100%;
+  flex: 1; /* Stretch to fill wrapper if inside one */
 }
 
 .product-card-img-wrap {
