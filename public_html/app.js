@@ -86,8 +86,7 @@ function addToCart(productId) {
   }
   saveCart();
   updateCartBadge();
-  const product = State.data?.products.find(p => p.id === productId);
-  showToast(`✓ ${product ? product.name : 'Товар'} добавлен в корзину`);
+  showToast('Добавлено в корзину');
 }
 
 function saveCart() {
