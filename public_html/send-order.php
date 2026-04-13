@@ -114,5 +114,7 @@ curl_close($ch);
 if ($http_code === 200) {
     echo json_encode(['status' => 'success']);
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Failed to notify Telegram']);
+    $tg_err = json_decode($result, true);
+    $detail = isset($tg_err['description']) ? $tg_err['description'] : 'HTTP ' . $http_code;
+    echo json_encode(['status' => 'error', 'message' => 'Telegram Error: ' . $detail]);
 }
