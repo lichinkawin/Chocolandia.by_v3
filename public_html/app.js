@@ -494,7 +494,25 @@ const routes = [
   { pattern: /^\/collections$/, handler: renderCollections },
   { pattern: /^\/collections\/([^/]+)$/, handler: (m) => renderCollectionPage(m[1]) },
   { pattern: /^\/product\/([^/]+)$/, handler: (m) => renderProductPage(m[1]) },
+  { pattern: /^\/privacy$/, handler: renderPrivacy },
 ];
+
+async function renderPrivacy() {
+  return `
+<div class="page-transition-enter">
+  <div class="page-wrapper">
+    <div class="container" style="padding-top:4rem; padding-bottom:6rem; max-width:800px">
+      <h1 class="text-headline-md" style="margin-bottom:2rem">Политика конфиденциальности</h1>
+      <div class="product-desc" style="font-size:1rem; opacity:0.8">
+        <p style="margin-bottom:1.5rem">Ваша конфиденциальность важна для нас. Мы собираем только те данные, которые необходимы для обработки вашего заказа (имя, телефон, адрес).</p>
+        <p style="margin-bottom:1.5rem">Мы не передаем ваши данные третьим лицам, за исключением служб доставки (Белпочта/Европочта) для выполнения вашего заказа.</p>
+        <p style="margin-bottom:1.5rem">Ваши данные хранятся в безопасности и используются только для связи с вами по поводу заказов в Chocolandia.by.</p>
+      </div>
+      <a href="/" data-route="/" class="btn btn-outline" style="margin-top:2rem">На главную</a>
+    </div>
+  </div>
+</div>`;
+}
 
 async function navigate(path, pushState = true) {
   if (pushState && path !== window.location.pathname) {
@@ -540,6 +558,15 @@ async function navigate(path, pushState = true) {
 
   // Update SEO title
   updatePageTitle(path);
+
+  // Handle hash if present in original path (e.g. from data-route)
+  const hash = window.location.hash;
+  if (hash) {
+    const el = document.querySelector(hash);
+    if (el) {
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+    }
+  }
 }
 
 function updatePageTitle(path) {
@@ -621,6 +648,18 @@ function initRouter() {
       closeSidebar();
     }
   });
+
+  // Handle hash links for sections on the same page
+  handleInitialHash();
+}
+
+function handleInitialHash() {
+  if (window.location.hash) {
+    setTimeout(() => {
+      const el = document.querySelector(window.location.hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
+  }
 }
 
 /* ============================================================
@@ -835,8 +874,7 @@ async function renderHome() {
         <!-- Main large card -->
         <a href="/collections/${escapeHtml(mainColl.slug || 'strawberry')}"
            data-route="/collections/${escapeHtml(mainColl.slug || 'strawberry')}"
-           class="bento-card bento-main"
-           style="min-height:300px">
+           class="bento-card bento-main">
           <img src="${imgPath(mainColl.image || 'assets/images/strawberry_chocolate.png')}"
                alt="${escapeHtml(mainColl.name || '')}"
                loading="lazy"
@@ -852,8 +890,7 @@ async function renderHome() {
         <!-- Side card -->
         <a href="/collections/${escapeHtml(sideColl.slug || 'dubai')}"
            data-route="/collections/${escapeHtml(sideColl.slug || 'dubai')}"
-           class="bento-card bento-side"
-           style="min-height:260px">
+           class="bento-card bento-side">
           <img src="${imgPath(sideColl.image || 'assets/images/dubai_chocolate.png')}"
                alt="${escapeHtml(sideColl.name || '')}"
                loading="lazy"
@@ -868,8 +905,7 @@ async function renderHome() {
         <!-- Mini A -->
         <a href="/collections/${escapeHtml(extraA.slug || 'truffles')}"
            data-route="/collections/${escapeHtml(extraA.slug || 'truffles')}"
-           class="bento-card bento-mini"
-           style="min-height:220px">
+           class="bento-card bento-mini">
           <img src="${imgPath(extraA.image || 'assets/images/truffles.png')}"
                alt="${escapeHtml(extraA.name || '')}"
                loading="lazy"
@@ -978,17 +1014,47 @@ async function renderHome() {
   </section>
 
   <!-- ── NEWSLETTER ── -->
-  <section class="newsletter-section">
+  <section class="newsletter-section" id="contact-section">
     <div class="container" style="max-width:600px">
-      <p class="section-eyebrow" style="color:var(--color-secondary-fixed);margin-bottom:0.75rem">Новости</p>
-      <h2>Будьте в числе первых</h2>
-      <p>Узнавайте первыми о новинках, сезонных коллекциях и специальных предложениях.</p>
+      <p class="section-eyebrow" style="color:var(--color-secondary-fixed);margin-bottom:0.75rem">Контакты</p>
+      <h2>Будьте на связи</h2>
+      <p>Следите за новинками в Instagram или пишите нам напрямую в Telegram.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;margin-bottom:3rem">
+         <a href="https://www.instagram.com/chocolandia.by/" target="_blank" class="btn btn-secondary">Instagram</a>
+         <a href="https://t.me/maryiskrova" target="_blank" class="btn btn-outline-white">Telegram</a>
+      </div>
+      <p style="opacity:0.6;font-size:0.875rem">Подпишитесь на нашу рассылку:</p>
       <form class="newsletter-form" id="newsletter-form" novalidate>
         <input type="email" class="newsletter-input" placeholder="Ваш email" required aria-label="Email адрес" />
         <button type="submit" class="btn btn-secondary" style="white-space:nowrap;padding:1rem 1.875rem">
           Подписаться
         </button>
       </form>
+    </div>
+  </section>
+
+  <!-- ── DELIVERY INFO ── -->
+  <section class="section-pad bg-surface-low" id="delivery-section">
+    <div class="container text-center">
+       <p class="section-eyebrow">Доставка</p>
+       <h2 class="section-title">Как мы доставляем радость</h2>
+       <div class="perks-grid" style="max-width:800px;margin:3rem auto;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr))">
+          <div class="perk" style="flex-direction:column;text-align:center;gap:1rem">
+             <span class="material-symbols-outlined" style="font-size:40px;color:var(--color-secondary)">local_shipping</span>
+             <p style="font-weight:700">По всей Беларуси</p>
+             <p style="font-size:0.875rem;opacity:0.7">Отправляем Европочтой или Белпочтой в любой город.</p>
+          </div>
+          <div class="perk" style="flex-direction:column;text-align:center;gap:1rem">
+             <span class="material-symbols-outlined" style="font-size:40px;color:var(--color-secondary)">schedule</span>
+             <p style="font-weight:700">Сроки 1-3 дня</p>
+             <p style="font-size:0.875rem;opacity:0.7">Изготовление и отправка в кратчайшие сроки.</p>
+          </div>
+          <div class="perk" style="flex-direction:column;text-align:center;gap:1rem">
+             <span class="material-symbols-outlined" style="font-size:40px;color:var(--color-secondary)">package_2</span>
+             <p style="font-weight:700">Надежная упаковка</p>
+             <p style="font-size:0.875rem;opacity:0.7">Каждое изделие бережно упаковывается для сохранности.</p>
+          </div>
+       </div>
     </div>
   </section>
 

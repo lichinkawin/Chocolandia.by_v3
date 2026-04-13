@@ -101,8 +101,13 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -112,7 +117,6 @@ body {
   color: var(--color-on-surface);
   line-height: 1.6;
   min-height: 100dvh;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -731,14 +735,15 @@ input, select, textarea {
    BENTO GRID (Collections)
    ============================================================ */
 .bento-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
 }
 
 @media (min-width: 768px) {
   .bento-grid {
+    display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(2, 380px);
     gap: 1.25rem;
@@ -753,6 +758,8 @@ input, select, textarea {
   cursor: pointer;
   text-decoration: none;
   display: block;
+  width: 100%;
+  aspect-ratio: 4/3;
 }
 
 .bento-card img {
@@ -815,16 +822,11 @@ input, select, textarea {
   .bento-card-title { font-size: 2.5rem; }
 }
 
-/* Desktop Bento layout */
-.bento-main    { aspect-ratio: 4/3; }
-.bento-tall    { aspect-ratio: 3/4; }
-.bento-sm      { aspect-ratio: 1/1; }
-
 @media (min-width: 768px) {
-  .bento-main { grid-column: span 8; aspect-ratio: unset; }
-  .bento-side { grid-column: span 4; aspect-ratio: unset; }
-  .bento-featured { grid-column: span 8; aspect-ratio: unset; }
-  .bento-mini { grid-column: span 4; aspect-ratio: unset; }
+  .bento-main { grid-column: span 8; }
+  .bento-side { grid-column: span 4; }
+  .bento-featured { grid-column: span 8; }
+  .bento-mini { grid-column: span 4; }
 }
 
 /* Featured dark card */
@@ -914,20 +916,17 @@ input, select, textarea {
    ============================================================ */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem 1rem;
+  justify-content: center;
 }
 
-@media (min-width: 640px) {
-  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-}
-
-@media (min-width: 900px) {
-  .product-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+@media (min-width: 768px) {
+  .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
 }
 
 @media (min-width: 1200px) {
-  .product-grid { grid-template-columns: repeat(4, 1fr); }
+  .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 /* ============================================================
@@ -938,6 +937,9 @@ input, select, textarea {
   flex-direction: column;
   cursor: pointer;
   text-decoration: none;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .product-card-img-wrap {
@@ -2021,12 +2023,13 @@ footer {
   right: 0;
   bottom: 0;
   z-index: 400;
-  width: min(480px, 100vw);
+  width: 100%;
+  max-width: 480px;
   background: var(--color-surface);
   display: flex;
   flex-direction: column;
   box-shadow: -20px 0 80px -10px rgba(39, 19, 16, 0.2);
-  transform: translateX(100%);
+  transform: translateX(105%);
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
