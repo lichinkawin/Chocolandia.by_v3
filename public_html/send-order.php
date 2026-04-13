@@ -83,7 +83,7 @@ foreach ($items as $item) {
     $items_html .= "• <b>{$iname}</b>{$link} x {$iqty} = {$iprice} BYN\n";
 }
 
-$message = "🛍 <b>НОВЫЙ ЗАКАЗ — Chocolandia.by</b>\n\n"
+$message = "🛍 <b>НОВЫЙ ЗАКАЗ (Новая система) — Chocolandia.by</b>\n\n"
          . "👤 <b>Клиент:</b> {$name}\n"
          . "📞 <b>Тел:</b> {$phone}\n"
          . "📍 <b>Адрес:</b> {$address}\n"
