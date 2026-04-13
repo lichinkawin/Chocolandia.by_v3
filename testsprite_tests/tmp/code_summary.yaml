@@ -1,0 +1,54 @@
+version: "2"
+type: frontend
+tech_stack:
+  - HTML5
+  - Vanilla JavaScript
+  - Vanilla CSS
+  - Apache (.htaccess)
+routes:
+  - path: /
+    file: public_html/index.html
+    auth_required: false
+    description: Homepage with hero and collections
+  - path: /collections
+    file: public_html/index.html
+    auth_required: false
+    description: All collections page
+  - path: /collections/:slug
+    file: public_html/index.html
+    auth_required: false
+    description: Category-specific products page
+  - path: /product/:slug
+    file: public_html/index.html
+    auth_required: false
+    description: Detailed product view
+features:
+  - name: Navigation & Routing
+    description: SPA router handling custom paths and history
+    files:
+      - public_html/app.js
+    entry_route: /
+    user_interactions:
+      - Click on collection cards
+      - Click on product links
+      - Use browser back/forward buttons
+  - name: Product Catalog
+    description: Dynamic product rendering from JSON
+    files:
+      - public_html/app.js
+      - public_html/data/products.json
+    entry_route: /collections
+    user_interactions:
+      - View product details
+      - Check prices and descriptions
+  - name: Shopping Cart
+    description: Local storage based cart management
+    files:
+      - public_html/app.js
+    user_interactions:
+      - Add product to cart
+      - View cart totals
+known_limitations:
+  - issue: Static local server doesn't support .htaccess routing
+    location: public_html/.htaccess
+    impact: Refreshing on sub-routes in localhost gives 404

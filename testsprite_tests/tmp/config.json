@@ -1,0 +1,17 @@
+{
+  "status": "init",
+  "scope": "codebase",
+  "type": "frontend",
+  "localEndpoint": "http://localhost:8080/",
+  "serverPort": 57954,
+  "executionArgs": {
+    "projectName": "Chcolandia v3 latest",
+    "projectPath": "d:\\vibecoding\\Chcolandia v3 latest",
+    "testIds": [],
+    "additionalInstruction": "Verify that product pages load correctly, images are not broken (no 404s), and the bento grid collections section is visually correct without overlaps. Check that prices are displayed in BYN.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-ceEb24ZY0Te41iWTgN5lwnmjUN9nCG0O9WZXGQ28MdP6cqPL52KvzmkTNxeIfVVXuu1Maw8gIUYiepuAfTJ-k15A8oV2UPiEK9ZdB1scQI2gDHonvaZFGpu0YGDWCKLC1t8"
+    }
+  }
+}
