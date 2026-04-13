@@ -720,6 +720,9 @@ function bindPageEvents(path, match) {
     document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth' });
   });
 
+  // Hero Slider initialization
+  initHeroSlider();
+
   // Newsletter form
   document.getElementById('newsletter-form')?.addEventListener('submit', e => {
     e.preventDefault();
@@ -830,28 +833,80 @@ async function renderHome() {
   return `
 <div class="page-transition-enter">
 
-  <!-- ── HERO ── -->
-  <section class="hero" id="hero">
-    <div class="hero-bg">
-      <img src="/assets/images/hero_banner.png" alt="Chocolandia — шоколад ручной работы" />
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-overlay-bottom"></div>
-    <div class="hero-content">
-      <div style="max-width:600px">
-        <div class="hero-badge">Ручная работа · Беларусь</div>
-        <h1 class="hero-title">
-          Шоколад,<br />который <em>создан с душой</em>
-        </h1>
-        <p class="hero-subtitle">
-          Авторский шоколад ручной работы — дубайский шоколад, клубника, трюфели и уникальные фигурки. Доставка по Беларуси.
-        </p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" id="hero-cta">Смотреть коллекции</button>
-          <button class="btn btn-outline-white" id="hero-process">О нас</button>
+  <!-- ── HERO SLIDER ── -->
+  <section class="hero-slider" id="hero-slider">
+    <div class="slider-wrapper">
+      
+      <!-- Slide 1 -->
+      <div class="hero-slide active" data-slide="0">
+        <div class="hero-bg">
+          <img src="/assets/images/hero_slider_1.png" alt="Chocolandia — шоколад ручной работы" />
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge">Ручная работа · Беларусь</div>
+          <h1 class="hero-title">
+            Шоколад,<br />который <em>создан с душой</em>
+          </h1>
+          <p class="hero-subtitle">
+            Авторский шоколад ручной работы — дубайский шоколад, клубника, трюфели и уникальные фигурки.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-route="/collections">Смотреть коллекции</button>
+            <button class="btn btn-outline-white" id="hero-process">О нас</button>
+          </div>
         </div>
       </div>
+
+      <!-- Slide 2 -->
+      <div class="hero-slide" data-slide="1">
+        <div class="hero-bg">
+          <img src="/assets/images/hero_slider_2.png" alt="Дубайский шоколад" />
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge">Тренд сезона</div>
+          <h1 class="hero-title">
+            Дубайский <em>вкус роскоши</em>
+          </h1>
+          <p class="hero-subtitle">
+            Хрустящая начинка из катаифи и фисташковой пасты в нежном бельгийском шоколаде. Попробуйте легенду.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-route="/collections/dubai">Попробовать</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="hero-slide" data-slide="2">
+        <div class="hero-bg">
+          <img src="/assets/images/hero_slider_3.png" alt="Клубника в шоколаде" />
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge">Идеальный подарок</div>
+          <h1 class="hero-title">
+            Клубника в <em>шоколаде</em>
+          </h1>
+          <p class="hero-subtitle">
+            Самая свежая клубника в изысканном оформлении. Подарок, который невозможно забыть и хочется повторить.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-route="/collections/strawberry">Заказать набор</button>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    <!-- Slider controls -->
+    <div class="slider-controls">
+      <div class="slider-dots">
+        <span class="dot active" data-goto="0"></span>
+        <span class="dot" data-goto="1"></span>
+        <span class="dot" data-goto="2"></span>
+      </div>
+    </div>
+
+    <div class="hero-overlay-bottom"></div>
   </section>
 
   <!-- ── BENTO GRID ── -->
@@ -1380,6 +1435,51 @@ async function renderProductPage(slug) {
   </div>
 
 </div>`;
+}
+
+/* ============================================================
+   HERO SLIDER LOGIC
+   ============================================================ */
+function initHeroSlider() {
+  const slider = document.getElementById('hero-slider');
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('.hero-slide');
+  const dots   = slider.querySelectorAll('.dot');
+  let current  = 0;
+  let timer    = null;
+  const interval = 6000; // 6 seconds
+
+  function showSlide(index) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    current = index;
+  }
+
+  function nextSlide() {
+    let next = (current + 1) % slides.length;
+    showSlide(next);
+    resetTimer();
+  }
+
+  function resetTimer() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(nextSlide, interval);
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = parseInt(dot.getAttribute('data-goto'));
+      showSlide(target);
+      resetTimer();
+    });
+  });
+
+  // Start initial timer
+  resetTimer();
 }
 
 /* ============================================================
