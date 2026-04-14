@@ -495,6 +495,7 @@ const routes = [
   { pattern: /^\/collections\/([^/]+)$/, handler: (m) => renderCollectionPage(m[1]) },
   { pattern: /^\/product\/([^/]+)$/, handler: (m) => renderProductPage(m[1]) },
   { pattern: /^\/privacy$/, handler: renderPrivacy },
+  { pattern: /^\/b2b$/, handler: renderB2B },
 ];
 
 async function renderPrivacy() {
@@ -595,6 +596,7 @@ function updatePageTitle(path) {
   const titleMap = {
     '/': 'Chocolandia.by — Шоколад ручной работы',
     '/collections': 'Все коллекции — Chocolandia.by',
+    '/b2b': 'Корпоративным клиентам — Chocolandia.by',
   };
   if (titleMap[path]) {
     document.title = titleMap[path];
@@ -754,6 +756,13 @@ function bindPageEvents(path, match) {
       input.value = '';
     }
   });
+
+  // B2B Form handling
+  if (path === '/b2b') {
+    bindB2BEvents();
+  }
+
+  // FAQ accordion toggle
 
   // FAQ accordion toggle
   document.querySelectorAll('.faq-question').forEach(btn => {
@@ -1648,6 +1657,188 @@ function renderNotFound() {
     </div>
   </div>
 </div>`;
+}
+
+/* ============================================================
+   PAGE: B2B LANDING
+   ============================================================ */
+async function renderB2B() {
+  return `
+  <div class="page-transition-enter">
+    <!-- Hero B2B -->
+    <section class="b2b-hero">
+      <div class="b2b-hero-bg">
+        <img src="/assets/images/b2b_hero.png" alt="Corporate Gifts" />
+      </div>
+      <div class="b2b-hero-content">
+        <div class="container">
+          <p class="section-eyebrow" style="color:var(--color-secondary-fixed)">Для бизнеса</p>
+          <h1 class="b2b-hero-title">Премиальные сладкие подарки <br>для вашего бизнеса</h1>
+          <p class="b2b-hero-subtitle">
+            Эксклюзивные наборы ручной работы с логотипом вашей компании. 
+            Создаем сладкую репутацию вашего бренда.
+          </p>
+          <div class="b2b-hero-actions">
+            <button class="btn btn-primary btn-lg" onclick="document.getElementById('b2b-form-section').scrollIntoView({behavior:'smooth'})">
+              Получить коммерческое предложение
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Advantages -->
+    <section class="section-pad bg-surface">
+      <div class="container">
+        <div class="text-center" style="margin-bottom:4rem">
+          <p class="section-eyebrow">Почему выбирают нас</p>
+          <h2 class="section-title">Наши преимущества</h2>
+        </div>
+        <div class="b2b-advantages-grid">
+          <div class="advantage-card">
+            <span class="material-symbols-outlined advantage-icon">account_balance</span>
+            <h3 class="advantage-title">Безналичный расчет</h3>
+            <p class="advantage-desc">Работаем официально с оформлением всех необходимых документов и договоров.</p>
+          </div>
+          <div class="advantage-card">
+            <span class="material-symbols-outlined advantage-icon">branding_watermark</span>
+            <h3 class="advantage-title">Свой логотип</h3>
+            <p class="advantage-desc">Кастомизация упаковки, брендированные ленты и открытки в корпоративном стиле.</p>
+          </div>
+          <div class="advantage-card">
+            <span class="material-symbols-outlined advantage-icon">percent</span>
+            <h3 class="advantage-title">Гибкие скидки</h3>
+            <p class="advantage-desc">Специальные условия и прогрессивная шкала скидок при оптовых заказах.</p>
+          </div>
+          <div class="advantage-card">
+            <span class="material-symbols-outlined advantage-icon">description</span>
+            <h3 class="advantage-title">Закрывающие документы</h3>
+            <p class="advantage-desc">Предоставляем полный пакет документов согласно законодательству РБ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="section-pad" id="b2b-form-section" style="background:var(--color-surface-container-low)">
+      <div class="container">
+        <div class="b2b-form-container">
+          <div class="b2b-form-info">
+            <h2 class="text-headline-lg" style="margin-bottom:1.5rem">Оставьте заявку</h2>
+            <p style="margin-bottom:2rem; opacity:0.8">
+              Заполните форму, и наш менеджер свяжется с вами в течение 30 минут для обсуждения деталей и подготовки индивидуального предложения.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:1.5rem">
+              <div style="display:flex; align-items:center; gap:1rem">
+                <span class="material-symbols-outlined" style="color:var(--color-secondary)">call</span>
+                <span>+375 (25) 545-??-??</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:1rem">
+                <span class="material-symbols-outlined" style="color:var(--color-secondary)">mail</span>
+                <span>b2b@chocolandia.by</span>
+              </div>
+            </div>
+          </div>
+
+          <form class="b2b-form" id="b2b-request-form">
+            <div class="form-group">
+              <label for="b2b-name">Ваше имя</label>
+              <input type="text" id="b2b-name" name="name" placeholder="Иван Иванов" required>
+            </div>
+            <div class="form-group">
+              <label for="b2b-company">Название компании</label>
+              <input type="text" id="b2b-company" name="company" placeholder="ООО 'Ваша Компания'" required>
+            </div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="b2b-phone">Телефон</label>
+                <input type="tel" id="b2b-phone" name="phone" placeholder="+375 (__) ___-__-__" required>
+              </div>
+              <div class="form-group">
+                <label for="b2b-email">Email</label>
+                <input type="email" id="b2b-email" name="email" placeholder="example@mail.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="b2b-quantity">Ориентировочное количество наборов</label>
+              <select id="b2b-quantity" name="quantity">
+                <option value="до 20">До 20 наборов</option>
+                <option value="20-50">От 20 до 50 наборов</option>
+                <option value="50-100">От 50 до 100 наборов</option>
+                <option value="свыше 100">Свыше 100 наборов</option>
+                <option value="не уверен">Пока не уверен (-а)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:1rem" id="b2b-submit-btn">
+              Оставить заявку
+            </button>
+          </form>
+
+          <!-- Success Message (initially hidden) -->
+          <div class="b2b-success" id="b2b-success-msg" style="display:none">
+            <span class="material-symbols-outlined" style="font-size:64px; color:var(--color-secondary); margin-bottom:1.5rem">check_circle</span>
+            <h2 class="text-headline-md">Заявка успешно отправлена!</h2>
+            <p style="margin-top:1rem; opacity:0.8; max-width:400px; margin-left:auto; margin-right:auto">
+              Спасибо за интерес к нашей продукции. Мы подготовим лучшее предложение для вашей компании и свяжемся с вами в ближайшее время.
+            </p>
+            <button class="btn btn-outline" style="margin-top:2rem" onclick="location.reload()">Отправить еще одну</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  `;
+}
+
+function bindB2BEvents() {
+  const form = document.getElementById('b2b-request-form');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = document.getElementById('b2b-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправка...';
+    }
+
+    const formData = new FormData(form);
+    const data = {
+      type: 'b2b',
+      name: formData.get('name'),
+      company: formData.get('company'),
+      phone: formData.get('phone'),
+      email: formData.get('email'),
+      quantity: formData.get('quantity')
+    };
+
+    try {
+      const res = await fetch('/send-order.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+
+      if (result.status === 'success') {
+        form.style.display = 'none';
+        document.querySelector('.b2b-form-info').style.display = 'none';
+        document.getElementById('b2b-success-msg').style.display = 'flex';
+        window.scrollTo({
+          top: document.getElementById('b2b-form-section').offsetTop - 100,
+          behavior: 'smooth'
+        });
+      } else {
+        throw new Error(result.message || 'Ошибка сервера');
+      }
+    } catch (err) {
+      alert('Ошибка при отправке: ' + err.message);
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Оставить заявку';
+      }
+    }
+  });
 }
 
 /* ============================================================

@@ -64,32 +64,45 @@ function sanitize($data) {
     return htmlspecialchars(strip_tags(trim($data)), ENT_QUOTES, 'UTF-8');
 }
 
-$name    = sanitize($body['name']    ?? 'N/A');
-$phone   = sanitize($body['phone']   ?? 'N/A');
-$address = sanitize($body['address'] ?? 'N/A');
-$comment = sanitize($body['comment'] ?? '');
-$items   = $body['items']            ?? [];
-$total   = sanitize($body['total']   ?? '0');
+$type      = sanitize($body['type']      ?? 'order');
+$name      = sanitize($body['name']      ?? 'N/A');
+$phone     = sanitize($body['phone']     ?? 'N/A');
+$company   = sanitize($body['company']   ?? 'N/A');
+$email     = sanitize($body['email']     ?? 'N/A');
+$quantity  = sanitize($body['quantity']  ?? 'N/A');
+$address   = sanitize($body['address']   ?? 'N/A');
+$comment   = sanitize($body['comment']   ?? '');
+$items     = $body['items']              ?? [];
+$total     = sanitize($body['total']     ?? '0');
 
 // 4. Build Formatted HTML Message
-$items_html = "";
-foreach ($items as $item) {
-    $iname  = sanitize($item['name']  ?? 'Unknown');
-    $iqty   = (int)($item['qty']       ?? 1);
-    $iprice = sanitize($item['lineTotal'] ?? '0');
-    $iurl   = filter_var($item['url'] ?? '', FILTER_VALIDATE_URL) ? $item['url'] : '';
-    
-    $link = $iurl ? " (<a href=\"{$iurl}\">ссылка</a>)" : "";
-    $items_html .= "• <b>{$iname}</b>{$link} x {$iqty} = {$iprice} BYN\n";
-}
+if ($type === 'b2b') {
+    $message = "🏢 <b>НОВАЯ B2B ЗАЯВКА — Chocolandia.by</b>\n\n"
+             . "👤 <b>Контакт:</b> {$name}\n"
+             . "🏢 <b>Компания:</b> {$company}\n"
+             . "📞 <b>Тел:</b> {$phone}\n"
+             . "📧 <b>Email:</b> {$email}\n"
+             . "📦 <b>Объем:</b> {$quantity}\n";
+} else {
+    $items_html = "";
+    foreach ($items as $item) {
+        $iname  = sanitize($item['name']  ?? 'Unknown');
+        $iqty   = (int)($item['qty']       ?? 1);
+        $iprice = sanitize($item['lineTotal'] ?? '0');
+        $iurl   = filter_var($item['url'] ?? '', FILTER_VALIDATE_URL) ? $item['url'] : '';
+        
+        $link = $iurl ? " (<a href=\"{$iurl}\">ссылка</a>)" : "";
+        $items_html .= "• <b>{$iname}</b>{$link} x {$iqty} = {$iprice} BYN\n";
+    }
 
-$message = "🛍 <b>НОВЫЙ ЗАКАЗ (Новая система) — Chocolandia.by</b>\n\n"
-         . "👤 <b>Клиент:</b> {$name}\n"
-         . "📞 <b>Тел:</b> {$phone}\n"
-         . "📍 <b>Адрес:</b> {$address}\n"
-         . ($comment ? "💬 <b>Коммент:</b> {$comment}\n" : "")
-         . "\n📦 <b>СОСТАВ:</b>\n{$items_html}\n"
-         . "💰 <b>ИТОГО:</b> {$total} BYN";
+    $message = "🛍 <b>НОВЫЙ ЗАКАЗ (Новая система) — Chocolandia.by</b>\n\n"
+             . "👤 <b>Клиент:</b> {$name}\n"
+             . "📞 <b>Тел:</b> {$phone}\n"
+             . "📍 <b>Адрес:</b> {$address}\n"
+             . ($comment ? "💬 <b>Коммент:</b> {$comment}\n" : "")
+             . "\n📦 <b>СОСТАВ:</b>\n{$items_html}\n"
+             . "💰 <b>ИТОГО:</b> {$total} BYN";
+}
 
 // 5. Send to Telegram API
 $api_url = "https://api.telegram.org/bot{$bot_token}/sendMessage";
