@@ -1731,11 +1731,11 @@ async function renderB2B() {
             <div style="display:flex; flex-direction:column; gap:1.5rem">
               <div style="display:flex; align-items:center; gap:1rem">
                 <span class="material-symbols-outlined" style="color:var(--color-secondary)">call</span>
-                <span>+375 (25) 545-??-??</span>
+                <span>+375 (25) 545-77-49</span>
               </div>
               <div style="display:flex; align-items:center; gap:1rem">
                 <span class="material-symbols-outlined" style="color:var(--color-secondary)">mail</span>
-                <span>b2b@chocolandia.by</span>
+                <span>hello@chocolandia.by</span>
               </div>
             </div>
           </div>
