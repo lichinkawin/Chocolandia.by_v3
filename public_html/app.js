@@ -514,12 +514,36 @@ async function renderPrivacy() {
 </div>`;
 }
 
-async function navigate(path, pushState = true) {
-  if (pushState && path !== window.location.pathname) {
-    history.pushState({}, '', path);
+async function navigate(fullPath, pushState = true) {
+  // Извлекаем хэш (#...) из пути
+  const hashIndex = fullPath.indexOf('#');
+  let path = fullPath;
+  let hash = '';
+  if (hashIndex !== -1) {
+    hash = fullPath.substring(hashIndex);
+    path = fullPath.substring(0, hashIndex) || '/';
   }
+
+  if (pushState && fullPath !== window.location.pathname + window.location.hash) {
+    history.pushState({}, '', fullPath);
+  }
+  
+  // Если мы уже находимся на этой странице, просто скроллим до нужного элемента
+  if (State.currentPath === path && document.getElementById('app').innerHTML.trim() !== '') {
+    updateNavActive(fullPath);
+    updateBottomNavActive(path);
+    closeSidebar();
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    return;
+  }
+
   State.currentPath = path;
-  updateNavActive(path);
+  updateNavActive(fullPath);
   updateBottomNavActive(path);
 
   const app = document.getElementById('app');
@@ -551,22 +575,20 @@ async function navigate(path, pushState = true) {
     app.firstElementChild?.classList.add('page-transition-enter');
   }
 
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  if (hash) {
+    setTimeout(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  } else {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 
   // Close mobile sidebar if open
   closeSidebar();
 
   // Update SEO title
   updatePageTitle(path);
-
-  // Handle hash if present in original path (e.g. from data-route)
-  const hash = window.location.hash;
-  if (hash) {
-    const el = document.querySelector(hash);
-    if (el) {
-      setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
-    }
-  }
 }
 
 function updatePageTitle(path) {
@@ -732,6 +754,19 @@ function bindPageEvents(path, match) {
       input.value = '';
     }
   });
+
+  // FAQ accordion toggle
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const parent = btn.closest('.faq-item');
+      if (!parent) return;
+      const isActive = parent.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+      if (!isActive) {
+        parent.classList.add('active');
+      }
+    });
+  });
 }
 
 function filterProducts(filter) {
@@ -829,6 +864,62 @@ async function renderHome() {
   const extraA   = featured[2] || {};
   const extraB   = featured[3] || {};
   const bestProducts = data?.products.filter(p => p.badge === 'Хит' || p.badge === 'Тренд').slice(0, 4) || [];
+
+  const mockReviews = [
+    {
+      name: 'Екатерина Семенова',
+      text: 'Брали дубайский шоколад на подарок — это просто восторг! Очень вкусная фисташковая начинка, хрустит невероятно.'
+    },
+    {
+      name: 'Максим',
+      text: 'Заказывал клубнику в шоколаде девушке. Ягоды огромные, сладкие, а шоколад тает во рту. Оформление топ.'
+    },
+    {
+      name: 'Ольга',
+      text: 'Трюфели невероятные. Чувствуется, что сделано из хорошего бельгийского шоколада. Буду заказывать еще!'
+    },
+    {
+      name: 'Анна В.',
+      text: 'Все идеально: от упаковки до вкуса. Заказывали подарочный набор маме на День Рождения, она в восторге.'
+    }
+  ];
+
+  const faqs = [
+    {
+      q: 'Как сделать заказ?',
+      a: 'Вы можете оформить заказ через корзину на нашем сайте, после чего мы свяжемся с вами для подтверждения деталей.'
+    },
+    {
+      q: 'За сколько дней нужно делать заказ?',
+      a: 'Желательно оформлять заказ за 2-3 дня до нужной даты. В преддверии праздников сроки могут увеличиваться.'
+    },
+    {
+      q: 'Осуществляете ли вы доставку в другие города?',
+      a: 'Да, мы отправляем наши наборы Европочтой и Белпочтой по всей территории Беларуси. Сроки доставки обычно составляют 1-3 дня.'
+    },
+    {
+      q: 'Какой срок годности у вашей продукции?',
+      a: 'Срок годности клубники в шоколаде — 24 часа. Трюфели и дубайский шоколад хранятся до 1 месяца при температуре от +15 до +20 °C.'
+    },
+    {
+      q: 'Есть ли у вас подарочная упаковка?',
+      a: 'Все наши изделия по умолчанию упакованы в стильные фирменные коробки с лентами. Это уже готовый подарок!'
+    }
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  };
+  const faqJsonLd = `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
 
   return `
 <div class="page-transition-enter">
@@ -1112,6 +1203,64 @@ async function renderHome() {
        </div>
     </div>
   </section>
+
+  <!-- ── REVIEWS ── -->
+  <section class="section-pad reviews-section" id="reviews-section">
+    <div class="container">
+      <div class="reviews-header">
+        <div>
+          <p class="section-eyebrow">Отзывы (Social Proof)</p>
+          <h2 class="section-title">Что говорят клиенты</h2>
+        </div>
+        <a href="https://www.instagram.com/chocolandia.by/" target="_blank" class="btn btn-primary">Оставить отзыв</a>
+      </div>
+      <div class="reviews-carousel">
+        ${mockReviews.map(r => `
+        <div class="review-card">
+          <div class="review-card-header">
+            <div>
+              <div class="review-author">${escapeHtml(r.name)}</div>
+              <div class="review-stars">
+                <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">star</span>
+                <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">star</span>
+                <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">star</span>
+                <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">star</span>
+                <span class="material-symbols-outlined" style="font-size:16px" aria-hidden="true">star</span>
+              </div>
+            </div>
+          </div>
+          <div class="review-text">${escapeHtml(r.text)}</div>
+        </div>
+        `).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="section-pad faq-section" id="faq-section">
+    <div class="container">
+      <div class="text-center" style="margin-bottom:3rem">
+        <p class="section-eyebrow">Вопрос - Ответ</p>
+        <h2 class="section-title">Часто задаваемые вопросы</h2>
+      </div>
+      <div class="faq-list">
+        ${faqs.map((f) => `
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>${escapeHtml(f.q)}</span>
+            <span class="material-symbols-outlined faq-question-icon">expand_more</span>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="faq-answer-content">
+              <div class="faq-answer-text">${escapeHtml(f.a)}</div>
+            </div>
+          </div>
+        </div>
+        `).join('')}
+      </div>
+    </div>
+  </section>
+  ${faqJsonLd}
 
 </div>`;
 }
