@@ -1728,7 +1728,7 @@ async function renderB2B() {
             <p style="margin-bottom:2rem; opacity:0.8">
               Заполните форму, и наш менеджер свяжется с вами в течение 30 минут для обсуждения деталей и подготовки индивидуального предложения.
             </p>
-            <div style="display:flex; flex-direction:column; gap:1.5rem">
+            <div class="b2b-form-info-items">
               <div style="display:flex; align-items:center; gap:1rem">
                 <span class="material-symbols-outlined" style="color:var(--color-secondary)">call</span>
                 <span>+375 (25) 545-77-49</span>
@@ -1738,6 +1738,7 @@ async function renderB2B() {
                 <span>hello@chocolandia.by</span>
               </div>
             </div>
+
           </div>
 
           <form class="b2b-form" id="b2b-request-form">

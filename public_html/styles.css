@@ -2840,31 +2840,51 @@ footer {
   position: relative;
   z-index: 2;
   color: white;
+  text-align: center;
 }
+
+@media (min-width: 768px) {
+  .b2b-hero-content { text-align: left; }
+}
+
 
 .b2b-hero-title {
   font-family: var(--font-headline);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(1.75rem, 8vw, 4.5rem);
   line-height: 1.1;
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
 }
 
+
 .b2b-hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-size: clamp(0.9375rem, 3vw, 1.25rem);
   opacity: 0.9;
   max-width: 600px;
   margin-bottom: 2.5rem;
   line-height: 1.6;
   font-weight: 300;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .b2b-hero-subtitle { margin-left: 0; }
 }
 
 
-.b2b-advantages-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+
+.b2b-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
 }
+
+@media (min-width: 768px) {
+  .b2b-hero-actions { justify-content: flex-start; }
+}
+
 
 .advantage-card {
   background: white;
@@ -2941,12 +2961,32 @@ footer {
   }
 }
 
+.b2b-form-info {
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .b2b-form-info { text-align: left; }
+}
+
+.b2b-form-info-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .b2b-form-info-items { align-items: flex-start; }
+}
+
 .b2b-form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   width: 100%;
 }
+
 
 
 .form-group-row {
