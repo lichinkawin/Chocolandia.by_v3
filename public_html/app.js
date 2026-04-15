@@ -1731,7 +1731,7 @@ async function renderB2B() {
             <div class="b2b-form-info-items">
               <div style="display:flex; align-items:center; gap:1rem">
                 <span class="material-symbols-outlined" style="color:var(--color-secondary)">call</span>
-                <span>+375 (25) 545-77-49</span>
+                <span>+37529 545 77 49</span>
               </div>
               <div style="display:flex; align-items:center; gap:1rem">
                 <span class="material-symbols-outlined" style="color:var(--color-secondary)">mail</span>
