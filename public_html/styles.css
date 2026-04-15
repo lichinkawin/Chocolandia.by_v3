@@ -2856,7 +2856,9 @@ footer {
   max-width: 600px;
   margin-bottom: 2.5rem;
   line-height: 1.6;
+  font-weight: 300;
 }
+
 
 .b2b-advantages-grid {
   display: grid;
@@ -2866,12 +2868,23 @@ footer {
 
 .advantage-card {
   background: white;
-  padding: 3rem 2rem;
-  border-radius: var(--radius-xl);
+  padding: 2.5rem 1.5rem;
+  border-radius: var(--radius-lg);
   text-align: center;
   transition: transform var(--transition-base), box-shadow var(--transition-base);
-  border: 1px solid rgba(var(--color-primary-rgb), 0.05);
+  border: 1px solid rgba(39, 19, 16, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+@media (min-width: 768px) {
+  .advantage-card {
+    padding: 3.5rem 2rem;
+    border-radius: var(--radius-xl);
+  }
+}
+
 
 .advantage-card:hover {
   transform: translateY(-8px);
@@ -2894,19 +2907,32 @@ footer {
 .advantage-desc {
   color: var(--color-on-surface-variant);
   line-height: 1.6;
+  font-size: 0.9375rem;
+  max-width: 320px;
 }
+
 
 .b2b-form-container {
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 4rem;
+  gap: 3rem;
   background: white;
-  padding: 4rem;
-  border-radius: var(--radius-2xl);
+  padding: 2.5rem 1.5rem;
+  border-radius: var(--radius-lg);
   box-shadow: 0 40px 80px rgba(39, 19, 16, 0.1);
+  overflow: hidden;
 }
+
+@media (min-width: 768px) {
+  .b2b-form-container {
+    padding: 4rem;
+    border-radius: var(--radius-2xl);
+    gap: 4rem;
+  }
+}
+
 
 @media (min-width: 992px) {
   .b2b-form-container {
@@ -2919,7 +2945,9 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  width: 100%;
 }
+
 
 .form-group-row {
   display: grid;
@@ -2937,7 +2965,9 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 }
+
 
 .form-group label {
   font-family: var(--font-label);
@@ -2950,13 +2980,16 @@ footer {
 
 .form-group input,
 .form-group select {
+  width: 100%;
   padding: 1rem;
   border: 1px solid rgba(39, 19, 16, 0.1);
   border-radius: var(--radius-md);
   font-family: inherit;
   font-size: 1rem;
   transition: border-color var(--transition-fast);
+  background-color: #fff;
 }
+
 
 .form-group input:focus,
 .form-group select:focus {
