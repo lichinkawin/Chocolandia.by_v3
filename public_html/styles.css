@@ -1142,7 +1142,7 @@ input, select, textarea {
   justify-content: space-between;
   margin-top: auto;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 @media (min-width: 768px) {
@@ -1153,10 +1153,17 @@ input, select, textarea {
 
 .product-card-price {
   font-family: var(--font-headline);
-  font-size: 1.125rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-primary);
   flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 380px) {
+  .product-card-price {
+    font-size: 1rem;
+  }
 }
 
 .product-card-action-btn {

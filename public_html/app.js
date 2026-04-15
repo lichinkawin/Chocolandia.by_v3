@@ -781,9 +781,10 @@ function bindPageEvents(path, match) {
 function filterProducts(filter) {
   const grid = document.getElementById('product-grid');
   if (!grid) return;
-  const cards = grid.querySelectorAll('[data-collection]');
+  const cards = grid.querySelectorAll('[data-badge]');
   cards.forEach(card => {
-    if (filter === 'all' || card.getAttribute('data-collection') === filter) {
+    const badge = card.getAttribute('data-badge');
+    if (filter === 'all' || badge === filter) {
       card.style.display = '';
     } else {
       card.style.display = 'none';
@@ -1352,9 +1353,9 @@ async function renderCollectionPage(slug) {
     <div style="background:var(--color-surface);padding:1.5rem 0 0">
       <div class="filter-bar">
         <button class="filter-chip active" data-filter="all">Все</button>
-        ${allProducts.filter(p => p.badge).map(p =>
-          `<button class="filter-chip" data-filter="${escapeHtml(p.id)}">${escapeHtml(p.badge)}</button>`
-        ).filter((v, i, a) => a.indexOf(v) === i).join('')}
+        ${[...new Set(allProducts.filter(p => p.badge).map(p => p.badge))].map(badge =>
+          `<button class="filter-chip" data-filter="${escapeHtml(badge)}">${escapeHtml(badge)}</button>`
+        ).join('')}
       </div>
     </div>
 
@@ -1367,7 +1368,7 @@ async function renderCollectionPage(slug) {
         </p>
         <div class="product-grid" id="product-grid">
           ${allProducts.map(p =>
-            `<div data-collection="${escapeHtml(p.id)}">${buildProductCard(p)}</div>`
+            `<div data-badge="${escapeHtml(p.badge || '')}" data-collection="${escapeHtml(p.id)}">${buildProductCard(p)}</div>`
           ).join('')}
         </div>
         ` : `
