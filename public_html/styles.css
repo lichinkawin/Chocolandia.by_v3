@@ -675,8 +675,17 @@ input, select, textarea {
   border: none;
   transition: transform var(--transition-fast), background var(--transition-base), color var(--transition-base), box-shadow var(--transition-base), opacity var(--transition-fast);
   text-decoration: none;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
 }
+
+@media (max-width: 640px) {
+  .btn {
+    padding: 0.875rem 1.25rem;
+    letter-spacing: 0.1em;
+  }
+}
+
 
 .btn:active { transform: scale(0.96); }
 
@@ -2860,11 +2869,14 @@ footer {
   font-size: clamp(0.875rem, 3vw, 1.125rem);
   opacity: 0.9;
   max-width: 520px;
+  width: 100%;
   margin-bottom: 2.5rem;
   line-height: 1.6;
   font-weight: 300;
   margin-left: 0;
+  overflow-wrap: break-word;
 }
+
 
 
 
