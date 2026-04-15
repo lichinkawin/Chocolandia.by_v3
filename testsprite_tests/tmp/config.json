@@ -2,8 +2,8 @@
   "status": "init",
   "scope": "codebase",
   "type": "frontend",
-  "localEndpoint": "http://localhost:8080/",
-  "serverPort": 57954,
+  "localEndpoint": "http://localhost:3000/",
+  "serverPort": 62300,
   "executionArgs": {
     "projectName": "Chcolandia v3 latest",
     "projectPath": "d:\\vibecoding\\Chcolandia v3 latest",
