@@ -1428,6 +1428,7 @@ input, select, textarea {
   color: var(--color-on-surface-variant);
   line-height: 1.75;
   font-size: 0.9375rem;
+  white-space: pre-wrap;
 }
 
 .product-info-block {
