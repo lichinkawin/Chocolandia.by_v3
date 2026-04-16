@@ -77,12 +77,12 @@ function showToast(message) {
   setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
-function addToCart(productId) {
-  const existing = State.cart.find(i => i.productId === productId);
+function addToCart(productId, qty = 1, variantId = null) {
+  const existing = State.cart.find(i => i.productId === productId && i.variantId === variantId);
   if (existing) {
-    existing.qty += 1;
+    existing.qty += qty;
   } else {
-    State.cart.push({ productId, qty: 1 });
+    State.cart.push({ productId, qty, variantId });
   }
   saveCart();
   updateCartBadge();
@@ -199,40 +199,50 @@ function renderCartDrawer() {
     renderCheckoutForm(body, footer);
   } else {
     // Items list
-    body.innerHTML = State.cart.map(item => {
+    body.innerHTML = State.cart.map((item, index) => {
       const product = State.data?.products.find(p => p.id === item.productId);
       if (!product) return '';
+      
+      let variant = null;
+      if (item.variantId && product.variants) {
+        variant = product.variants.find(v => v.id === item.variantId);
+      }
+      
+      const price = variant ? variant.price : product.price;
+      const weight = variant ? variant.weight : product.weight;
+      const name = product.name + (variant ? ` (${variant.name})` : '');
       const imgSrc = imgPath(product.image);
-      const lineTotal = (product.price * item.qty).toFixed(2).replace('.', ',');
+      const lineTotal = (price * item.qty).toFixed(2).replace('.', ',');
+      
       return `
-      <div class="cart-item" data-cart-item="${escapeHtml(item.productId)}">
+      <div class="cart-item" data-cart-index="${index}">
         <div class="cart-item-img">
           <img src="${imgSrc}"
-               alt="${escapeHtml(product.name)}"
+               alt="${escapeHtml(name)}"
                onerror="this.src='/assets/images/hero_banner.png'" />
         </div>
         <div class="cart-item-info">
           <span class="cart-item-name"
                 data-route="/product/${escapeHtml(product.slug)}"
                 onclick="closeCartDrawer();navigate('/product/${escapeHtml(product.slug)}')">
-            ${escapeHtml(product.name)}
+            ${escapeHtml(name)}
           </span>
-          ${product.weight ? `<span class="cart-item-weight">${escapeHtml(product.weight)}</span>` : ''}
+          ${weight ? `<span class="cart-item-weight">${escapeHtml(weight)}</span>` : ''}
           <div class="cart-item-price-row">
             <span class="cart-item-price">${lineTotal} BYN</span>
           </div>
           <div class="cart-item-qty">
             <button class="cart-item-qty-btn"
-                    data-cart-dec="${escapeHtml(item.productId)}"
+                    data-cart-dec="${index}"
                     aria-label="Уменьшить количество">−</button>
             <span class="cart-item-qty-val">${item.qty}</span>
             <button class="cart-item-qty-btn"
-                    data-cart-inc="${escapeHtml(item.productId)}"
+                    data-cart-inc="${index}"
                     aria-label="Увеличить количество">+</button>
           </div>
         </div>
         <button class="cart-item-remove"
-                data-cart-remove="${escapeHtml(item.productId)}"
+                data-cart-remove="${index}"
                 aria-label="Удалить из корзины">
           <span class="material-symbols-outlined" style="font-size:18px">delete_outline</span>
         </button>
@@ -350,11 +360,22 @@ async function sendOrderTelegram() {
   const items = State.cart.map(item => {
     const p = State.data.products.find(pr => pr.id === item.productId);
     if (!p) return null;
+    
+    let variantDetails = '';
+    let price = p.price;
+    if (item.variantId && p.variants) {
+      const v = p.variants.find(v => v.id === item.variantId);
+      if (v) {
+        variantDetails = ` (${v.name})`;
+        price = v.price;
+      }
+    }
+    
     return {
-      name:      p.name,
+      name:      p.name + variantDetails,
       weight:    p.weight || '',
       qty:       item.qty,
-      lineTotal: (p.price * item.qty).toFixed(2).replace('.', ','),
+      lineTotal: (price * item.qty).toFixed(2).replace('.', ','),
       url:       `${window.location.origin}/product/${p.slug}`
     };
   }).filter(Boolean);
@@ -446,30 +467,30 @@ function bindCartDrawerEvents() {
   // Event delegation on the drawer body
   body.querySelectorAll('[data-cart-dec]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-cart-dec');
-      cartChangeQty(id, -1);
+      const index = parseInt(btn.getAttribute('data-cart-dec'));
+      cartChangeQtyByIndex(index, -1);
     });
   });
   body.querySelectorAll('[data-cart-inc]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-cart-inc');
-      cartChangeQty(id, 1);
+      const index = parseInt(btn.getAttribute('data-cart-inc'));
+      cartChangeQtyByIndex(index, 1);
     });
   });
   body.querySelectorAll('[data-cart-remove]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-cart-remove');
-      cartRemoveItem(id);
+      const index = parseInt(btn.getAttribute('data-cart-remove'));
+      cartRemoveByIndex(index);
     });
   });
 }
 
-function cartChangeQty(productId, delta) {
-  const item = State.cart.find(i => i.productId === productId);
+function cartChangeQtyByIndex(index, delta) {
+  const item = State.cart[index];
   if (!item) return;
   item.qty += delta;
   if (item.qty <= 0) {
-    State.cart = State.cart.filter(i => i.productId !== productId);
+    State.cart.splice(index, 1);
   }
   saveCart();
   updateCartBadge();
@@ -477,8 +498,8 @@ function cartChangeQty(productId, delta) {
   bindCartDrawerEvents();
 }
 
-function cartRemoveItem(productId) {
-  State.cart = State.cart.filter(i => i.productId !== productId);
+function cartRemoveByIndex(index) {
+  State.cart.splice(index, 1);
   saveCart();
   updateCartBadge();
   renderCartDrawer();
@@ -719,14 +740,47 @@ function bindPageEvents(path, match) {
     // Main add-to-cart on product detail
     document.getElementById('detail-add-btn')?.addEventListener('click', () => {
       const productId = document.getElementById('detail-add-btn').getAttribute('data-product-id');
-      for (let i = 0; i < qty; i++) addToCart(productId);
+      const variantId = document.querySelector('input[name="product-variant"]:checked')?.value || null;
+      addToCart(productId, qty, variantId);
     });
 
     document.getElementById('mobile-add-btn')?.addEventListener('click', () => {
       const productId = document.getElementById('mobile-add-btn').getAttribute('data-product-id');
-      for (let i = 0; i < qty; i++) addToCart(productId);
+      const variantId = document.querySelector('input[name="product-variant"]:checked')?.value || null;
+      addToCart(productId, qty, variantId);
     });
   }
+
+  // Variant selector price update
+  document.querySelectorAll('input[name="product-variant"]').forEach(input => {
+    input.addEventListener('change', () => {
+      const price = parseFloat(input.getAttribute('data-price'));
+      const weight = input.getAttribute('data-weight');
+      const priceEl = document.getElementById('display-price');
+      const mobileBtn = document.getElementById('mobile-add-btn');
+      
+      if (priceEl) {
+        priceEl.innerHTML = `${price.toFixed(2).replace('.', ',')} <span class="currency">BYN</span>
+                             <span class="display-weight" style="font-size:0.875rem;font-family:var(--font-body);font-weight:400;opacity:0.5;margin-left:0.25rem">
+                               · ${weight}
+                             </span>`;
+      }
+      if (mobileBtn) {
+        mobileBtn.innerHTML = `В корзину · ${price.toFixed(2).replace('.', ',')} BYN`;
+      }
+    });
+  });
+
+  // Gallery switching
+  document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+      const imgSrc = thumb.querySelector('img').src;
+      const mainImg = document.getElementById('main-prod-img');
+      if (mainImg) mainImg.src = imgSrc;
+    });
+  });
 
   // Collection filter chips
   document.querySelectorAll('.filter-chip').forEach(chip => {
@@ -1469,11 +1523,20 @@ async function renderProductPage(slug) {
 
       <!-- Image Gallery -->
       <div class="product-gallery">
-        <div class="product-gallery-main">
+        <div class="product-gallery-main" id="gallery-main">
           <img src="${imgPath(product.image)}"
                alt="${escapeHtml(product.name)}"
+               id="main-prod-img"
                onerror="this.src='/assets/images/hero_banner.png'" />
         </div>
+        ${product.images && product.images.length > 1 ? `
+        <div class="product-gallery-thumbs">
+          ${product.images.map((img, i) => `
+            <div class="gallery-thumb ${i === 0 ? 'active' : ''}" data-gallery-index="${i}">
+              <img src="${imgPath(img)}" alt="thumb ${i}" />
+            </div>
+          `).join('')}
+        </div>` : ''}
       </div>
 
       <!-- Product Info Panel -->
@@ -1488,12 +1551,29 @@ async function renderProductPage(slug) {
               : `<span class="badge" style="background:rgba(186,26,26,0.1);color:var(--color-error)">Нет в наличии</span>`}
           </div>
           <h1 class="product-name" style="margin:1rem 0 0.75rem">${escapeHtml(product.name)}</h1>
-          <div class="product-price">
+          <div class="product-price" id="display-price">
             ${product.price.toFixed(2).replace('.', ',')}
             <span class="currency">BYN</span>
-            ${product.weight ? `<span style="font-size:0.875rem;font-family:var(--font-body);font-weight:400;opacity:0.5;margin-left:0.25rem">· ${escapeHtml(product.weight)}</span>` : ''}
+            <span class="display-weight" style="font-size:0.875rem;font-family:var(--font-body);font-weight:400;opacity:0.5;margin-left:0.25rem">
+              ${product.weight ? `· ${escapeHtml(product.weight)}` : ''}
+            </span>
           </div>
         </div>
+
+        <!-- Variants (Size Selection) -->
+        ${product.variants ? `
+        <div class="product-info-block">
+          <p class="product-info-label">Выберите размер</p>
+          <div class="variant-selector">
+            ${product.variants.map((v, i) => `
+              <label class="variant-chip">
+                <input type="radio" name="product-variant" value="${v.id}" ${i === 0 ? 'checked' : ''} 
+                       data-price="${v.price}" data-weight="${escapeHtml(v.weight)}">
+                <span class="variant-chip-label">${escapeHtml(v.name)}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>` : ''}
 
         <!-- Description -->
         <p class="product-desc">${escapeHtml(product.description)}</p>
