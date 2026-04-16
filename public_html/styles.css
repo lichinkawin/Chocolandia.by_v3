@@ -1072,7 +1072,7 @@ input, select, textarea {
 .product-card-img-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform var(--transition-slow);
 }
 
@@ -1301,7 +1301,7 @@ input, select, textarea {
 .product-gallery-main img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform var(--transition-slow);
 }
 

@@ -1450,11 +1450,13 @@ async function renderCollectionPage(slug) {
       </div>
     </div>
 
-    <!-- Filter bar -->
     <div style="background:var(--color-surface);padding:1.5rem 0 0">
       <div class="filter-bar">
         <button class="filter-chip active" data-filter="all">Все</button>
-        ${[...new Set(allProducts.filter(p => p.badge).map(p => p.badge))].map(badge =>
+        ${[...new Set(allProducts.filter(p => p.badge).map(p => p.badge))]
+          .sort()
+          .slice(0, 8)
+          .map(badge =>
           `<button class="filter-chip" data-filter="${escapeHtml(badge)}">${escapeHtml(badge)}</button>`
         ).join('')}
       </div>
@@ -1578,23 +1580,7 @@ async function renderProductPage(slug) {
         <!-- Description -->
         <p class="product-desc">${escapeHtml(product.description)}</p>
 
-        <!-- Tasting Notes -->
-        ${product.tastingNotes?.length > 0 ? `
-        <div class="product-info-block">
-          <p class="product-info-label">Вкусовые нотки</p>
-          <ul class="tasting-notes">
-            ${product.tastingNotes.map(n => `<li>${escapeHtml(n)}</li>`).join('')}
-          </ul>
-        </div>` : ''}
 
-        <!-- Ingredients -->
-        ${product.ingredients ? `
-        <div class="product-info-block">
-          <p class="product-info-label">Состав</p>
-          <p style="font-size:0.8125rem;color:var(--color-on-surface-variant);font-style:italic;line-height:1.65">
-            ${escapeHtml(product.ingredients)}
-          </p>
-        </div>` : ''}
 
         <!-- Qty + Add to Cart (desktop) -->
         <div class="product-info-block">
