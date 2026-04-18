@@ -291,49 +291,49 @@ input, select, textarea {
 
 .nav-logo:hover { opacity: 0.75; }
 
+/* Desktop Navigation Links */
 .nav-links {
   display: none;
   list-style: none;
-  gap: 2.5rem;
-  align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
-@media (min-width: 1024px) {
-  .nav-links { display: flex; }
+@media (min-width: 1025px) {
+  #nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .nav-links li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    font-family: var(--font-label); /* Using Manrope for cleaner nav links */
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    opacity: 0.65;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: opacity var(--transition-base), border-color var(--transition-base);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 4px;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    opacity: 1;
+    border-bottom: 1px solid var(--color-primary);
+  }
 }
 
-.nav-links a {
-  font-family: var(--font-headline);
-  font-size: 1rem;
-  color: var(--color-primary);
-  opacity: 0.8;
-  letter-spacing: -0.01em;
-  transition: color var(--transition-base), opacity var(--transition-base);
-  position: relative;
-  padding-bottom: 2px;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--color-secondary);
-  transition: width var(--transition-base);
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--color-secondary);
-  opacity: 1;
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-  width: 100%;
-}
 
 .nav-actions {
   display: flex;
