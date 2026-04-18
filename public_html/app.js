@@ -2037,13 +2037,13 @@ const TEASER_ASSETS = {
 let constructorState = {
   size: 9,
   flavors: [
-    { id: 'hazelnut', name: 'Фундучный', desc: 'на молочном итальянском шоколаде в посыпке дробленного фундука.', img: '/assets/images/truffle/IMG_9790.PNG', count: 0 },
-    { id: 'coconut', name: 'Кокосовый', desc: 'на белом бельгийском шоколаде в посыпке кокосовой стружки.', img: '/assets/images/truffle/IMG_9791.PNG', count: 0 },
-    { id: 'pistachio', name: 'Фисташковый', desc: 'на белом бельгийском шоколаде в посыпке фисташковой муки.', img: '/assets/images/truffle/IMG_9794.PNG', count: 0 },
-    { id: 'coffee', name: 'Кофейный', desc: 'на молочном итальянском шоколаде в посыпке вафельной крошке.', img: '/assets/images/truffle/IMG_9734.PNG', count: 0 },
-    { id: 'currant', name: 'Смородина', desc: 'на белом бельгийском шоколаде в посыпке из сублимированной малины.', img: '/assets/images/truffle/IMG_9735.PNG', count: 0 },
-    { id: 'classic', name: 'Классический', desc: 'на темном итальянском шоколаде в кондитерской посыпке.', img: '/assets/images/truffle/IMG_9732.PNG', count: 0 },
-    { id: 'mojito', name: 'Мохито', desc: 'на белом бельгийском шоколаде в качестве посыпки какао.', img: '/assets/images/truffle/IMG_9736.PNG', count: 0 }
+    { id: 'hazelnut', name: 'Фундучный', desc: 'на молочном итальянском шоколаде в посыпке дробленного фундука.', img: '/assets/images/truffle/IMG_9790.jpg', count: 0 },
+    { id: 'coconut', name: 'Кокосовый', desc: 'на белом бельгийском шоколаде в посыпке кокосовой стружки.', img: '/assets/images/truffle/IMG_9791.jpg', count: 0 },
+    { id: 'pistachio', name: 'Фисташковый', desc: 'на белом бельгийском шоколаде в посыпке фисташковой муки.', img: '/assets/images/truffle/IMG_9794.jpg', count: 0 },
+    { id: 'coffee', name: 'Кофейный', desc: 'на молочном итальянском шоколаде в посыпке вафельной крошке.', img: '/assets/images/truffle/IMG_9734.jpg', count: 0 },
+    { id: 'currant', name: 'Смородина', desc: 'на белом бельгийском шоколаде в посыпке из сублимированной малины.', img: '/assets/images/truffle/IMG_9735.jpg', count: 0 },
+    { id: 'classic', name: 'Классический', desc: 'на темном итальянском шоколаде в кондитерской посыпке.', img: '/assets/images/truffle/IMG_9732.jpg', count: 0 },
+    { id: 'mojito', name: 'Мохито', desc: 'на белом бельгийском шоколаде в качестве посыпки какао.', img: '/assets/images/truffle/IMG_9736.jpg', count: 0 }
   ]
 };
 
