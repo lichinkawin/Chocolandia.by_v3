@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#241a00",
+                        "surface-container-high": "#efe7d9",
+                        "surface-tint": "#745853",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f8f0e1",
+                        "tertiary-fixed-dim": "#e4beb2",
+                        "secondary-fixed": "#ffe088",
+                        "primary-fixed": "#ffdad4",
+                        "on-surface": "#1e1b13",
+                        "on-primary-container": "#ae8d87",
+                        "on-secondary-fixed-variant": "#574500",
+                        "on-tertiary-fixed-variant": "#5b4137",
+                        "surface-bright": "#fff8ef",
+                        "on-primary-fixed": "#2b1613",
+                        "tertiary-fixed": "#ffdbce",
+                        "tertiary-container": "#3e271e",
+                        "on-primary-fixed-variant": "#5b403c",
+                        "inverse-primary": "#e3beb8",
+                        "secondary": "#735c00",
+                        "surface-container-low": "#fbf3e4",
+                        "surface-container": "#f5edde",
+                        "primary-container": "#3e2723",
+                        "on-secondary-container": "#745c00",
+                        "primary-fixed-dim": "#e3beb8",
+                        "tertiary": "#27130b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#fff8ef",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e9e2d3",
+                        "surface-variant": "#e9e2d3",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#d3c3c0",
+                        "on-surface-variant": "#504442",
+                        "secondary-fixed-dim": "#e9c349",
+                        "inverse-surface": "#343026",
+                        "on-tertiary-fixed": "#2b160f",
+                        "error-container": "#ffdad6",
+                        "background": "#fff8ef",
+                        "surface-dim": "#e1d9cb",
+                        "primary": "#271310",
+                        "outline": "#827472",
+                        "on-background": "#1e1b13",
+                        "on-tertiary-container": "#ae8d81",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#fed65b",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrolling-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        .scrolling-wrapper {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- Top Navigation Shell -->
+<nav class="bg-[#fff8ef]/80 backdrop-blur-xl fixed top-0 w-full z-[100] shadow-[0_10px_40px_rgba(39,19,16,0.05)]">
+<div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+<span class="text-2xl font-headline italic text-primary">The Atelier</span>
+<div class="hidden md:flex items-center space-x-12">
+<a class="text-on-surface-variant font-label text-sm uppercase tracking-widest hover:text-secondary transition-colors duration-300" href="#">Collections</a>
+<a class="text-secondary font-label text-sm uppercase tracking-widest font-bold" href="#">Constructor</a>
+<a class="text-on-surface-variant font-label text-sm uppercase tracking-widest hover:text-secondary transition-colors duration-300" href="#">Boutique</a>
+</div>
+<div class="flex items-center space-x-6">
+<button class="material-symbols-outlined text-primary hover:scale-95 duration-200">shopping_bag</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-32 pb-40 max-w-7xl mx-auto px-6">
+<!-- Header Section -->
+<header class="mb-20 text-center md:text-left">
+<h1 class="font-headline text-5xl md:text-6xl text-primary leading-tight mb-4 italic">The Constructor</h1>
+<p class="font-body text-on-surface-variant max-w-xl text-lg">Curate your personal collection of artisanal truffles. Select a box size, choose your palette of flavors, and watch your creation come to life.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+<!-- Left Column: Selection Flow -->
+<div class="lg:col-span-7 space-y-20">
+<!-- Step 1: Box Size Selection -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<span class="w-8 h-8 rounded-full bg-primary-container text-surface flex items-center justify-center font-bold text-sm">1</span>
+<h2 class="font-headline text-2xl text-primary tracking-wide">Select Box Size</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+<!-- Size Card 5 -->
+<button class="group p-6 bg-surface-container-low border-2 border-transparent hover:border-secondary transition-all text-center rounded-lg">
+<span class="block font-headline text-3xl text-primary mb-2">5</span>
+<span class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Pieces</span>
+<span class="block font-bold text-secondary">25 BYN</span>
+</button>
+<!-- Size Card 9 (Selected State) -->
+<button class="group p-6 bg-surface-container-lowest border-2 border-secondary shadow-lg text-center rounded-lg">
+<span class="block font-headline text-3xl text-primary mb-2">9</span>
+<span class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Pieces</span>
+<span class="block font-bold text-secondary">36 BYN</span>
+</button>
+<!-- Size Card 12 -->
+<button class="group p-6 bg-surface-container-low border-2 border-transparent hover:border-secondary transition-all text-center rounded-lg">
+<span class="block font-headline text-3xl text-primary mb-2">12</span>
+<span class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Pieces</span>
+<span class="block font-bold text-secondary">48 BYN</span>
+</button>
+<!-- Size Card 16 -->
+<button class="group p-6 bg-surface-container-low border-2 border-transparent hover:border-secondary transition-all text-center rounded-lg">
+<span class="block font-headline text-3xl text-primary mb-2">16</span>
+<span class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Pieces</span>
+<span class="block font-bold text-secondary">64 BYN</span>
+</button>
+<!-- Size Card 25 -->
+<button class="group p-6 bg-surface-container-low border-2 border-transparent hover:border-secondary transition-all text-center rounded-lg">
+<span class="block font-headline text-3xl text-primary mb-2">25</span>
+<span class="block font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Pieces</span>
+<span class="block font-bold text-secondary">100 BYN</span>
+</button>
+</div>
+</section>
+<!-- Step 2: Flavor Palette -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<span class="w-8 h-8 rounded-full bg-primary-container text-surface flex items-center justify-center font-bold text-sm">2</span>
+<h2 class="font-headline text-2xl text-primary tracking-wide">Flavor Palette</h2>
+</div>
+<div class="space-y-6">
+<!-- Flavor Item: Classic Dark -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<img class="w-24 h-24 object-cover rounded-md bg-surface-container-high" data-alt="close-up of a perfectly round dark chocolate truffle with a fine cocoa dusting on a warm beige background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYI-OoEj2vtPwOLRZ7UDUe_qWu6e4-AZ5s6cZRo-12kzWCKMz3fvldMBF-rkoYXrqtZl72HOuXbSJYx4SRaWCUjz0SddTaKGwJEg_Lim2Lhk2OugldOdgqkm3pBXyjBndVg4tCt-cYAwLjEt2BZvft-IfSlWD88jQuiB8-GvbLhuyJNlMWvOevn3gi9H-JLM2-M2l2CyZXngFNXZdBp7s7ttUkzKvcggU4vpvfH1lCq03UlCULDq1O3dz9G0xK0GLdD0JM8NlFmw"/>
+<div class="flex-grow">
+<h3 class="font-headline text-lg text-primary">Classic Dark</h3>
+<p class="text-sm text-on-surface-variant font-body">70% Cacao single-origin Venezuelan dark chocolate.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container p-2 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-bold w-4 text-center">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Flavor Item: Sea Salt Caramel -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-xl shadow-sm">
+<img class="w-24 h-24 object-cover rounded-md bg-surface-container-high" data-alt="exquisite caramel truffle with a gold leaf fleck and delicate salt crystals visible on a smooth chocolate shell" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHDtzyxGBWbsYScKBcIfz_ZmGXhyMalMCTDaPx_wMuxKr5y0ZmyemWhfI9KRt8wFtF8uTazIGxTyCRH5BsSmTPs44b19u5tM1ixbL4XUX1Bx7kMccjlTB773qtYMItTq4PieQw73WiiWUfFNjiPjoegwWe_8XlzqjIZdi5nm7W7kuY-hKPokSNMIbGG8XRlx7-Pc_kifxUGQitC0Yavnn32pHuGiN0vHr-xiLvePldwdzmkn4A5jMPoGJr7LSaiPyhvBBNZGYxOA"/>
+<div class="flex-grow">
+<h3 class="font-headline text-lg text-primary">Sea Salt Caramel</h3>
+<p class="text-sm text-on-surface-variant font-body">Hand-burnt butter caramel with fleur de sel.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container p-2 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-bold w-4 text-center">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Flavor Item: Pistachio -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-xl shadow-sm">
+<img class="w-24 h-24 object-cover rounded-md bg-surface-container-high" data-alt="vibrant pistachio truffle with a white chocolate shell and crushed green nuts on top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5ItQRyZcLI_BsKA1mvrrZH1oaikEURuQuYQs4XfhwE0zd4ujGvV-AqFhjttqEPjF7ZI2xgWIAXzDm41raB8bzuuSjlLXMC8lD2LKRzLrhgyNlNa1osg0p3y80rJm8RhWBUuKdYLfGY6CfD1Y8OnJy0elmYvTRyjExTAzGrJoaLDQnYgFpKPDmwk-tsQrj5Y9e7CGFH88YaPrLg_a9UWUsfQLoc4Ycr0KQgF87DbEIRHyjAAqbwo4qsprI13NZRImVR2MtyCyEEA"/>
+<div class="flex-grow">
+<h3 class="font-headline text-lg text-primary">Pistachio</h3>
+<p class="text-sm text-on-surface-variant font-body">Roasted Sicilian pistachio ganache in white chocolate.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container p-2 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-bold w-4 text-center">0</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Flavor Item: Raspberry -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-xl shadow-sm">
+<img class="w-24 h-24 object-cover rounded-md bg-surface-container-high" data-alt="bright red raspberry truffle with a light chocolate drizzle on a soft cream background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSlCxc7JfCaIzUInCgDEMJSz1e6P4j_RdL9wy9BXPE0HvvGkho_EqGH6NaeFt2qANfNO1n1e_CxyKCzzzI23kiHxOXbfT4Jb11rR6NYqMXGFQkW3o2eTG_Pa0mbBaRD35Itc8_yNtXUmvSeI1qgwsB0bFI20372wRhYBtFOQxev9ySq3ssAVGRCjGBQ-1OQiljLgal_Z6MLUhCigPxMB9xYpjWblY57U4AAJW8JOrXIJ-9QYvM1ZVlJAFYAm8vBScxUvuAeuLoLQ"/>
+<div class="flex-grow">
+<h3 class="font-headline text-lg text-primary">Raspberry</h3>
+<p class="text-sm text-on-surface-variant font-body">Fresh forest raspberry purée infused in dark cacao.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container p-2 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-bold w-4 text-center">0</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Flavor Item: Champagne -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-xl shadow-sm">
+<img class="w-24 h-24 object-cover rounded-md bg-surface-container-high" data-alt="sparkling white chocolate truffle dusted with edible pearl dust to represent champagne" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeaGnMvBPSo7XeR1lHrPbREaxK8ag1R4rXsriLqCwljYYbPNJxdbxIuCYvSB7KdzthvNenX6bTSCJ0eun5K9f-WYMGdc-W5c2Y3DNGagVOeh9gZsoRGiOXBincDWHH9J-2mzgWFqwSaGLAM1YVvItrkdtLvgRBVCk4XxtvDX7YS0VYTZHfD5mkMqStXAUUyN4LuqHZI5Hrxg49nE1Kf_Pe2E8C-IIG-ccM8--E-mubRIFxgdGGNIdWrNaG3f0IADmvmRzuKUC_Vw"/>
+<div class="flex-grow">
+<h3 class="font-headline text-lg text-primary">Champagne</h3>
+<p class="text-sm text-on-surface-variant font-body">Vintage Brut reduction blended with silky cream.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container p-2 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-bold w-4 text-center">0</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Flavor Item: Hazelnut Praline -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-xl shadow-sm">
+<img class="w-24 h-24 object-cover rounded-md bg-surface-container-high" data-alt="hazelnut praline truffle with a whole roasted nut on top and textured chocolate surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3c8EUCOu_bB8HCh65JanViNvg0ZKPLKGKI-zHtgYpYjTx9OqOaJHYggiwmoJHMVBBCsxkwxO2raODMMGOD7YNKuUDr9nprjLAuF3Yf21GzSH2wY135yo2xxJrfv9x6aqiR1vM-9dMuob-1__rIRPId3dM4DyiWMcv6vmeqktw_vim7Oo3l0pbwJ_dtCZDfqtPG5mx5QIOjkgRqakVeQS_IyKK25NUKawsYHQsznMgAinVkZLPp5xYtkaOfvYI2GxxFT2-rrzWOg"/>
+<div class="flex-grow">
+<h3 class="font-headline text-lg text-primary">Hazelnut Praline</h3>
+<p class="text-sm text-on-surface-variant font-body">Caramelized Piedmont hazelnuts with milk chocolate.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container p-2 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-bold w-4 text-center">0</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Flavor Item: Passion Fruit -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-xl shadow-sm">
+<img class="w-24 h-24 object-cover rounded-md bg-surface-container-high" data-alt="tropical passion fruit truffle with a vibrant yellow pattern on a dark chocolate shell" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb9nOd_o8BOF7qoWFkFoVrEgvaVCOi3UGcA0dAsi7_GQoBW5wQOvCPduvTtpP1ogEHC5PLF8aG9E4re7tWF-p8fvr-OHYoOOeboqcgVDhFHzmHb0AK2J_ET2smiV0NZ5950oRIIbum_NwUdsXjXZ0U3hxhk61sNNqsDLLXdy2ZKROsAVfy1fyoByh9MPCVXOh1F6W92pdefRc7_C6mQBw4874-gH3tP1GJsEub1UbUzlNwSFoftVukEaf01TRHdRsbImqNj9krOA"/>
+<div class="flex-grow">
+<h3 class="font-headline text-lg text-primary">Passion Fruit</h3>
+<p class="text-sm text-on-surface-variant font-body">Exotic tangy passion fruit reduction in white chocolate.</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container p-2 rounded-full">
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-bold w-4 text-center">0</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary-container hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Live Preview (Sticky) -->
+<div class="lg:col-span-5 sticky top-32">
+<div class="bg-surface-container-low p-12 rounded-3xl aspect-square flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,#735c00_0%,transparent_70%)]"></div>
+<h3 class="font-headline text-xl text-primary mb-12 italic relative z-10">Your Atelier Selection</h3>
+<!-- 3x3 Grid Box Preview (for 9 pieces) -->
+<div class="grid grid-cols-3 gap-6 relative z-10">
+<!-- Slot 1: Classic Dark -->
+<div class="w-24 h-24 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/20 shadow-inner group">
+<img class="w-full h-full object-cover" data-alt="top view of a single classic dark truffle nestled in a luxury box slot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr80iFxsT_FUwfXMJDirTZ-eGCmdgcQX0aqL6D2Qr577WIJLk_XtC11G2vb2O_kbOoz6dW5o_j7r2r6A5h8Cw_06G1mKNf0tyofx8gVYWIuqSuQlI5nJrIfouWpXotVc9ItqxJHk19TPomy13nn06p32wt48fw_yLOVRt8gj7CUQRaHSjh7ZSnInk6iBFxAwZYB4J1bSuwsOgLFbLLe2aiD396X5VYKOLUI9xULgPg5m1KGMTI-dVwax1VsqYurO-uHSh9IO1vyA"/>
+</div>
+<!-- Slot 2: Sea Salt Caramel -->
+<div class="w-24 h-24 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant/20 shadow-inner">
+<img class="w-full h-full object-cover" data-alt="top view of a salted caramel truffle with delicate gold leaf in a luxury box slot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCSmvFF2IsAnj5UMN0d_mlzJfAj7v_4Hj7TL7GJJY9mZFFf-lE2uWUTl6MF4nDXLqnXvEBldG6DUoLL7Rjlv49MCj1sRQJXOVS2h02-sZVNxrcfUCmVY0a6axP8OxZEQFaXT8KvOsvhkdfGdZ0ZUOZwW02bFzMYmgV1LQNUNn11rTDlDdlQVJv1t8mGXTvSMd-u6b5-IDBiHhnDFdaihIPbMLZJCHhiQhNtFFpxqWLpUyaMFY713o92xFIdv3HPs0w3rXeluYmCA"/>
+</div>
+<!-- Slot 3: Empty -->
+<div class="w-24 h-24 rounded-full bg-surface-container/50 flex items-center justify-center border-2 border-dashed border-outline-variant/30 text-outline-variant">
+<span class="material-symbols-outlined font-thin">add</span>
+</div>
+<!-- Slot 4: Empty -->
+<div class="w-24 h-24 rounded-full bg-surface-container/50 flex items-center justify-center border-2 border-dashed border-outline-variant/30 text-outline-variant">
+<span class="material-symbols-outlined font-thin">add</span>
+</div>
+<!-- Slot 5: Empty -->
+<div class="w-24 h-24 rounded-full bg-surface-container/50 flex items-center justify-center border-2 border-dashed border-outline-variant/30 text-outline-variant">
+<span class="material-symbols-outlined font-thin">add</span>
+</div>
+<!-- Slot 6: Empty -->
+<div class="w-24 h-24 rounded-full bg-surface-container/50 flex items-center justify-center border-2 border-dashed border-outline-variant/30 text-outline-variant">
+<span class="material-symbols-outlined font-thin">add</span>
+</div>
+<!-- Slot 7: Empty -->
+<div class="w-24 h-24 rounded-full bg-surface-container/50 flex items-center justify-center border-2 border-dashed border-outline-variant/30 text-outline-variant">
+<span class="material-symbols-outlined font-thin">add</span>
+</div>
+<!-- Slot 8: Empty -->
+<div class="w-24 h-24 rounded-full bg-surface-container/50 flex items-center justify-center border-2 border-dashed border-outline-variant/30 text-outline-variant">
+<span class="material-symbols-outlined font-thin">add</span>
+</div>
+<!-- Slot 9: Empty -->
+<div class="w-24 h-24 rounded-full bg-surface-container/50 flex items-center justify-center border-2 border-dashed border-outline-variant/30 text-outline-variant">
+<span class="material-symbols-outlined font-thin">add</span>
+</div>
+</div>
+<div class="mt-12 text-center relative z-10">
+<p class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant">Selected Configuration</p>
+<p class="font-headline text-lg text-primary mt-2">The Connoisseur’s Selection (9 Pieces)</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Footer Summary -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest z-[90] shadow-[0_-10px_40px_rgba(39,19,16,0.08)]">
+<div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="w-full md:w-auto flex flex-col gap-2">
+<div class="flex justify-between md:justify-start items-center gap-4">
+<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold">Curation Progress</span>
+<span class="text-secondary font-bold">2 / 9 SELECTED</span>
+</div>
+<div class="w-full md:w-64 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-secondary h-full transition-all duration-500 ease-out" style="width: 22%"></div>
+</div>
+</div>
+<div class="flex items-center gap-12 w-full md:w-auto justify-between">
+<div class="text-right">
+<span class="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Subtotal</span>
+<span class="font-headline text-2xl text-primary">36.00 BYN</span>
+</div>
+<!-- Disabled State for ADD TO CART -->
+<button class="bg-primary-container/20 text-on-primary-container/40 cursor-not-allowed px-12 py-4 rounded-md font-label font-bold text-sm uppercase tracking-widest transition-all">
+                    Add To Cart
+                </button>
+</div>
+</div>
+</footer>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-[100] bg-surface flex justify-around items-center px-4 pb-safe h-20 shadow-[0_-10px_40px_rgba(39,19,16,0.08)]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant/40 pt-2">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold">Collections</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary border-t-2 border-secondary pt-2">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold">Constructor</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/40 pt-2">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold">Boutique</span>
+</div>
+</nav>
+</body></html>

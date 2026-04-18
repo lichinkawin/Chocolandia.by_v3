@@ -60,8 +60,21 @@ function escapeHtml(str) {
 function getCartTotal() {
   if (!State.data) return 0;
   return State.cart.reduce((sum, item) => {
-    const product = State.data.products.find(p => p.id === item.productId);
-    return sum + (product ? product.price * item.qty : 0);
+    let price = 0;
+    if (item.customData) {
+      price = item.customData.price;
+    } else {
+      const product = State.data.products.find(p => p.id === item.productId);
+      if (product) {
+        if (item.variantId && product.variants) {
+          const variant = product.variants.find(v => v.id === item.variantId);
+          price = variant ? variant.price : product.price;
+        } else {
+          price = product.price;
+        }
+      }
+    }
+    return sum + (price * item.qty);
   }, 0);
 }
 
@@ -200,18 +213,30 @@ function renderCartDrawer() {
   } else {
     // Items list
     body.innerHTML = State.cart.map((item, index) => {
-      const product = State.data?.products.find(p => p.id === item.productId);
-      if (!product) return '';
-      
-      let variant = null;
-      if (item.variantId && product.variants) {
-        variant = product.variants.find(v => v.id === item.variantId);
+      let name, price, weight, imgSrc, slug;
+
+      if (item.customData) {
+        name   = item.customData.name;
+        price  = item.customData.price;
+        weight = item.customData.weight;
+        imgSrc = item.customData.image;
+        slug   = 'constructor'; 
+      } else {
+        const product = State.data?.products.find(p => p.id === item.productId);
+        if (!product) return '';
+        
+        let variant = null;
+        if (item.variantId && product.variants) {
+          variant = product.variants.find(v => v.id === item.variantId);
+        }
+        
+        price = variant ? variant.price : product.price;
+        weight = variant ? variant.weight : product.weight;
+        name = product.name + (variant ? ` (${variant.name})` : '');
+        imgSrc = imgPath(product.image);
+        slug = product.slug;
       }
       
-      const price = variant ? variant.price : product.price;
-      const weight = variant ? variant.weight : product.weight;
-      const name = product.name + (variant ? ` (${variant.name})` : '');
-      const imgSrc = imgPath(product.image);
       const lineTotal = (price * item.qty).toFixed(2).replace('.', ',');
       
       return `
@@ -223,8 +248,8 @@ function renderCartDrawer() {
         </div>
         <div class="cart-item-info">
           <span class="cart-item-name"
-                data-route="/product/${escapeHtml(product.slug)}"
-                onclick="closeCartDrawer();navigate('/product/${escapeHtml(product.slug)}')">
+                data-route="/product/${escapeHtml(slug)}"
+                onclick="closeCartDrawer();navigate('/product/${escapeHtml(slug)}')">
             ${escapeHtml(name)}
           </span>
           ${weight ? `<span class="cart-item-weight">${escapeHtml(weight)}</span>` : ''}
@@ -511,17 +536,18 @@ function cartRemoveByIndex(index) {
    ROUTER
    ============================================================ */
 const routes = [
-  { pattern: /^\/$/, handler: renderHome },
-  { pattern: /^\/collections$/, handler: renderCollections },
-  { pattern: /^\/collections\/([^/]+)$/, handler: (m) => renderCollectionPage(m[1]) },
-  { pattern: /^\/product\/([^/]+)$/, handler: (m) => renderProductPage(m[1]) },
-  { pattern: /^\/privacy$/, handler: renderPrivacy },
-  { pattern: /^\/b2b$/, handler: renderB2B },
+  { pattern: /^\/?$/, handler: renderHome },
+  { pattern: /^\/constructor\/?$/, handler: renderConstructor },
+  { pattern: /^\/collections\/?$/, handler: renderCollections },
+  { pattern: /^\/collections\/([^/]+)\/?$/, handler: (m) => renderCollectionPage(m[1]) },
+  { pattern: /^\/product\/([^/]+)\/?$/, handler: (m) => renderProductPage(m[1]) },
+  { pattern: /^\/privacy\/?$/, handler: renderPrivacy },
+  { pattern: /^\/b2b\/?$/, handler: renderB2B },
 ];
 
 async function renderPrivacy() {
   return `
-<div class="page-transition-enter">
+<div>
   <div class="page-wrapper">
     <div class="container" style="padding-top:4rem; padding-bottom:6rem; max-width:800px">
       <h1 class="text-headline-md" style="margin-bottom:2rem">Политика конфиденциальности</h1>
@@ -536,7 +562,7 @@ async function renderPrivacy() {
 </div>`;
 }
 
-async function navigate(fullPath, pushState = true) {
+async function navigate(fullPath, pushState = true, force = false, noScroll = false) {
   // Извлекаем хэш (#...) из пути
   const hashIndex = fullPath.indexOf('#');
   let path = fullPath;
@@ -551,7 +577,7 @@ async function navigate(fullPath, pushState = true) {
   }
   
   // Если мы уже находимся на этой странице, просто скроллим до нужного элемента
-  if (State.currentPath === path && document.getElementById('app').innerHTML.trim() !== '') {
+  if (!force && State.currentPath === path && document.getElementById('app').innerHTML.trim() !== '') {
     updateNavActive(fullPath);
     updateBottomNavActive(path);
     closeSidebar();
@@ -572,10 +598,8 @@ async function navigate(fullPath, pushState = true) {
   if (!app) return;
 
   // Show loading state
-  app.innerHTML = `<div style="min-height:60vh;display:flex;align-items:center;justify-content:center;">
-    <div class="skeleton" style="width:200px;height:24px;border-radius:4px;"></div>
-  </div>`;
-
+  // Removed skeleton loader that caused flickering
+  // We now keep the current page visible until the new one is ready
   await loadData();
 
   // Match route
@@ -585,7 +609,7 @@ async function navigate(fullPath, pushState = true) {
     if (m) {
       const html = await route.handler(m);
       app.innerHTML = html;
-      app.firstElementChild?.classList.add('page-transition-enter');
+      if (!force) app.firstElementChild?.classList.add('page-transition-enter');
       bindPageEvents(path, m);
       matched = true;
       break;
@@ -594,16 +618,18 @@ async function navigate(fullPath, pushState = true) {
 
   if (!matched) {
     app.innerHTML = renderNotFound();
-    app.firstElementChild?.classList.add('page-transition-enter');
+    if (!force) app.firstElementChild?.classList.add('page-transition-enter');
   }
 
-  if (hash) {
-    setTimeout(() => {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  } else {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+  if (!noScroll) {
+    if (hash) {
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
   }
 
   // Close mobile sidebar if open
@@ -711,6 +737,14 @@ function handleInitialHash() {
    BIND PAGE EVENTS (called after each render)
    ============================================================ */
 function bindPageEvents(path, match) {
+  if (path === '/') {
+    initHeroSlider();
+  } else if (path === '/constructor' || (match && match[1] === 'truffles') || (match && State.data?.products?.find(p => p.slug === match[1])?.isConstructor)) {
+    bindConstructorEvents();
+  } else if (path === '/collections') {
+    // Fall through to general add-to-cart binding
+  }
+
   // Add-to-cart buttons
   document.querySelectorAll('[data-add-to-cart]').forEach(btn => {
     btn.addEventListener('click', e => {
@@ -986,7 +1020,7 @@ async function renderHome() {
   const faqJsonLd = `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
 
   return `
-<div class="page-transition-enter">
+<div>
 
   <!-- ── HERO SLIDER ── -->
   <section class="hero-slider" id="hero-slider">
@@ -1063,6 +1097,10 @@ async function renderHome() {
 
     <div class="hero-overlay-bottom"></div>
   </section>
+
+  ${renderTeaser()}
+
+  <!-- Removed 'Why choose us' section -->
 
   <!-- ── BENTO GRID ── -->
   <section class="section-pad bg-surface" id="collections-section">
@@ -1384,7 +1422,7 @@ async function renderCollections() {
   const collections = data?.collections.sort((a, b) => a.sortOrder - b.sortOrder) || [];
 
   return `
-<div class="page-transition-enter">
+<div>
   <div class="page-wrapper">
 
     <!-- Header strip -->
@@ -1417,6 +1455,9 @@ async function renderCollections() {
    PAGE: COLLECTION PRODUCT GRID
    ============================================================ */
 async function renderCollectionPage(slug) {
+  if (slug === 'truffles') {
+    return renderConstructor();
+  }
   const data = State.data;
   const collection = data?.collections.find(c => c.slug === slug);
   const allProducts = data?.products.filter(p => p.collectionId === slug) || [];
@@ -1424,7 +1465,7 @@ async function renderCollectionPage(slug) {
   if (!collection) return renderNotFound();
 
   return `
-<div class="page-transition-enter">
+<div>
   <div class="page-wrapper">
 
     <!-- Collection Hero -->
@@ -1496,6 +1537,11 @@ async function renderProductPage(slug) {
   const product = data?.products.find(p => p.slug === slug);
 
   if (!product) return renderNotFound();
+  
+  // If it's a constructor product, render the constructor instead
+  if (product.isConstructor) {
+    return renderConstructor();
+  }
 
   const collection = data?.collections.find(c => c.id === product.collectionId);
   const related = data?.products
@@ -1503,7 +1549,7 @@ async function renderProductPage(slug) {
     .slice(0, 4) || [];
 
   return `
-<div class="page-transition-enter">
+<div>
   <div class="page-wrapper">
 
     <!-- Breadcrumbs -->
@@ -1759,7 +1805,7 @@ function initHeroSlider() {
    ============================================================ */
 function renderNotFound() {
   return `
-<div class="page-transition-enter">
+<div>
   <div class="page-wrapper">
     <div class="not-found">
       <h2>404</h2>
@@ -1778,7 +1824,7 @@ function renderNotFound() {
    ============================================================ */
 async function renderB2B() {
   return `
-  <div class="page-transition-enter">
+  <div>
     <!-- Hero B2B -->
     <section class="b2b-hero">
       <div class="b2b-hero-bg">
@@ -1973,4 +2019,240 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
   init();
+}
+
+/* ============================================================
+   CONSTRUCTOR STATE & LOGIC
+   ============================================================ */
+let constructorState = {
+  size: 9,
+  flavors: [
+    { id: 'dark', name: 'Классический темный', desc: '70% бельгийский шоколад', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYI-OoEj2vtPwOLRZ7UDUe_qWu6e4-AZ5s6cZRo-12kzWCKMz3fvldMBF-rkoYXrqtZl72HOuXbSJYx4SRaWCUjz0SddTaKGwJEg_Lim2Lhk2OugldOdgqkm3pBXyjBndVg4tCt-cYAwLjEt2BZvft-IfSlWD88jQuiB8-GvbLhuyJNlMWvOevn3gi9H-JLM2-M2l2CyZXngFNXZdBp7s7ttUkzKvcggU4vpvfH1lCq03UlCULDq1O3dz9G0xK0GLdD0JM8NlFmw', count: 0 },
+    { id: 'caramel', name: 'Соленая карамель', desc: 'Сливочная карамель с морской солью', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHDtzyxGBWbsYScKBcIfz_ZmGXhyMalMCTDaPx_wMuxKr5y0ZmyemWhfI9KRt8wFtF8uTazIGxTyCRH5BsSmTPs44b19u5tM1ixbL4XUX1Bx7kMccjlTB773qtYMItTq4PieQw73WiiWUfFNjiPjoegwWe_8XlzqjIZdi5nm7W7kuY-hKPokSNMIbGG8XRlx7-Pc_kifxUGQitC0Yavnn32pHuGiN0vHr-xiLvePldwdzmkn4A5jMPoGJr7LSaiPyhvBBNZGYxOA', count: 0 },
+    { id: 'pistachio', name: 'Фисташка', desc: 'Сицилийская фисташка в белом шоколаде', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5ItQRyZcLI_BsKA1mvrrZH1oaikEURuQuYQs4XfhwE0zd4ujGvV-AqFhjttqEPjF7ZI2xgWIAXzDm41raB8bzuuSjlLXMC8lD2LKRzLrhgyNlNa1osg0p3y80rJm8RhWBUuKdYLfGY6CfD1Y8OnJy0elmYvTRyjExTAzGrJoaLDQnYgFpKPDmwk-tsQrj5Y9e7CGFH88YaPrLg_a9UWUsfQLoc4Ycr0KQgF87DbEIRHyjAAqbwo4qsprI13NZRImVR2MtyCyEEA', count: 0 },
+    { id: 'raspberry', name: 'Малина', desc: 'Освежающий малиновый ганаш', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlCxc7JfCaIzUInCgDEMJSz1e6P4j_RdL9wy9BXPE0HvvGkho_EqGH6NaeFt2qANfNO1n1e_CxyKCzzzI23kiHxOXbfT4Jb11rR6NYqMXGFQkW3o2eTG_Pa0mbBaRD35Itc8_yNtXUmvSeI1qgwsB0bFI20372wRhYBtFOQxev9ySq3ssAVGRCjGBQ-1OQiljLgal_Z6MLUhCigPxMB9xYpjWblY57U4AAJW8JOrXIJ-9QYvM1ZVlJAFYAm8vBScxUvuAeuLoLQ', count: 0 },
+    { id: 'champagne', name: 'Шампанское', desc: 'Изысканный вкус праздника', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAeaGnMvBPSo7XeR1lHrPbREaxK8ag1R4rXsriLqCwljYYbPNJxdbxIuCYvSB7KdzthvNenX6bTSCJ0eun5K9f-WYMGdc-W5c2Y3DNGagVOeh9gZsoRGiOXBincDWHH9J-2mzgWFqwSaGLAM1YVvItrkdtLvgRBVCk4XxtvDX7YS0VYTZHfD5mkMqStXAUUyN4LuqHZI5Hrxg49nE1Kf_Pe2E8C-IIG-ccM8--E-mubRIFxgdGGNIdWrNaG3f0IADmvmRzuKUC_Vw', count: 0 },
+    { id: 'hazelnut', name: 'Фундук', desc: 'Цельный фундук и пралине', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD3c8EUCOu_bB8HCh65JanViNvg0ZKPLKGKI-zHtgYpYjTx9OqOaJHYggiwmoJHMVBBCsxkwxO2raODMMGOD7YNKuUDr9nprjLAuF3Yf21GzSH2wY135yo2xxJrfv9x6aqiR1vM-9dMuob-1__rIRPId3dM4DyiWMcv6vmeqktw_vim7Oo3l0pbwJ_dtCZDfqtPG5mx5QIOjkgRqakVeQS_IyKK25NUKawsYHQsznMgAinVkZLPp5xYtkaOfvYI2GxxFT2-rrzWOg', count: 0 },
+    { id: 'passion', name: 'Маракуйя', desc: 'Тропическая кислинка и нежный крем', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBb9nOd_o8BOF7qoWFkFoVrEgvaVCOi3UGcA0dAsi7_GQoBW5wQOvCPduvTtpP1ogEHC5PLF8aG9E4re7tWF-p8fvr-OHYoOOeboqcgVDhFHzmHb0AK2J_ET2smiV0NZ5950oRIIbum_NwUdsXjXZ0U3hxhk61sNNqsDLLXdy2ZKROsAVfy1fyoByh9MPCVXOh1F6W92pdefRc7_C6mQBw4874-gH3tP1GJsEub1UbUzlNwSFoftVukEaf01TRHdRsbImqNj9krOA', count: 0 }
+  ]
+};
+
+const BOX_SIZES = [
+  { count: 5, price: 25 },
+  { count: 9, price: 36 },
+  { count: 12, price: 48 },
+  { count: 16, price: 64 },
+  { count: 25, price: 100 }
+];
+
+async function renderConstructor() {
+  const currentTotal = constructorState.flavors.reduce((sum, f) => sum + f.count, 0);
+  const currentSize = BOX_SIZES.find(s => s.count === constructorState.size);
+  
+  // Build preview grid
+  let gridHtml = '';
+  const slots = [];
+  constructorState.flavors.forEach(f => {
+    for (let i = 0; i < f.count; i++) slots.push(f);
+  });
+  
+  for (let i = 0; i < constructorState.size; i++) {
+    const f = slots[i];
+    if (f) {
+      gridHtml += `
+        <div class="constructor-slot filled" onclick="removeFlavorFromSlot('${f.id}')">
+          <img src="${f.img}" alt="${f.name}" />
+          <div class="slot-remove"><span class="material-symbols-outlined">close</span></div>
+        </div>`;
+    } else {
+      gridHtml += `<div class="constructor-slot empty"><span class="material-symbols-outlined">add</span></div>`;
+    }
+  }
+
+  const columns = Math.ceil(Math.sqrt(constructorState.size));
+
+  return `
+<div>
+  <div class="page-wrapper">
+    <div class="container" style="padding-top:2rem; padding-bottom:6rem">
+      <div class="constructor-layout">
+        
+        <!-- Left: Selection -->
+        <div class="constructor-selection">
+          <h1 class="text-headline-md" style="margin-bottom:2rem">Конструктор набора</h1>
+          
+          <!-- Size Selector -->
+          <section style="margin-bottom:3rem">
+            <h3 class="constructor-step-title">1. Выберите размер коробочки</h3>
+            <div class="size-grid">
+              ${BOX_SIZES.map(s => `
+                <button class="size-card ${s.count === constructorState.size ? 'active' : ''}" 
+                        onclick="setBoxSize(${s.count})">
+                  <span class="size-count">${s.count}</span>
+                  <span class="size-label">штук</span>
+                  <span class="size-price">${s.price} BYN</span>
+                </button>
+              `).join('')}
+            </div>
+          </section>
+
+          <!-- Flavor Picker -->
+          <section>
+            <h3 class="constructor-step-title">2. Выберите вкусы (${currentTotal} / ${constructorState.size})</h3>
+            <div class="flavor-list">
+              ${constructorState.flavors.map(f => `
+                <div class="flavor-item">
+                  <img src="${f.img}" alt="${f.name}" class="flavor-img" />
+                  <div class="flavor-info">
+                    <h4>${f.name}</h4>
+                    <p>${f.desc}</p>
+                  </div>
+                  <div class="flavor-controls">
+                    <button class="qty-btn-const" data-id="${f.id}" data-action="dec" ${f.count === 0 ? 'disabled' : ''}>-</button>
+                    <span class="qty-val-const">${f.count}</span>
+                    <button class="qty-btn-const" data-id="${f.id}" data-action="inc" ${currentTotal >= constructorState.size ? 'disabled' : ''}>+</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        </div>
+
+        <!-- Right: Preview (Sticky) -->
+        <div class="constructor-preview-wrap">
+          <div class="constructor-preview-card">
+            <h3 class="font-headline" style="font-size:1.25rem;color:var(--color-primary);margin-bottom:2rem;font-style:italic;position:relative;z-index:2">Ваш набор</h3>
+            <div class="constructor-grid" style="grid-template-columns: repeat(${columns}, 1fr)">
+              ${gridHtml}
+            </div>
+            <div style="margin-top:2rem;text-align:center;position:relative;z-index:2">
+              <p class="text-label-sm" style="opacity:0.6;margin-bottom:0.5rem">Итого к оплате</p>
+              <p class="text-headline-sm" style="color:var(--color-primary)">${currentSize.price} BYN</p>
+            </div>
+          </div>
+          
+          <div class="constructor-actions">
+             <button class="btn btn-primary ${currentTotal < constructorState.size ? 'disabled' : ''}" 
+                     id="add-const-to-cart"
+                     style="width:100%">
+               Добавить в корзину
+             </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>`;
+}
+
+function setBoxSize(size) {
+  constructorState.size = size;
+  // Reset flavors if total > new size
+  let total = constructorState.flavors.reduce((sum, f) => sum + f.count, 0);
+  if (total > size) {
+    constructorState.flavors.forEach(f => f.count = 0);
+  }
+  navigate(window.location.pathname, false, true, true);
+}
+
+function removeFlavorFromSlot(id) {
+  const flavor = constructorState.flavors.find(f => f.id === id);
+  if (flavor && flavor.count > 0) {
+    flavor.count--;
+    navigate(window.location.pathname, false, true, true);
+  }
+}
+
+function bindConstructorEvents() {
+  // Handle inc/dec buttons via delegation or direct binding
+  // This is called by navigate after rendering
+  document.querySelectorAll('.qty-btn-const').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const action = btn.getAttribute('data-action');
+      const flavor = constructorState.flavors.find(f => f.id === id);
+      const total = constructorState.flavors.reduce((sum, f) => sum + f.count, 0);
+
+      if (action === 'inc' && total < constructorState.size) {
+        flavor.count++;
+      } else if (action === 'dec' && flavor.count > 0) {
+        flavor.count--;
+      }
+      navigate(window.location.pathname, false, true, true);
+    });
+  });
+
+  document.getElementById('add-const-to-cart')?.addEventListener('click', () => {
+    const total = constructorState.flavors.reduce((sum, f) => sum + f.count, 0);
+    if (total < constructorState.size) {
+      showToast('Сначала заполните коробку полностью! 🍫');
+      return;
+    }
+
+    const flavorsText = constructorState.flavors
+      .filter(f => f.count > 0)
+      .map(f => `${f.name} (x${f.count})`)
+      .join(', ');
+
+    const currentSize = BOX_SIZES.find(s => s.count === constructorState.size);
+
+    const customProduct = {
+      id: `custom-box-${Date.now()}`,
+      name: `Набор трюфелей (${constructorState.size} шт)`,
+      price: currentSize.price,
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBCSmvFF2IsAnj5UMN0d_mlzJfAj7v_4Hj7TL7GJJY9mZFFf-lE2uWUTl6MF4nDXLqnXvEBldG6DUoLL7Rjlv49MCj1sRQJXOVS2h02-sZVNxrcfUCmVY0a6axP8OxZEQFaXT8KvOsvhkdfGdZ0ZUOZwW02bFzMYmgV1LQNUNn11rTDlDdlQVJv1t8mGXTvSMd-u6b5-IDBiHhnDFdaihIPbMLZJCHhiQhNtFFpxqWLpUyaMFY713o92xFIdv3HPs0w3rXeluYmCA',
+      weight: flavorsText
+    };
+
+    State.cart.push({
+      productId: customProduct.id,
+      qty: 1,
+      variantId: null,
+      customData: customProduct // Store full custom data for display
+    });
+
+    saveCart();
+    updateCartBadge();
+    showToast('Набор добавлен в корзину! ✨');
+    openCartDrawer();
+  });
+}
+
+function renderTeaser() {
+  return `
+  <section class="teaser-section">
+    <div class="container">
+      <div class="antigravity-container">
+        
+        <div class="antigravity-visual">
+          <div class="floating-box">
+            <div class="constructor-slot filled"><img src="${constructorState.flavors[0].img}" /></div>
+            <div class="constructor-slot filled"><img src="${constructorState.flavors[1].img}" /></div>
+            <div class="constructor-slot filled"><img src="${constructorState.flavors[2].img}" /></div>
+            <div class="constructor-slot empty"></div>
+            <div class="constructor-slot filled"><img src="${constructorState.flavors[3].img}" /></div>
+            <div class="constructor-slot empty"></div>
+            <div class="constructor-slot filled"><img src="${constructorState.flavors[4].img}" /></div>
+            <div class="constructor-slot empty"></div>
+            <div class="constructor-slot filled"><img src="${constructorState.flavors[5].img}" /></div>
+          </div>
+          <img src="${constructorState.flavors[0].img}" class="floating-truffle t1" />
+          <img src="${constructorState.flavors[2].img}" class="floating-truffle t2" />
+          <img src="${constructorState.flavors[4].img}" class="floating-truffle t3" />
+          <img src="${constructorState.flavors[6].img}" class="floating-truffle t4" />
+        </div>
+
+        <div class="antigravity-content">
+          <p class="section-eyebrow" style="color:var(--color-secondary); margin-bottom: 0.5rem;">Эксклюзив</p>
+          <h2 class="text-headline-md" style="margin-bottom:1rem">Ваш идеальный набор</h2>
+          <p style="font-size:1rem; color:var(--color-on-surface-variant); margin-bottom:1.5rem; line-height:1.5">
+            Соберите свою коробочку трюфелей вручную. Выбирайте любимые вкусы и создавайте уникальные сочетания.
+          </p>
+          <a href="/constructor" data-route="/constructor" class="btn btn-primary">Начать сборку</a>
+        </div>
+
+      </div>
+    </div>
+  </section>`;
 }
