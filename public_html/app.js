@@ -2024,16 +2024,26 @@ if (document.readyState === 'loading') {
 /* ============================================================
    CONSTRUCTOR STATE & LOGIC
    ============================================================ */
+const TEASER_ASSETS = {
+  f0: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYI-OoEj2vtPwOLRZ7UDUe_qWu6e4-AZ5s6cZRo-12kzWCKMz3fvldMBF-rkoYXrqtZl72HOuXbSJYx4SRaWCUjz0SddTaKGwJEg_Lim2Lhk2OugldOdgqkm3pBXyjBndVg4tCt-cYAwLjEt2BZvft-IfSlWD88jQuiB8-GvbLhuyJNlMWvOevn3gi9H-JLM2-M2l2CyZXngFNXZdBp7s7ttUkzKvcggU4vpvfH1lCq03UlCULDq1O3dz9G0xK0GLdD0JM8NlFmw',
+  f1: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHDtzyxGBWbsYScKBcIfz_ZmGXhyMalMCTDaPx_wMuxKr5y0ZmyemWhfI9KRt8wFtF8uTazIGxTyCRH5BsSmTPs44b19u5tM1ixbL4XUX1Bx7kMccjlTB773qtYMItTq4PieQw73WiiWUfFNjiPjoegwWe_8XlzqjIZdi5nm7W7kuY-hKPokSNMIbGG8XRlx7-Pc_kifxUGQitC0Yavnn32pHuGiN0vHr-xiLvePldwdzmkn4A5jMPoGJr7LSaiPyhvBBNZGYxOA',
+  f2: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5ItQRyZcLI_BsKA1mvrrZH1oaikEURuQuYQs4XfhwE0zd4ujGvV-AqFhjttqEPjF7ZI2xgWIAXzDm41raB8bzuuSjlLXMC8lD2LKRzLrhgyNlNa1osg0p3y80rJm8RhWBUuKdYLfGY6CfD1Y8OnJy0elmYvTRyjExTAzGrJoaLDQnYgFpKPDmwk-tsQrj5Y9e7CGFH88YaPrLg_a9UWUsfQLoc4Ycr0KQgF87DbEIRHyjAAqbwo4qsprI13NZRImVR2MtyCyEEA',
+  f3: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlCxc7JfCaIzUInCgDEMJSz1e6P4j_RdL9wy9BXPE0HvvGkho_EqGH6NaeFt2qANfNO1n1e_CxyKCzzzI23kiHxOXbfT4Jb11rR6NYqMXGFQkW3o2eTG_Pa0mbBaRD35Itc8_yNtXUmvSeI1qgwsB0bFI20372wRhYBtFOQxev9ySq3ssAVGRCjGBQ-1OQiljLgal_Z6MLUhCigPxMB9xYpjWblY57U4AAJW8JOrXIJ-9QYvM1ZVlJAFYAm8vBScxUvuAeuLoLQ',
+  f4: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAeaGnMvBPSo7XeR1lHrPbREaxK8ag1R4rXsriLqCwljYYbPNJxdbxIuCYvSB7KdzthvNenX6bTSCJ0eun5K9f-WYMGdc-W5c2Y3DNGagVOeh9gZsoRGiOXBincDWHH9J-2mzgWFqwSaGLAM1YVvItrkdtLvgRBVCk4XxtvDX7YS0VYTZHfD5mkMqStXAUUyN4LuqHZI5Hrxg49nE1Kf_Pe2E8C-IIG-ccM8--E-mubRIFxgdGGNIdWrNaG3f0IADmvmRzuKUC_Vw',
+  f5: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD3c8EUCOu_bB8HCh65JanViNvg0ZKPLKGKI-zHtgYpYjTx9OqOaJHYggiwmoJHMVBBCsxkwxO2raODMMGOD7YNKuUDr9nprjLAuF3Yf21GzSH2wY135yo2xxJrfv9x6aqiR1vM-9dMuob-1__rIRPId3dM4DyiWMcv6vmeqktw_vim7Oo3l0pbwJ_dtCZDfqtPG5mx5QIOjkgRqakVeQS_IyKK25NUKawsYHQsznMgAinVkZLPp5xYtkaOfvYI2GxxFT2-rrzWOg',
+  f6: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBb9nOd_o8BOF7qoWFkFoVrEgvaVCOi3UGcA0dAsi7_GQoBW5wQOvCPduvTtpP1ogEHC5PLF8aG9E4re7tWF-p8fvr-OHYoOOeboqcgVDhFHzmHb0AK2J_ET2smiV0NZ5950oRIIbum_NwUdsXjXZ0U3hxhk61sNNqsDLLXdy2ZKROsAVfy1fyoByh9MPCVXOh1F6W92pdefRc7_C6mQBw4874-gH3tP1GJsEub1UbUzlNwSFoftVukEaf01TRHdRsbImqNj9krOA'
+};
+
 let constructorState = {
   size: 9,
   flavors: [
-    { id: 'dark', name: 'Классический темный', desc: '70% бельгийский шоколад', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYI-OoEj2vtPwOLRZ7UDUe_qWu6e4-AZ5s6cZRo-12kzWCKMz3fvldMBF-rkoYXrqtZl72HOuXbSJYx4SRaWCUjz0SddTaKGwJEg_Lim2Lhk2OugldOdgqkm3pBXyjBndVg4tCt-cYAwLjEt2BZvft-IfSlWD88jQuiB8-GvbLhuyJNlMWvOevn3gi9H-JLM2-M2l2CyZXngFNXZdBp7s7ttUkzKvcggU4vpvfH1lCq03UlCULDq1O3dz9G0xK0GLdD0JM8NlFmw', count: 0 },
-    { id: 'caramel', name: 'Соленая карамель', desc: 'Сливочная карамель с морской солью', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHDtzyxGBWbsYScKBcIfz_ZmGXhyMalMCTDaPx_wMuxKr5y0ZmyemWhfI9KRt8wFtF8uTazIGxTyCRH5BsSmTPs44b19u5tM1ixbL4XUX1Bx7kMccjlTB773qtYMItTq4PieQw73WiiWUfFNjiPjoegwWe_8XlzqjIZdi5nm7W7kuY-hKPokSNMIbGG8XRlx7-Pc_kifxUGQitC0Yavnn32pHuGiN0vHr-xiLvePldwdzmkn4A5jMPoGJr7LSaiPyhvBBNZGYxOA', count: 0 },
-    { id: 'pistachio', name: 'Фисташка', desc: 'Сицилийская фисташка в белом шоколаде', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5ItQRyZcLI_BsKA1mvrrZH1oaikEURuQuYQs4XfhwE0zd4ujGvV-AqFhjttqEPjF7ZI2xgWIAXzDm41raB8bzuuSjlLXMC8lD2LKRzLrhgyNlNa1osg0p3y80rJm8RhWBUuKdYLfGY6CfD1Y8OnJy0elmYvTRyjExTAzGrJoaLDQnYgFpKPDmwk-tsQrj5Y9e7CGFH88YaPrLg_a9UWUsfQLoc4Ycr0KQgF87DbEIRHyjAAqbwo4qsprI13NZRImVR2MtyCyEEA', count: 0 },
-    { id: 'raspberry', name: 'Малина', desc: 'Освежающий малиновый ганаш', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlCxc7JfCaIzUInCgDEMJSz1e6P4j_RdL9wy9BXPE0HvvGkho_EqGH6NaeFt2qANfNO1n1e_CxyKCzzzI23kiHxOXbfT4Jb11rR6NYqMXGFQkW3o2eTG_Pa0mbBaRD35Itc8_yNtXUmvSeI1qgwsB0bFI20372wRhYBtFOQxev9ySq3ssAVGRCjGBQ-1OQiljLgal_Z6MLUhCigPxMB9xYpjWblY57U4AAJW8JOrXIJ-9QYvM1ZVlJAFYAm8vBScxUvuAeuLoLQ', count: 0 },
-    { id: 'champagne', name: 'Шампанское', desc: 'Изысканный вкус праздника', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAeaGnMvBPSo7XeR1lHrPbREaxK8ag1R4rXsriLqCwljYYbPNJxdbxIuCYvSB7KdzthvNenX6bTSCJ0eun5K9f-WYMGdc-W5c2Y3DNGagVOeh9gZsoRGiOXBincDWHH9J-2mzgWFqwSaGLAM1YVvItrkdtLvgRBVCk4XxtvDX7YS0VYTZHfD5mkMqStXAUUyN4LuqHZI5Hrxg49nE1Kf_Pe2E8C-IIG-ccM8--E-mubRIFxgdGGNIdWrNaG3f0IADmvmRzuKUC_Vw', count: 0 },
-    { id: 'hazelnut', name: 'Фундук', desc: 'Цельный фундук и пралине', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD3c8EUCOu_bB8HCh65JanViNvg0ZKPLKGKI-zHtgYpYjTx9OqOaJHYggiwmoJHMVBBCsxkwxO2raODMMGOD7YNKuUDr9nprjLAuF3Yf21GzSH2wY135yo2xxJrfv9x6aqiR1vM-9dMuob-1__rIRPId3dM4DyiWMcv6vmeqktw_vim7Oo3l0pbwJ_dtCZDfqtPG5mx5QIOjkgRqakVeQS_IyKK25NUKawsYHQsznMgAinVkZLPp5xYtkaOfvYI2GxxFT2-rrzWOg', count: 0 },
-    { id: 'passion', name: 'Маракуйя', desc: 'Тропическая кислинка и нежный крем', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBb9nOd_o8BOF7qoWFkFoVrEgvaVCOi3UGcA0dAsi7_GQoBW5wQOvCPduvTtpP1ogEHC5PLF8aG9E4re7tWF-p8fvr-OHYoOOeboqcgVDhFHzmHb0AK2J_ET2smiV0NZ5950oRIIbum_NwUdsXjXZ0U3hxhk61sNNqsDLLXdy2ZKROsAVfy1fyoByh9MPCVXOh1F6W92pdefRc7_C6mQBw4874-gH3tP1GJsEub1UbUzlNwSFoftVukEaf01TRHdRsbImqNj9krOA', count: 0 }
+    { id: 'hazelnut', name: 'Фундучный', desc: 'на молочном итальянском шоколаде в посыпке дробленного фундука.', img: '/assets/images/truffle/IMG_9732.PNG', count: 0 },
+    { id: 'coconut', name: 'Кокосовый', desc: 'на белом бельгийском шоколаде в посыпке кокосовой стружки.', img: '/assets/images/truffle/IMG_9734.PNG', count: 0 },
+    { id: 'pistachio', name: 'Фисташковый', desc: 'на белом бельгийском шоколаде в посыпке фисташковой муки.', img: '/assets/images/truffle/IMG_9735.PNG', count: 0 },
+    { id: 'coffee', name: 'Кофейный', desc: 'на молочном итальянском шоколаде в посыпке вафельной крошке.', img: '/assets/images/truffle/IMG_9736.PNG', count: 0 },
+    { id: 'currant', name: 'Смородина', desc: 'на белом бельгийском шоколаде в посыпке из сублимированной малины.', img: '/assets/images/truffle/IMG_9790.PNG', count: 0 },
+    { id: 'classic', name: 'Классический', desc: 'на темном итальянском шоколаде в кондитерской посыпке.', img: '/assets/images/truffle/IMG_9791.PNG', count: 0 },
+    { id: 'mojito', name: 'Мохито', desc: 'на белом бельгийском шоколаде в качестве посыпки какао.', img: '/assets/images/truffle/IMG_9794.PNG', count: 0 }
   ]
 };
 
@@ -2227,20 +2237,20 @@ function renderTeaser() {
         
         <div class="antigravity-visual">
           <div class="floating-box">
-            <div class="constructor-slot filled"><img src="${constructorState.flavors[0].img}" /></div>
-            <div class="constructor-slot filled"><img src="${constructorState.flavors[1].img}" /></div>
-            <div class="constructor-slot filled"><img src="${constructorState.flavors[2].img}" /></div>
+            <div class="constructor-slot filled"><img src="${TEASER_ASSETS.f0}" /></div>
+            <div class="constructor-slot filled"><img src="${TEASER_ASSETS.f1}" /></div>
+            <div class="constructor-slot filled"><img src="${TEASER_ASSETS.f2}" /></div>
             <div class="constructor-slot empty"></div>
-            <div class="constructor-slot filled"><img src="${constructorState.flavors[3].img}" /></div>
+            <div class="constructor-slot filled"><img src="${TEASER_ASSETS.f3}" /></div>
             <div class="constructor-slot empty"></div>
-            <div class="constructor-slot filled"><img src="${constructorState.flavors[4].img}" /></div>
+            <div class="constructor-slot filled"><img src="${TEASER_ASSETS.f4}" /></div>
             <div class="constructor-slot empty"></div>
-            <div class="constructor-slot filled"><img src="${constructorState.flavors[5].img}" /></div>
+            <div class="constructor-slot filled"><img src="${TEASER_ASSETS.f5}" /></div>
           </div>
-          <img src="${constructorState.flavors[0].img}" class="floating-truffle t1" />
-          <img src="${constructorState.flavors[2].img}" class="floating-truffle t2" />
-          <img src="${constructorState.flavors[4].img}" class="floating-truffle t3" />
-          <img src="${constructorState.flavors[6].img}" class="floating-truffle t4" />
+          <img src="${TEASER_ASSETS.f0}" class="floating-truffle t1" />
+          <img src="${TEASER_ASSETS.f2}" class="floating-truffle t2" />
+          <img src="${TEASER_ASSETS.f4}" class="floating-truffle t3" />
+          <img src="${TEASER_ASSETS.f6}" class="floating-truffle t4" />
         </div>
 
         <div class="antigravity-content">
