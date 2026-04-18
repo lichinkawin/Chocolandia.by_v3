@@ -383,7 +383,13 @@ async function sendOrderTelegram() {
 
   // Build items array for PHP backend (no raw Telegram formatting here)
   const items = State.cart.map(item => {
-    const p = State.data.products.find(pr => pr.id === item.productId);
+    let p = State.data?.products.find(pr => pr.id === item.productId);
+    
+    // Handle custom products from constructor
+    if (!p && item.customData) {
+      p = item.customData;
+    }
+    
     if (!p) return null;
     
     let variantDetails = '';

@@ -90,9 +90,9 @@ if ($type === 'b2b') {
         $iqty   = (int)($item['qty']       ?? 1);
         $iprice = sanitize($item['lineTotal'] ?? '0');
         $iurl   = filter_var($item['url'] ?? '', FILTER_VALIDATE_URL) ? $item['url'] : '';
-        
+        $iweight = sanitize($item['weight'] ?? '');
         $link = $iurl ? " (<a href=\"{$iurl}\">ссылка</a>)" : "";
-        $items_html .= "• <b>{$iname}</b>{$link} x {$iqty} = {$iprice} BYN\n";
+        $items_html .= "• <b>{$iname}</b>" . ($iweight ? "\n   └ <i>{$iweight}</i>" : "") . "{$link} x {$iqty} = {$iprice} BYN\n";
     }
 
     $message = "🛍 <b>НОВЫЙ ЗАКАЗ (Новая система) — Chocolandia.by</b>\n\n"
