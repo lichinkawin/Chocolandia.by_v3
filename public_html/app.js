@@ -1038,12 +1038,11 @@ async function renderHome() {
           <img src="/assets/images/hero_slider_1.png" alt="Chocolandia — шоколад ручной работы" />
         </div>
         <div class="hero-content">
-          <div class="hero-badge">Ручная работа · Беларусь</div>
-          <h1 class="hero-title">
-            Дизайнерский шоколад <em>ручной работы</em> с&nbsp;доставкой по&nbsp;Беларуси
+          <h1 class="hero-title" style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.05em;">
+            Эксклюзивный шоколад ручной работы
           </h1>
-          <p class="hero-subtitle">
-            Авторский шоколад ручной работы — дубайский шоколад, клубника, трюфели и уникальные фигурки.
+          <p class="hero-subtitle" style="font-size: 1.125rem; opacity: 0.9;">
+            Шоколадные наборы, трюфели, клубника и финики в шоколаде
           </p>
           <div class="hero-actions">
             <button class="btn btn-primary" data-route="/collections">Смотреть коллекции</button>
