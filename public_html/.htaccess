@@ -5,6 +5,9 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Redirect removed Easter collection
+RewriteRule ^collections/easter/?$ /collections [L,R=301]
+
 RewriteBase /
 
 # Security: Deny public access to .env files

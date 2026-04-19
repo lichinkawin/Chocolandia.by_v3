@@ -141,7 +141,7 @@ public_html/
 | `/collections/dubai` | Дубайский шоколад |
 | `/collections/truffles` | Трюфели |
 | `/collections/gifts` | Подарочные наборы |
-| `/collections/easter` | Пасхальная коллекция |
+
 | `/collections/figures` | Шоколадные фигурки |
 | `/product/[slug]` | Страница товара |
 
