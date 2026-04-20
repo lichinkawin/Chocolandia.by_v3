@@ -1073,7 +1073,7 @@ async function renderHome() {
       <!-- Slide 3 -->
       <div class="hero-slide" data-slide="2">
         <div class="hero-bg">
-          <img src="/assets/images/finiki/IMG_9832.webp" alt="Изысканные трюфели" />
+          <img src="/assets/images/IMG_9832.webp" alt="Изысканные трюфели" />
         </div>
         <div class="hero-content">
           <div class="hero-badge">Премиальное качество</div>
