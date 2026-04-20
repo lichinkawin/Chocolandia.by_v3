@@ -1080,7 +1080,7 @@
       "price": 18.9,
       "unit": "BYN",
       "weight": "130 г (9 шт.)",
-      "image": "/assets/images/truffles.webp",
+      "image": "/assets/images/finiki/IMG_9845.webp",
       "badge": null,
       "inStock": true,
       "tastingNotes": [
@@ -1099,7 +1099,7 @@
       "price": 27.9,
       "unit": "BYN",
       "weight": "180 г (12 шт.)",
-      "image": "/assets/images/truffles.webp",
+      "image": "/assets/images/finiki/IMG_9845.webp",
       "badge": "Популярное",
       "inStock": true,
       "tastingNotes": [
@@ -1119,7 +1119,7 @@
       "price": 34.9,
       "unit": "BYN",
       "weight": "180 г (9 шт.)",
-      "image": "/assets/images/truffles.webp",
+      "image": "/assets/images/finiki/IMG_9845.webp",
       "badge": "Премиум",
       "inStock": true,
       "tastingNotes": [
@@ -1179,7 +1179,7 @@
       "slug": "gift-box-premium",
       "collectionId": "gifts",
       "name": "Подарочный набор «Люкс»",
-      "description": "Роскошная коробка с 24 конфетами, клубникой в шоколаде и дубайским шоколадом. Всё лучшее в одном наборе.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "description": "Роскошная коробка с 24 конфетами, клубникой в шоколаде и финиками в шоколаде. Всё лучшее в одном наборе.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
       "price": 59.9,
       "unit": "BYN",
       "weight": "~550 г",
@@ -1187,7 +1187,7 @@
       "badge": "Премиум",
       "inStock": true,
       "tastingNotes": [],
-      "ingredients": "Ассортимент конфет, клубника в шоколаде, дубайский шоколад"
+      "ingredients": "Ассортимент конфет, клубника в шоколаде, финики в шоколаде"
     },
     {
       "id": "easter-animal-set",
