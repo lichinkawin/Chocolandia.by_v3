@@ -600,12 +600,13 @@ input, select, textarea {
 }
 
 .hero-title {
-  font-family: var(--font-headline);
+  font-family: var(--font-display);
   font-size: clamp(1.75rem, 6vw, 4.5rem);
   color: #ffffff;
   line-height: 0.95;
   font-weight: 400;
-  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 1.5rem;
 }
 

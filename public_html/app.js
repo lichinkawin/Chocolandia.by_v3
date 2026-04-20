@@ -1038,7 +1038,7 @@ async function renderHome() {
           <img src="/assets/images/hero_slider_1.png" alt="Chocolandia — шоколад ручной работы" />
         </div>
         <div class="hero-content">
-          <h1 class="hero-title" style="font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.05em;">
+          <h1 class="hero-title">
             Эксклюзивный шоколад ручной работы
           </h1>
           <p class="hero-subtitle" style="font-size: 1.125rem; opacity: 0.9;">
