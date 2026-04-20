@@ -1054,18 +1054,18 @@ async function renderHome() {
       <!-- Slide 2 -->
       <div class="hero-slide" data-slide="1">
         <div class="hero-bg">
-          <img src="/assets/images/hero_slider_2.png" alt="Дубайский шоколад" />
+          <img src="/assets/images/finiki/IMG_9840.webp" alt="Финики с орехами в шоколаде" />
         </div>
         <div class="hero-content">
-          <div class="hero-badge">Тренд сезона</div>
+          <div class="hero-badge">Полезное лакомство</div>
           <div class="hero-title">
-            Дубайский <em>вкус роскоши</em>
+            Финики <em>в шоколаде</em>
           </div>
           <p class="hero-subtitle">
-            Хрустящая начинка из катаифи и фисташковой пасты в нежном бельгийском шоколаде. Попробуйте легенду.
+            Каждый финик в наборе обволакивает три вида шоколада: нежный белый, классический молочный и насыщенный темный. Внутри каждого финика прячутся хрустящие орехи: миндаль, грецкий и фундук, которые добавляют текстуру и неповторимый вкус.
           </p>
           <div class="hero-actions">
-            <button class="btn btn-primary" data-route="/collections/dubai">Попробовать</button>
+            <button class="btn btn-primary" data-route="/collections/finiki">Попробовать</button>
           </div>
         </div>
       </div>
@@ -1141,17 +1141,17 @@ async function renderHome() {
         </a>
 
         <!-- Side card -->
-        <a href="/collections/${escapeHtml(sideColl.slug || 'dubai')}"
-           data-route="/collections/${escapeHtml(sideColl.slug || 'dubai')}"
+        <a href="/collections/${escapeHtml(sideColl.slug || 'finiki')}"
+           data-route="/collections/${escapeHtml(sideColl.slug || 'finiki')}"
            class="bento-card bento-side">
-          <img src="${imgPath(sideColl.image || 'assets/images/dubai_chocolate.png')}"
+          <img src="${imgPath(sideColl.image || 'assets/images/finiki/IMG_9840.webp')}"
                alt="${escapeHtml(sideColl.name || '')}"
                loading="lazy"
                onerror="this.src='/assets/images/hero_banner.png'" />
           <div class="bento-card-overlay"></div>
           <div class="bento-card-content">
             <span class="bento-card-eyebrow">Коллекция</span>
-            <h3 class="bento-card-title" style="font-size:1.5rem">${escapeHtml(sideColl.name || 'Дубайский шоколад')}</h3>
+            <h3 class="bento-card-title" style="font-size:1.5rem">${escapeHtml(sideColl.name || 'Финики в шоколаде')}</h3>
           </div>
         </a>
 
@@ -1232,32 +1232,18 @@ async function renderHome() {
         <div style="padding-top:2rem">
           <p class="section-eyebrow">О нас</p>
           <h2 class="text-headline-lg" style="color:var(--color-primary);margin-bottom:1.5rem;margin-top:0.5rem">
-            Шоколад — это <br />наша страсть
+            CHOCOLANDIA.BY — <br />Больше, чем просто шоколад
           </h2>
           <p style="color:var(--color-on-surface-variant);line-height:1.75;font-size:1rem;margin-bottom:1.5rem">
-            Chocolandia — это небольшая мастерская авторского шоколада в Беларуси. Мы создаём шоколадные изделия вручную, используя только лучший бельгийский шоколад и натуральные ингредиенты.
+            Мы создаем эксклюзивный шоколад ручной работы для тех, кто ценит эстетику и безупречное качество.
+          </p>
+          <p style="color:var(--color-on-surface-variant);line-height:1.75;font-size:1rem;margin-bottom:1.5rem">
+            Вручную создаем изысканные коллекции из лучшего итальянского и бельгийского шоколада, чтобы вы могли дарить по-настоящему особенные эмоции.
           </p>
           <p style="color:var(--color-on-surface-variant);line-height:1.75;font-size:1rem;margin-bottom:2rem">
-            От трендового дубайского шоколада до классических трюфелей и изысканных наборов в подарок — каждое изделие создаётся с вниманием к деталям и любовью к своему делу.
+            Трюфели с характером, нежная клубника в шоколаде и эксклюзивные подарочные наборы — в каждом кусочке скрыта наша преданность делу и стремление к совершенству.
           </p>
-          <div class="heritage-stats">
-            <div class="heritage-stat">
-              <h4>100%</h4>
-              <p>Ручная работа</p>
-            </div>
-            <div class="heritage-stat">
-              <h4>Бельг.</h4>
-              <p>Шоколад</p>
-            </div>
-            <div class="heritage-stat">
-              <h4>Любые</h4>
-              <p>Поводы</p>
-            </div>
-            <div class="heritage-stat">
-              <h4>Доставка</h4>
-              <p>По Беларуси</p>
-            </div>
-          </div>
+
           <a href="/collections" data-route="/collections" class="btn btn-outline" style="margin-top:0.5rem">
             Смотреть все коллекции
           </a>
@@ -1376,7 +1362,7 @@ async function renderHome() {
         <h2 class="text-headline-md" style="margin-bottom: 2rem; color: var(--color-primary);">Почему выбирают Chocolandia?</h2>
         
         <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--color-on-surface-variant);">
-          Добро пожаловать в Chocolandia — мастерскую, где мы создаем настоящий <strong>бельгийский шоколад</strong> с любовью и вниманием к каждой детали. Наша миссия — дарить незабываемые эмоции через изысканный вкус и премиальное оформление. Если вы ищете, где <strong>купить дубайский шоколад в Беларуси</strong>, вы попали по адресу. Мы используем оригинальную рецептуру с хрустящим тестом катаифи и натуральной фисташковой пастой, чтобы вы могли насладиться тем самым легендарным вкусом.
+          Добро пожаловать в Chocolandia — мастерскую, где мы создаем настоящий <strong>бельгийский шоколад</strong> с любовью и вниманием к каждой детали. Наша миссия — дарить незабываемые эмоции через изысканный вкус и премиальное оформление. Если вы ищете, где <strong>купить финики в шоколаде в Беларуси</strong>, вы попали по адресу. Мы используем лучшие сорта фиников и отборные орехи, чтобы вы могли насладиться неповторимым вкусом.
         </p>
 
         <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--color-on-surface-variant);">

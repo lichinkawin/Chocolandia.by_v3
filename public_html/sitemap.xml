@@ -24,8 +24,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chocolandia.by/collections/dubai</loc>
-    <lastmod>2026-04-18</lastmod>
+    <loc>https://chocolandia.by/collections/finiki</loc>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -69,8 +69,7 @@
   <url><loc>https://chocolandia.by/product/dlya-neyo</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://chocolandia.by/product/in-yan-serdce</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://chocolandia.by/product/valentinka-serdce</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://chocolandia.by/product/dubaiskiy-shokolad-mini</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://chocolandia.by/product/dubaiskiy-shokolad-classic</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chocolandia.by/product/finiki-set</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://chocolandia.by/product/pistachio-truffle</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://chocolandia.by/product/classic-truffle</loc><lastmod>2026-04-18</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
