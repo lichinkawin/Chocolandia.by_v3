@@ -1054,7 +1054,7 @@ async function renderHome() {
       <!-- Slide 2 -->
       <div class="hero-slide" data-slide="1">
         <div class="hero-bg">
-          <img src="/assets/images/finiki/IMG_9840.webp" alt="Финики с орехами в шоколаде" />
+          <img src="/assets/images/finiki/IMG_9845.webp" alt="Финики с орехами в шоколаде" />
         </div>
         <div class="hero-content">
           <div class="hero-badge">Полезное лакомство</div>
@@ -1073,18 +1073,18 @@ async function renderHome() {
       <!-- Slide 3 -->
       <div class="hero-slide" data-slide="2">
         <div class="hero-bg">
-          <img src="/assets/images/hero_slider_3.png" alt="Клубника в шоколаде" />
+          <img src="/assets/images/finiki/IMG_9834.webp" alt="Изысканные трюфели" />
         </div>
         <div class="hero-content">
-          <div class="hero-badge">Идеальный подарок</div>
+          <div class="hero-badge">Премиальное качество</div>
           <div class="hero-title">
-            Клубника в <em>шоколаде</em>
+            Изысканные <em>трюфели</em>
           </div>
           <p class="hero-subtitle">
-            Самая свежая клубника в изысканном оформлении. Подарок, который невозможно забыть и хочется повторить.
+            Французская классика в авторском исполнении. Каждый трюфель — это гармония вкуса и текстуры, созданная вручную.
           </p>
           <div class="hero-actions">
-            <button class="btn btn-primary" data-route="/collections/strawberry">Заказать набор</button>
+            <button class="btn btn-primary" data-route="/collections/truffles">Заказать трюфели</button>
           </div>
         </div>
       </div>

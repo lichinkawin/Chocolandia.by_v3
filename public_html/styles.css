@@ -277,6 +277,11 @@ input, select, textarea {
   .top-nav .nav-inner { padding: 0 1.25rem; }
 }
 
+@media (max-width: 1024px) {
+  .hamburger { margin-right: 1rem; }
+  .nav-logo { margin-right: auto; }
+}
+
 .nav-logo {
   font-family: var(--font-display);
   font-style: normal;
@@ -288,7 +293,7 @@ input, select, textarea {
   white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 2rem; /* Gap for potential collection label */
+  gap: 0.5rem; 
 }
 
 @media (min-width: 1024px) {
