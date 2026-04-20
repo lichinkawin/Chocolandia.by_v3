@@ -1073,7 +1073,7 @@ async function renderHome() {
       <!-- Slide 3 -->
       <div class="hero-slide" data-slide="2">
         <div class="hero-bg">
-          <img src="/assets/images/IMG_9832.webp" alt="Изысканные трюфели" />
+          <img src="/assets/images/finiki/IMG_9832.png" alt="Изысканные трюфели" />
         </div>
         <div class="hero-content">
           <div class="hero-badge">Премиальное качество</div>
@@ -1221,8 +1221,8 @@ async function renderHome() {
       <div class="heritage-grid">
         <div class="heritage-img-wrap">
           <div class="heritage-img-main">
-            <img src="/assets/images/truffles.png"
-                 alt="Chocolandia — шоколад ручной работы"
+            <img src="/assets/images/IMG_3742.png"
+                 alt="Студия Chocolandia"
                  loading="lazy" />
           </div>
           <div class="heritage-quote-card">
