@@ -1231,8 +1231,8 @@ async function renderHome() {
         </div>
         <div style="padding-top:2rem">
           <p class="section-eyebrow">О нас</p>
-          <h2 class="text-headline-lg" style="color:var(--color-primary);margin-bottom:1.5rem;margin-top:0.5rem">
-            CHOCOLANDIA.BY — <br />Больше, чем просто шоколад
+          <h2 class="text-headline-lg" style="color:var(--color-primary);margin-bottom:1.5rem;margin-top:0.5rem; font-family: var(--font-display);">
+            CHOCOLANDIA.BY —<br />Больше, чем просто шоколад
           </h2>
           <p style="color:var(--color-on-surface-variant);line-height:1.75;font-size:1rem;margin-bottom:1.5rem">
             Мы создаем эксклюзивный шоколад ручной работы для тех, кто ценит эстетику и безупречное качество.
