@@ -1032,27 +1032,8 @@ async function renderHome() {
   <section class="hero-slider" id="hero-slider">
     <div class="slider-wrapper">
       
-      <!-- Slide 1 -->
+      <!-- Slide 1: Финики -->
       <div class="hero-slide active" data-slide="0">
-        <div class="hero-bg">
-          <img src="/assets/images/hero_slider_1.png" alt="Chocolandia — шоколад ручной работы" />
-        </div>
-        <div class="hero-content">
-          <h1 class="hero-title">
-            Эксклюзивный шоколад ручной работы
-          </h1>
-          <p class="hero-subtitle" style="font-size: 1.125rem; opacity: 0.9;">
-            Шоколадные наборы, трюфели, клубника и финики в шоколаде
-          </p>
-          <div class="hero-actions">
-            <button class="btn btn-primary" data-route="/collections">Смотреть коллекции</button>
-            <button class="btn btn-outline-white" id="hero-process">О нас</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 2 -->
-      <div class="hero-slide" data-slide="1">
         <div class="hero-bg">
           <img src="/assets/images/finiki/IMG_9840.webp" alt="Финики с орехами в шоколаде" />
         </div>
@@ -1070,10 +1051,29 @@ async function renderHome() {
         </div>
       </div>
 
+      <!-- Slide 2: Клубника -->
+      <div class="hero-slide" data-slide="1">
+        <div class="hero-bg">
+          <img src="/assets/images/IMG_9500.webp" alt="Клубника в шоколаде" />
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge">Бестселлер</div>
+          <div class="hero-title">
+            Клубника <em>в шоколаде</em>
+          </div>
+          <p class="hero-subtitle">
+            Сочные отборные ягоды в сочетании с нежнейшим бельгийским шоколадом. Классика, которая дарит счастье.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-route="/collections/strawberry">Заказать клубнику</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Slide 3 -->
       <div class="hero-slide" data-slide="2">
         <div class="hero-bg">
-          <img src="/assets/images/finiki/IMG_9834.webp" alt="Изысканные трюфели" />
+          <img src="/assets/images/finiki/IMG_9832.webp" alt="Изысканные трюфели" />
         </div>
         <div class="hero-content">
           <div class="hero-badge">Премиальное качество</div>

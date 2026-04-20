@@ -15,7 +15,7 @@
       "slug": "finiki",
       "name": "Финики в шоколаде",
       "description": "Трио премиального шоколада и хрустящие орехи: миндаль, фундук и грецкий орех в сердце каждого финика. Совершенство вкуса и текстуры.",
-      "image": "/assets/images/finiki/IMG_9840.webp",
+      "image": "/assets/images/finiki/IMG_9845.webp",
       "badge": "Новинка",
       "featured": true,
       "sortOrder": 2
@@ -25,7 +25,7 @@
       "slug": "truffles",
       "name": "Шоколадные трюфели",
       "description": "Истинное воплощение шоколадного искусства. Трюфели ручной работы из премиального шоколада с натуральными сливками и изысканными начинками.",
-      "image": "/assets/images/finiki/IMG_9845.webp",
+      "image": "/assets/images/finiki/IMG_9834.webp",
       "badge": "Классика",
       "featured": true,
       "sortOrder": 3
@@ -1035,7 +1035,7 @@
       "price": 42,
       "unit": "BYN",
       "weight": "9 шт",
-      "image": "/assets/images/finiki/IMG_9846.webp",
+      "image": "/assets/images/finiki/IMG_9840.webp",
       "badge": "Хит",
       "inStock": true,
       "variants": [
@@ -1080,7 +1080,7 @@
       "price": 18.9,
       "unit": "BYN",
       "weight": "130 г (9 шт.)",
-      "image": "/assets/images/finiki/IMG_9845.webp",
+      "image": "/assets/images/finiki/IMG_9834.webp",
       "badge": null,
       "inStock": true,
       "tastingNotes": [
@@ -1099,7 +1099,7 @@
       "price": 27.9,
       "unit": "BYN",
       "weight": "180 г (12 шт.)",
-      "image": "/assets/images/finiki/IMG_9845.webp",
+      "image": "/assets/images/finiki/IMG_9834.webp",
       "badge": "Популярное",
       "inStock": true,
       "tastingNotes": [
@@ -1119,7 +1119,7 @@
       "price": 34.9,
       "unit": "BYN",
       "weight": "180 г (9 шт.)",
-      "image": "/assets/images/finiki/IMG_9845.webp",
+      "image": "/assets/images/finiki/IMG_9834.webp",
       "badge": "Премиум",
       "inStock": true,
       "tastingNotes": [
