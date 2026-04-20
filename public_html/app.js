@@ -1221,7 +1221,7 @@ async function renderHome() {
       <div class="heritage-grid">
         <div class="heritage-img-wrap">
           <div class="heritage-img-main">
-            <img src="/assets/images/IMG_3742.png"
+            <img src="/assets/images/IMG_3742.webp"
                  alt="Мария Искрова — основатель Chocolandia"
                  loading="lazy" />
           </div>
