@@ -1032,21 +1032,21 @@ async function renderHome() {
   <section class="hero-slider" id="hero-slider">
     <div class="slider-wrapper">
       
-      <!-- Slide 1: Финики -->
+      <!-- Slide 1: Вступление -->
       <div class="hero-slide active" data-slide="0">
         <div class="hero-bg">
-          <img src="/assets/images/finiki/IMG_9840.webp" alt="Финики с орехами в шоколаде" />
+          <img src="/assets/images/truffles.png" alt="Chocolandia — шоколад ручной работы" loading="lazy">
         </div>
         <div class="hero-content">
-          <div class="hero-badge">Полезное лакомство</div>
-          <div class="hero-title">
-            Финики <em>в шоколаде</em>
-          </div>
-          <p class="hero-subtitle">
-            Трио премиального шоколада и хрустящие орехи: миндаль, фундук и грецкий орех в сердце каждого финика. Совершенство вкуса и текстуры.
+          <h1 class="hero-title">
+            Эксклюзивный шоколад ручной работы
+          </h1>
+          <p class="hero-subtitle" style="font-size: 1.125rem; opacity: 0.9;">
+            Шоколадные наборы, трюфели, клубника и финики в шоколаде
           </p>
           <div class="hero-actions">
-            <button class="btn btn-primary" data-route="/collections/finiki">Попробовать</button>
+            <button class="btn btn-primary" data-route="/collections">Смотреть коллекции</button>
+            <button class="btn btn-outline-white" id="hero-process">О нас</button>
           </div>
         </div>
       </div>
