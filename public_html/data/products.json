@@ -11,11 +11,11 @@
       "sortOrder": 1
     },
     {
-      "id": "finiki",
-      "slug": "finiki",
-      "name": "Финики в шоколаде",
-      "description": "Элитные сорта фиников с цельными орехами, покрытые премиальным итальянским и бельгийским шоколадом. Изысканное сочетание вкусов и текстур.",
-      "image": "/assets/images/finiki/IMG_9840.webp",
+      "id": "dubai",
+      "slug": "dubai",
+      "name": "Дубайский шоколад",
+      "description": "Легендарный шоколад с начинкой из фисташковой пасты и хрустящего кадаифа. Тренд, покоривший весь мир.",
+      "image": "/assets/images/dubai_chocolate.webp",
       "badge": "Новинка",
       "featured": true,
       "sortOrder": 2
@@ -40,7 +40,16 @@
       "featured": true,
       "sortOrder": 4
     },
-
+    {
+      "id": "easter",
+      "slug": "easter",
+      "name": "Пасхальная коллекция",
+      "description": "Пасхальные шоколадные фигурки: ягнята, цыплята, яйца и корзинки ручной работы.",
+      "image": "/assets/images/easter_collection.webp",
+      "badge": "Сезонная",
+      "featured": false,
+      "sortOrder": 5
+    },
     {
       "id": "figures",
       "slug": "figures",
@@ -934,26 +943,6 @@
       "image": "/assets/images/IMG_9688.webp",
       "badge": null,
       "inStock": true,
-      "variants": [
-        {
-          "id": "heart-20",
-          "name": "Сердце 20 см (11-12 ягод)",
-          "price": 85,
-          "weight": "11-12 ягод"
-        },
-        {
-          "id": "heart-24",
-          "name": "Сердце 24 см (15-17 ягод)",
-          "price": 115,
-          "weight": "15-17 ягод"
-        },
-        {
-          "id": "heart-28",
-          "name": "Сердце 28 см (22-23 ягоды)",
-          "price": 160,
-          "weight": "22-23 ягоды"
-        }
-      ],
       "tastingNotes": [],
       "ingredients": ""
     },
@@ -1038,59 +1027,81 @@
       "ingredients": ""
     },
     {
-      "id": "finiki-set",
-      "slug": "finiki-set",
-      "collectionId": "finiki",
-      "name": "Набор «Финики с орехами в шоколаде»",
-      "description": "Финики с хрустящими орехами - миндаль, фундук и кешью покрытые итальянским и бельгийским шоколадом. \n\nИнформация:\n• Срок годности: 1 месяц\n• Изготовление: 30-60 минут до выдачи",
-      "price": 42,
+      "id": "dubai-bar-210",
+      "slug": "dubai-bar-210",
+      "collectionId": "dubai",
+      "name": "Дубайский шоколад — плитка 210 г",
+      "description": "Легендарный дубайский шоколад с нежной фисташковой пастой и хрустящим кадаифом внутри. Плитка 210 г — авторский рецепт.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 50,
       "unit": "BYN",
-      "weight": "9 шт",
-      "image": "/assets/images/finiki/IMG_9846.webp",
-      "badge": "Хит",
+      "weight": "210 г",
+      "image": "/assets/images/dubai_bar_ai.webp",
+      "badge": "Популярное",
       "inStock": true,
-      "variants": [
-        {
-          "id": "9-pcs",
-          "name": "9 шт",
-          "price": 42,
-          "weight": "9 шт"
-        },
-        {
-          "id": "12-pcs",
-          "name": "12 шт",
-          "price": 54,
-          "weight": "12 шт"
-        },
-        {
-          "id": "16-pcs",
-          "name": "16 шт",
-          "price": 70,
-          "weight": "16 шт"
-        }
-      ],
       "tastingNotes": [
-        "Итальянский шоколад",
-        "Бельгийский шоколад",
-        "Цельный миндаль",
-        "Фундук",
-        "Кешью"
+        "Молочный шоколад",
+        "Фисташковая паста",
+        "Хрустящий кадаиф"
       ],
-      "ingredients": "Натуральные финики, молочный шоколад, белый шоколад, темный шоколад, миндаль, фундук, кешью."
+      "ingredients": "Молочный шоколад, фисташковая паста, кадаиф (пшеничная мука, масло)"
     },
     {
-      "id": "truffle-constructor",
-      "slug": "constructor",
+      "id": "truffle-classic",
+      "slug": "truffle-classic",
       "collectionId": "truffles",
-      "name": "Собери свой набор трюфелей",
-      "description": "Создайте свой идеальный набор из наших лучших вкусов. Выберите размер коробочки и наполните её вручную.\n\nДоступные размеры:\n• 5 шт — 25 BYN\n• 9 шт — 36 BYN\n• 12 шт — 48 BYN\n• 16 шт — 64 BYN\n• 25 шт — 100 BYN",
-      "price": 25,
+      "name": "Трюфели Классические",
+      "description": "Классические трюфели из тёмного бельгийского шоколада с ганашем на сливках. Обваляны в какао-порошке.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 18.9,
       "unit": "BYN",
-      "weight": "на выбор",
+      "weight": "130 г (9 шт.)",
       "image": "/assets/images/truffles.webp",
-      "badge": "Конструктор",
+      "badge": null,
       "inStock": true,
-      "isConstructor": true
+      "tastingNotes": [
+        "Тёмный шоколад",
+        "Сливочный ганаш",
+        "Какао-порошок"
+      ],
+      "ingredients": "Тёмный шоколад (какао 70%), сливки 33%, масло сливочное, какао-порошок"
+    },
+    {
+      "id": "truffle-assorted",
+      "slug": "truffle-assorted",
+      "collectionId": "truffles",
+      "name": "Трюфели Ассорти",
+      "description": "Набор из 12 трюфелей с разными начинками: малина, фисташка, кофе, солёная карамель. Ручная работа.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 27.9,
+      "unit": "BYN",
+      "weight": "180 г (12 шт.)",
+      "image": "/assets/images/truffles.webp",
+      "badge": "Популярное",
+      "inStock": true,
+      "tastingNotes": [
+        "Малина",
+        "Фисташка",
+        "Кофе",
+        "Солёная карамель"
+      ],
+      "ingredients": "Тёмный шоколад, белый шоколад, молочный шоколад, сливки, фруктовые пюре"
+    },
+    {
+      "id": "truffle-gold",
+      "slug": "truffle-gold",
+      "collectionId": "truffles",
+      "name": "Трюфели «Золото»",
+      "description": "Премиальные трюфели с изысканным покрытием из золотого пищевого кандурина. Подарок для особых случаев.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 34.9,
+      "unit": "BYN",
+      "weight": "180 г (9 шт.)",
+      "image": "/assets/images/truffles.webp",
+      "badge": "Премиум",
+      "inStock": true,
+      "tastingNotes": [
+        "Тёмный шоколад",
+        "Сливочный ганаш",
+        "Пищевое золото"
+      ],
+      "ingredients": "Тёмный шоколад (какао 70%), сливки 33%, масло, пищевой кандурин"
     },
     {
       "id": "gift-valentine",
@@ -1152,7 +1163,84 @@
       "tastingNotes": [],
       "ingredients": "Ассортимент конфет, клубника в шоколаде, дубайский шоколад"
     },
-
+    {
+      "id": "easter-animal-set",
+      "slug": "easter-animal-set",
+      "collectionId": "easter",
+      "name": "Шоколадный набор «Животные» (ягнёнок / цыплёнок)",
+      "description": "Набор из шоколадных фигурок в виде пасхальных животных — ягнёнок или цыплёнок. Ручная работа, авторский декор.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 22,
+      "unit": "BYN",
+      "weight": null,
+      "image": "/assets/images/easter_collection.webp",
+      "badge": "Новинка",
+      "inStock": true,
+      "tastingNotes": [],
+      "ingredients": "Молочный и белый шоколад, пищевой декор"
+    },
+    {
+      "id": "easter-set-small",
+      "slug": "easter-set-small",
+      "collectionId": "easter",
+      "name": "Пасхальный шоколадный набор",
+      "description": "Небольшой пасхальный шоколадный набор ручной работы. Нарядная упаковка, весенние цвета.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 25,
+      "unit": "BYN",
+      "weight": null,
+      "image": "/assets/images/easter_collection.webp",
+      "badge": null,
+      "inStock": true,
+      "tastingNotes": [],
+      "ingredients": "Молочный и белый шоколад, пищевой декор"
+    },
+    {
+      "id": "easter-choco-figures",
+      "slug": "easter-choco-figures",
+      "collectionId": "easter",
+      "name": "Пасхальные шоколадные фигурки",
+      "description": "Набор шоколадных фигурок к Пасхе: ягнята, цыплята, яйца. Авторский декор ручной работы.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 34,
+      "unit": "BYN",
+      "weight": null,
+      "image": "/assets/images/easter_collection.webp",
+      "badge": "Новинка",
+      "inStock": true,
+      "tastingNotes": [],
+      "ingredients": "Молочный и тёмный шоколад, пищевые красители"
+    },
+    {
+      "id": "easter-egg-box",
+      "slug": "easter-egg-box",
+      "collectionId": "easter",
+      "name": "Коробка-яйцо с клубникой в шоколаде (12–13 ягод)",
+      "description": "Праздничная коробка в форме пасхального яйца, наполненная 12–13 ягодами клубники в шоколаде.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": 85,
+      "unit": "BYN",
+      "weight": "12–13 ягод",
+      "image": "/assets/images/easter_collection.webp",
+      "badge": "Новинка",
+      "inStock": true,
+      "tastingNotes": [
+        "Свежая клубника",
+        "Шоколад"
+      ],
+      "ingredients": "Клубника свежая, шоколад бельгийский"
+    },
+    {
+      "id": "easter-kulich-decor",
+      "slug": "easter-kulich-decor",
+      "collectionId": "easter",
+      "name": "Пасхальный декор для кулича",
+      "description": "Авторский шоколадный декор для украшения пасхального кулича. Ручная работа, уникальный дизайн.\n\nИнформация:\n• Срок годности: 24 часа с с момента изготовления заказа\n• Изготовление: 30-60 минут до выдачи",
+      "price": null,
+      "unit": "BYN",
+      "weight": null,
+      "image": "/assets/images/easter_collection.webp",
+      "badge": "Классика",
+      "inStock": true,
+      "tastingNotes": [],
+      "ingredients": "Шоколад, пищевой декор"
+    },
     {
       "id": "figure-letter",
       "slug": "figure-letter",

@@ -1054,7 +1054,7 @@ async function renderHome() {
       <!-- Slide 2 -->
       <div class="hero-slide" data-slide="1">
         <div class="hero-bg">
-          <img src="/assets/images/finiki/IMG_9845.webp" alt="Финики с орехами в шоколаде" />
+          <img src="/assets/images/finiki/IMG_9840.webp" alt="Финики с орехами в шоколаде" />
         </div>
         <div class="hero-content">
           <div class="hero-badge">Полезное лакомство</div>
