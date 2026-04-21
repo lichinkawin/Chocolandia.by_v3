@@ -363,11 +363,12 @@ input, select, textarea {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-left: auto; /* Push to far right */
 }
 
 .nav-icon-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -381,12 +382,17 @@ input, select, textarea {
 
 .nav-cart-btn {
   position: relative;
+  margin-right: 15px; /* Spacing from screen edge */
+}
+
+.nav-cart-btn .material-symbols-outlined {
+  font-size: 26px; /* Larger icon */
 }
 
 .nav-cart-badge {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 4px;
+  right: 4px;
   background: var(--color-secondary);
   color: var(--color-on-secondary);
   font-size: 0.5625rem;
@@ -2454,17 +2460,19 @@ footer {
 
 /* Item qty controls */
 .cart-item-qty {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
-  background: var(--color-surface-container);
+  gap: 8px;
+  background: var(--color-surface-container-high);
   border-radius: var(--radius-sm);
-  padding: 2px 4px;
+  padding: 4px;
+  width: fit-content;
+  margin-top: 0.5rem;
 }
 
 .cart-item-qty-btn {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;

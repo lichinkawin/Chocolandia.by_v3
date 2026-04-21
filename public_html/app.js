@@ -1059,7 +1059,7 @@ async function renderHome() {
         <div class="hero-content">
           <div class="hero-badge">Бестселлер</div>
           <div class="hero-title">
-            Клубника <em>в шоколаде</em>
+            Клубника в шоколаде
           </div>
           <p class="hero-subtitle">
             Сочные отборные ягоды в сочетании с нежнейшим бельгийским шоколадом. Классика, которая дарит счастье.
@@ -1078,7 +1078,7 @@ async function renderHome() {
         <div class="hero-content">
           <div class="hero-badge">Премиальное качество</div>
           <div class="hero-title">
-            Изысканные <em>трюфели</em>
+            Изысканные трюфели
           </div>
           <p class="hero-subtitle">
             Французская классика в авторском исполнении. Каждый трюфель — это гармония вкуса и текстуры, созданная вручную.
