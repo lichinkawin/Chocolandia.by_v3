@@ -1642,9 +1642,6 @@ async function renderProductPage(slug) {
                     data-product-id="${escapeHtml(product.id)}">
               Добавить в корзину
             </button>
-            <button class="btn-wishlist" aria-label="В избранное">
-              <span class="material-symbols-outlined" style="font-size:20px">favorite</span>
-            </button>
           </div>
         </div>
 
