@@ -559,7 +559,7 @@ async function renderPrivacy() {
       <h1 class="text-headline-md" style="margin-bottom:2rem">Политика конфиденциальности</h1>
       <div class="product-desc" style="font-size:1rem; opacity:0.8">
         <p style="margin-bottom:1.5rem">Ваша конфиденциальность важна для нас. Мы собираем только те данные, которые необходимы для обработки вашего заказа (имя, телефон, адрес).</p>
-        <p style="margin-bottom:1.5rem">Мы не передаем ваши данные третьим лицам, за исключением служб доставки (Белпочта/Европочта) для выполнения вашего заказа.</p>
+        <p style="margin-bottom:1.5rem">Мы не передаем ваши данные третьим лицам, за исключением службы доставки (Белпочта) для выполнения вашего заказа.</p>
         <p style="margin-bottom:1.5rem">Ваши данные хранятся в безопасности и используются только для связи с вами по поводу заказов в Chocolandia.by.</p>
       </div>
       <a href="/" data-route="/" class="btn btn-outline" style="margin-top:2rem">На главную</a>
@@ -999,7 +999,7 @@ async function renderHome() {
     },
     {
       q: 'Осуществляете ли вы доставку в другие города?',
-      a: 'Да, мы отправляем наши наборы Европочтой и Белпочтой по всей территории Беларуси. Сроки доставки обычно составляют 1-3 дня.'
+      a: 'Да, мы отправляем наши наборы Белпочтой по всей территории Беларуси. Сроки доставки обычно составляют 1-3 дня.'
     },
     {
       q: 'Какой срок годности у вашей продукции?',
@@ -1281,7 +1281,7 @@ async function renderHome() {
           <div class="perk" style="flex-direction:column;text-align:center;gap:1rem">
              <span class="material-symbols-outlined" style="font-size:40px;color:var(--color-secondary)">local_shipping</span>
              <p style="font-weight:700">По всей Беларуси</p>
-             <p style="font-size:0.875rem;opacity:0.7">Отправляем Европочтой или Белпочтой в любой город.</p>
+             <p style="font-size:0.875rem;opacity:0.7">Отправляем Белпочтой в любой город.</p>
           </div>
           <div class="perk" style="flex-direction:column;text-align:center;gap:1rem">
              <span class="material-symbols-outlined" style="font-size:40px;color:var(--color-secondary)">schedule</span>
@@ -1354,53 +1354,6 @@ async function renderHome() {
     </div>
   </section>
   ${faqJsonLd}
-
-  <!-- ── SEO TEXT BLOCK ── -->
-  <section class="section-pad bg-surface" id="seo-section">
-    <div class="container">
-      <div style="max-width: 900px; margin: 0 auto;">
-        <h2 class="text-headline-md" style="margin-bottom: 2rem; color: var(--color-primary);">Почему выбирают Chocolandia?</h2>
-        
-        <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--color-on-surface-variant);">
-          Добро пожаловать в Chocolandia — мастерскую, где мы создаем настоящий <strong>бельгийский шоколад</strong> с любовью и вниманием к каждой детали. Наша миссия — дарить незабываемые эмоции через изысканный вкус и премиальное оформление. Если вы ищете, где <strong>купить финики в шоколаде в Беларуси</strong>, вы попали по адресу. Мы используем лучшие сорта фиников и отборные орехи, чтобы вы могли насладиться неповторимым вкусом.
-        </p>
-
-        <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--color-on-surface-variant);">
-          Наша гордость — это <strong>шоколад ручной работы Минск</strong> и другие города Беларуси выбирают нас за качество ингредиентов и авторский подход. В каталоге вы найдете нежные трюфели, уникальные фигурки и роскошные <strong>подарочные наборы</strong>, которые идеально подойдут для любого повода: от дня рождения до корпоративного праздника. Мы гарантируем, что каждый заказ станет особенным подарком для ваших близких.
-        </p>
-
-        <div style="background: var(--color-surface-container-low); padding: 2rem; border-radius: 1.5rem; margin-bottom: 2rem;">
-          <h3 style="margin-bottom: 1.25rem; font-family: var(--font-headline); color: var(--color-secondary);">Преимущества заказа у нас:</h3>
-          <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-            <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
-              <span class="material-symbols-outlined" style="color: var(--color-secondary); font-size: 20px;">check_circle</span>
-              <span>Только премиальный бельгийский шоколад Callebaut.</span>
-            </li>
-            <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
-              <span class="material-symbols-outlined" style="color: var(--color-secondary); font-size: 20px;">check_circle</span>
-              <span>Уникальный дизайн и ручное исполнение каждого изделия.</span>
-            </li>
-            <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
-              <span class="material-symbols-outlined" style="color: var(--color-secondary); font-size: 20px;">check_circle</span>
-              <span>Быстрая <strong>доставка шоколада</strong> в любую точку страны.</span>
-            </li>
-            <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
-              <span class="material-symbols-outlined" style="color: var(--color-secondary); font-size: 20px;">check_circle</span>
-              <span>Фирменная упаковка, включенная в стоимость.</span>
-            </li>
-          </ul>
-        </div>
-
-        <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--color-on-surface-variant);">
-          Мы максимально расширили географию нашей заботы. Теперь наш фирменный шоколад и трюфели доступны каждому жителю страны: <strong>доставка по Беларуси</strong> осуществляется через сервисы «Европочта» и «Белпочта». Мы надежно упаковываем ваши заказы, чтобы они доехали в идеальном состоянии в Минск, Брест, Гродно, Витебск, Гомель или любой другой населенный пункт.
-        </p>
-
-        <p style="line-height: 1.8; color: var(--color-on-surface-variant); font-weight: 500; border-left: 4px solid var(--color-secondary); padding-left: 1.5rem;">
-          Важное уточнение по логистике: свежая <strong>клубника в шоколаде</strong> доставляется исключительно в пределах города Могилёв (курьером или самовывозом), так как этот продукт требует особых условий хранения и максимальной свежести. Шоколадную продукцию и наборы мы с радостью отправим в любой уголок Беларуси.
-        </p>
-      </div>
-    </div>
-  </section>
 
 </div>`;
 }
