@@ -1035,7 +1035,7 @@ async function renderHome() {
       <!-- Slide 1: Вступление -->
       <div class="hero-slide active" data-slide="0">
         <div class="hero-bg">
-          <img src="/assets/images/IMG_7500.JPG" alt="Chocolandia — шоколад ручной работы" loading="lazy">
+          <img src="/assets/images/IMG_7500.webp" alt="Chocolandia — шоколад ручной работы" loading="lazy">
         </div>
         <div class="hero-content">
           <h1 class="hero-title">
