@@ -2665,6 +2665,8 @@ footer {
   border: 1px solid var(--color-outline-variant);
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
+  text-transform: none; /* override uppercase from form-group label */
+  letter-spacing: normal;
 }
 
 .delivery-option:hover {
@@ -2672,10 +2674,11 @@ footer {
 }
 
 .delivery-option input[type="radio"] {
-  margin-right: 0.75rem;
+  margin: 0 0.75rem 0 0;
   accent-color: var(--color-secondary);
   width: 1.125rem;
   height: 1.125rem;
+  flex-shrink: 0;
 }
 
 .delivery-option-text {

@@ -318,11 +318,11 @@ function renderCheckoutForm(body, footer) {
         <div class="delivery-options">
           <label class="delivery-option">
             <input type="radio" name="delivery-method" value="pickup" checked>
-            <span class="delivery-option-text">Самовывоз (ул. 30 лет Победы, 30А)</span>
+            <span class="delivery-option-text">самовывоз (ул. 30 лет Победы, 30А)</span>
           </label>
           <label class="delivery-option">
             <input type="radio" name="delivery-method" value="delivery">
-            <span class="delivery-option-text">Доставка (Яндекс курьер)</span>
+            <span class="delivery-option-text">доставка (яндекс курьер по их тарифам)</span>
           </label>
         </div>
       </div>
