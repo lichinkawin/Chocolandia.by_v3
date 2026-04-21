@@ -1054,7 +1054,7 @@ async function renderHome() {
       <!-- Slide 2: Клубника -->
       <div class="hero-slide" data-slide="1">
         <div class="hero-bg">
-          <img src="/assets/images/IMG_9703.PNG" alt="Клубника в шоколаде" />
+          <img src="/assets/images/IMG_9703.webp" alt="Клубника в шоколаде" />
         </div>
         <div class="hero-content">
           <div class="hero-badge">Бестселлер</div>
