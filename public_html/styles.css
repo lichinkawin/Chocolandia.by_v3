@@ -2648,6 +2648,42 @@ footer {
   color: var(--color-error);
   margin-left: 2px;
 }
+
+.delivery-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.delivery-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface-container-low);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.delivery-option:hover {
+  background: var(--color-surface-container-high);
+}
+
+.delivery-option input[type="radio"] {
+  margin-right: 0.75rem;
+  accent-color: var(--color-secondary);
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.delivery-option-text {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  line-height: 1.4;
+}
 .form-textarea {
   min-height: 80px;
   resize: vertical;

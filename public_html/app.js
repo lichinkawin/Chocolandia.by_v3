@@ -310,18 +310,47 @@ function renderCheckoutForm(body, footer) {
       </div>
       <div class="form-group">
         <label for="checkout-phone">Телефон <span class="required-asterisk">*</span></label>
-        <input type="tel" id="checkout-phone" class="form-input" placeholder="+375 (__) ___-__-__" required>
+        <input type="tel" id="checkout-phone" class="form-input" value="+375" required>
       </div>
+      
       <div class="form-group">
-        <label for="checkout-address">Адрес доставки <span class="required-asterisk">*</span></label>
-        <textarea id="checkout-address" class="form-textarea" placeholder="Город, улица, дом, квартира" required></textarea>
+        <label>Способ получения <span class="required-asterisk">*</span></label>
+        <div class="delivery-options">
+          <label class="delivery-option">
+            <input type="radio" name="delivery-method" value="pickup" checked>
+            <span class="delivery-option-text">Самовывоз (ул. 30 лет Победы, 30А)</span>
+          </label>
+          <label class="delivery-option">
+            <input type="radio" name="delivery-method" value="delivery">
+            <span class="delivery-option-text">Доставка (Яндекс курьер)</span>
+          </label>
+        </div>
       </div>
+
+      <div id="checkout-address-group" class="form-group" style="display:none">
+        <label for="checkout-address">Адрес доставки <span class="required-asterisk">*</span></label>
+        <textarea id="checkout-address" class="form-textarea" placeholder="Город, улица, дом, квартира"></textarea>
+      </div>
+
       <div class="form-group">
         <label for="checkout-comment">Комментарий</label>
         <textarea id="checkout-comment" class="form-textarea" placeholder="Ваши пожелания"></textarea>
       </div>
     </div>
   </div>`;
+
+  // Bind delivery method toggle
+  const methodRadios = body.querySelectorAll('input[name="delivery-method"]');
+  const addressGroup = body.querySelector('#checkout-address-group');
+  methodRadios.forEach(r => {
+    r.addEventListener('change', (e) => {
+      if (e.target.value === 'delivery') {
+        addressGroup.style.display = 'block';
+      } else {
+        addressGroup.style.display = 'none';
+      }
+    });
+  });
 
   if (footer) {
     footer.innerHTML = `
@@ -355,20 +384,27 @@ async function sendOrderTelegram() {
   const phoneEl   = document.getElementById('checkout-phone');
   const addressEl = document.getElementById('checkout-address');
   const commentEl = document.getElementById('checkout-comment');
+  const methodEl  = document.querySelector('input[name="delivery-method"]:checked');
 
   const name    = nameEl?.value.trim() || '';
   const phone   = phoneEl?.value.trim() || '';
   const address = addressEl?.value.trim() || '';
   const comment = commentEl?.value.trim() || '';
+  const method  = methodEl?.value || 'pickup';
 
   let hasError = false;
 
-  [nameEl, phoneEl, addressEl].forEach(el => {
+  // Validation
+  const fieldsToValidate = [nameEl, phoneEl];
+  if (method === 'delivery') {
+    fieldsToValidate.push(addressEl);
+  }
+
+  fieldsToValidate.forEach(el => {
     if (el) {
-      if (!el.value.trim()) {
+      if (!el.value.trim() || (el === phoneEl && el.value.trim() === '+375')) {
         el.classList.add('error');
         hasError = true;
-        // remove error when user types
         el.addEventListener('input', () => el.classList.remove('error'), { once: true });
       } else {
         el.classList.remove('error');
@@ -377,7 +413,7 @@ async function sendOrderTelegram() {
   });
 
   if (hasError) {
-    showToast('\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u0437\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u043f\u043e\u043b\u044f, \u0432\u044b\u0434\u0435\u043b\u0435\u043d\u043d\u044b\u0435 \u043a\u0440\u0430\u0441\u043d\u044b\u043c.');
+    showToast('Пожалуйста, заполните обязательные поля.');
     return;
   }
 
@@ -426,7 +462,15 @@ async function sendOrderTelegram() {
     const res = await fetch('/send-order.php', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ name, phone, address, comment, items, total }),
+      body:    JSON.stringify({ 
+        name, 
+        phone, 
+        address: method === 'pickup' ? 'Самовывоз: ул. 30 лет Победы, 30А' : address, 
+        comment, 
+        items, 
+        total,
+        deliveryMethod: method 
+      }),
     });
 
     const data = await res.json();
