@@ -943,7 +943,7 @@ function buildCollectionCard(collection) {
     <div class="collection-card-overlay"></div>
     <div class="collection-card-body">
       ${collection.badge ? `<div style="margin-bottom:0.75rem">${buildBadge(collection.badge, 'white')}</div>` : ''}
-      <h3 style="font-family:var(--font-headline);color:white;font-size:clamp(1.25rem,2.5vw,1.875rem);line-height:1.1;margin-bottom:0.5rem">
+      <h3 class="collection-card-title">
         ${escapeHtml(collection.name)}
       </h3>
       <p style="color:rgba(255,255,255,0.72);font-size:0.8125rem;line-height:1.55;margin-bottom:1rem">
@@ -1151,7 +1151,7 @@ async function renderHome() {
           <div class="bento-card-overlay"></div>
           <div class="bento-card-content">
             <span class="bento-card-eyebrow">Коллекция</span>
-            <h3 class="bento-card-title" style="font-size:1.5rem">${escapeHtml(sideColl.name || 'Финики в шоколаде')}</h3>
+            <h3 class="bento-card-title">${escapeHtml(sideColl.name || 'Финики в шоколаде')}</h3>
           </div>
         </a>
 
@@ -1166,7 +1166,7 @@ async function renderHome() {
           <div class="bento-card-overlay"></div>
           <div class="bento-card-content">
             <span class="bento-card-eyebrow">Коллекция</span>
-            <h3 class="bento-card-title" style="font-size:1.375rem">${escapeHtml(extraA.name || 'Трюфели')}</h3>
+            <h3 class="bento-card-title">${escapeHtml(extraA.name || 'Трюфели')}</h3>
           </div>
         </a>
 
