@@ -318,7 +318,7 @@ function renderCheckoutForm(body, footer) {
         <div class="delivery-options">
           <label class="delivery-option">
             <input type="radio" name="delivery-method" value="pickup" checked>
-            <span class="delivery-option-text">самовывоз (ул. 30 лет Победы, 30А)</span>
+            <span class="delivery-option-text">самовывоз (ул. Кутепова 24 б)</span>
           </label>
           <label class="delivery-option">
             <input type="radio" name="delivery-method" value="delivery">
@@ -465,7 +465,7 @@ async function sendOrderTelegram() {
       body:    JSON.stringify({ 
         name, 
         phone, 
-        address: method === 'pickup' ? 'Самовывоз: ул. 30 лет Победы, 30А' : address, 
+        address: method === 'pickup' ? 'Самовывоз: ул. Кутепова 24 б' : address, 
         comment, 
         items, 
         total,
