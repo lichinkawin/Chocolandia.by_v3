@@ -1050,7 +1050,7 @@
       "weight": null,
       "image": "/assets/images/gift_box.webp",
       "badge": "Хит",
-      "inStock": true,
+      "inStock": false,
       "tastingNotes": [],
       "ingredients": "Клубника в шоколаде, трюфели, шоколадный декор"
     },
@@ -1065,7 +1065,7 @@
       "weight": "~110 г",
       "image": "/assets/images/gift_box.webp",
       "badge": null,
-      "inStock": true,
+      "inStock": false,
       "tastingNotes": [],
       "ingredients": "Ассортимент конфет на выбор"
     },
@@ -1080,7 +1080,7 @@
       "weight": "~300 г",
       "image": "/assets/images/gift_box.webp",
       "badge": "Хит",
-      "inStock": true,
+      "inStock": false,
       "tastingNotes": [],
       "ingredients": "Ассортимент конфет: трюфели, пралине, ганаш"
     },
@@ -1095,7 +1095,7 @@
       "weight": "~550 г",
       "image": "/assets/images/gift_box.webp",
       "badge": "Премиум",
-      "inStock": true,
+      "inStock": false,
       "tastingNotes": [],
       "ingredients": "Ассортимент конфет, клубника в шоколаде, финики в шоколаде"
     }

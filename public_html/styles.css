@@ -687,6 +687,16 @@ input, select, textarea {
 /* ============================================================
    BUTTONS
    ============================================================ */
+button:disabled,
+.btn:disabled,
+.product-card-action-btn:disabled,
+.btn-add-to-cart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+  pointer-events: none;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

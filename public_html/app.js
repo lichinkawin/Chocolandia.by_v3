@@ -962,10 +962,11 @@ function buildProductCard(product) {
           <span class="currency">BYN</span>
         </div>
         <button class="product-card-action-btn"
+                ${!product.inStock ? 'disabled' : ''}
                 data-add-to-cart="${escapeHtml(product.id)}"
-                aria-label="Добавить в корзину">
-          <span class="material-symbols-outlined" style="font-size:18px">add_shopping_cart</span>
-          <span>В корзину</span>
+                aria-label="${product.inStock ? 'Добавить в корзину' : 'Нет в наличии'}">
+          <span class="material-symbols-outlined" style="font-size:18px">${product.inStock ? 'add_shopping_cart' : 'block'}</span>
+          <span>${product.inStock ? 'В корзину' : 'Нет в наличии'}</span>
         </button>
       </div>
     </div>
@@ -1639,8 +1640,9 @@ async function renderProductPage(slug) {
           <div class="add-to-cart-row">
             <button class="btn-add-to-cart"
                     id="detail-add-btn"
-                    data-product-id="${escapeHtml(product.id)}">
-              Добавить в корзину
+                    data-product-id="${escapeHtml(product.id)}"
+                    ${!product.inStock ? 'disabled' : ''}>
+              ${product.inStock ? 'Добавить в корзину' : 'Нет в наличии'}
             </button>
           </div>
         </div>
@@ -1732,8 +1734,9 @@ async function renderProductPage(slug) {
     </div>
     <button class="btn-add-to-cart" style="flex:1"
             id="mobile-add-btn"
-            data-product-id="${escapeHtml(product.id)}">
-      В корзину · ${product.price.toFixed(2).replace('.', ',')} BYN
+            data-product-id="${escapeHtml(product.id)}"
+            ${!product.inStock ? 'disabled' : ''}>
+      ${product.inStock ? `В корзину · ${product.price.toFixed(2).replace('.', ',')} BYN` : 'Нет в наличии'}
     </button>
   </div>
 
