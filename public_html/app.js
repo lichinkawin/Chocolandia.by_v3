@@ -333,8 +333,11 @@ function renderCheckoutForm(body, footer) {
       </div>
 
       <div class="form-group">
-        <label for="checkout-datetime">Желаемые дата и время получения <span class="required-asterisk">*</span></label>
-        <input type="datetime-local" id="checkout-datetime" class="form-input" required>
+        <label>Желаемые дата и время получения <span class="required-asterisk">*</span></label>
+        <div style="display:flex;gap:0.5rem">
+          <input type="date" id="checkout-date" class="form-input" required style="flex:1">
+          <input type="time" id="checkout-time" class="form-input" required style="width:110px">
+        </div>
       </div>
 
       <div class="form-group">
@@ -388,29 +391,29 @@ async function sendOrderTelegram() {
   const nameEl     = document.getElementById('checkout-name');
   const phoneEl    = document.getElementById('checkout-phone');
   const addressEl  = document.getElementById('checkout-address');
-  const datetimeEl = document.getElementById('checkout-datetime');
+  const dateEl     = document.getElementById('checkout-date');
+  const timeEl     = document.getElementById('checkout-time');
   const commentEl  = document.getElementById('checkout-comment');
   const methodEl   = document.querySelector('input[name="delivery-method"]:checked');
 
-  const name     = nameEl?.value.trim() || '';
-  const phone    = phoneEl?.value.trim() || '';
-  const address  = addressEl?.value.trim() || '';
-  const comment  = commentEl?.value.trim() || '';
-  const method   = methodEl?.value || 'pickup';
-  const datetimeRaw = datetimeEl?.value || '';
+  const name    = nameEl?.value.trim() || '';
+  const phone   = phoneEl?.value.trim() || '';
+  const address = addressEl?.value.trim() || '';
+  const comment = commentEl?.value.trim() || '';
+  const method  = methodEl?.value || 'pickup';
 
-  // Format datetime for display: "05.05.2026 в 14:30"
+  // Format date in Russian: "5 мая 2026 в 14:30"
+  const MONTHS_RU = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   let deliveryDateTime = '';
-  if (datetimeRaw) {
-    const dt = new Date(datetimeRaw);
-    const pad = n => String(n).padStart(2, '0');
-    deliveryDateTime = `${pad(dt.getDate())}.${pad(dt.getMonth()+1)}.${dt.getFullYear()} в ${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+  if (dateEl?.value && timeEl?.value) {
+    const [year, month, day] = dateEl.value.split('-').map(Number);
+    deliveryDateTime = `${day} ${MONTHS_RU[month - 1]} ${year} в ${timeEl.value}`;
   }
 
   let hasError = false;
 
   // Validation
-  const fieldsToValidate = [nameEl, phoneEl, datetimeEl];
+  const fieldsToValidate = [nameEl, phoneEl, dateEl, timeEl];
   if (method === 'delivery') {
     fieldsToValidate.push(addressEl);
   }
