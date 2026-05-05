@@ -333,6 +333,11 @@ function renderCheckoutForm(body, footer) {
       </div>
 
       <div class="form-group">
+        <label for="checkout-datetime">Желаемые дата и время получения <span class="required-asterisk">*</span></label>
+        <input type="datetime-local" id="checkout-datetime" class="form-input" required>
+      </div>
+
+      <div class="form-group">
         <label for="checkout-comment">Комментарий</label>
         <textarea id="checkout-comment" class="form-textarea" placeholder="Ваши пожелания"></textarea>
       </div>
@@ -380,22 +385,32 @@ function toggleCheckout(toCheckout) {
 }
 
 async function sendOrderTelegram() {
-  const nameEl    = document.getElementById('checkout-name');
-  const phoneEl   = document.getElementById('checkout-phone');
-  const addressEl = document.getElementById('checkout-address');
-  const commentEl = document.getElementById('checkout-comment');
-  const methodEl  = document.querySelector('input[name="delivery-method"]:checked');
+  const nameEl     = document.getElementById('checkout-name');
+  const phoneEl    = document.getElementById('checkout-phone');
+  const addressEl  = document.getElementById('checkout-address');
+  const datetimeEl = document.getElementById('checkout-datetime');
+  const commentEl  = document.getElementById('checkout-comment');
+  const methodEl   = document.querySelector('input[name="delivery-method"]:checked');
 
-  const name    = nameEl?.value.trim() || '';
-  const phone   = phoneEl?.value.trim() || '';
-  const address = addressEl?.value.trim() || '';
-  const comment = commentEl?.value.trim() || '';
-  const method  = methodEl?.value || 'pickup';
+  const name     = nameEl?.value.trim() || '';
+  const phone    = phoneEl?.value.trim() || '';
+  const address  = addressEl?.value.trim() || '';
+  const comment  = commentEl?.value.trim() || '';
+  const method   = methodEl?.value || 'pickup';
+  const datetimeRaw = datetimeEl?.value || '';
+
+  // Format datetime for display: "05.05.2026 в 14:30"
+  let deliveryDateTime = '';
+  if (datetimeRaw) {
+    const dt = new Date(datetimeRaw);
+    const pad = n => String(n).padStart(2, '0');
+    deliveryDateTime = `${pad(dt.getDate())}.${pad(dt.getMonth()+1)}.${dt.getFullYear()} в ${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+  }
 
   let hasError = false;
 
   // Validation
-  const fieldsToValidate = [nameEl, phoneEl];
+  const fieldsToValidate = [nameEl, phoneEl, datetimeEl];
   if (method === 'delivery') {
     fieldsToValidate.push(addressEl);
   }
@@ -469,7 +484,8 @@ async function sendOrderTelegram() {
         comment, 
         items, 
         total,
-        deliveryMethod: method 
+        deliveryMethod: method,
+        deliveryDateTime 
       }),
     });
 

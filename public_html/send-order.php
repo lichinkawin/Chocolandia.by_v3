@@ -74,6 +74,7 @@ $address   = sanitize($body['address']   ?? 'N/A');
 $comment   = sanitize($body['comment']   ?? '');
 $items     = $body['items']              ?? [];
 $total     = sanitize($body['total']     ?? '0');
+$deliveryDateTime = sanitize($body['deliveryDateTime'] ?? '');
 
 // 4. Build Formatted HTML Message
 if ($type === 'b2b') {
@@ -99,6 +100,7 @@ if ($type === 'b2b') {
              . "👤 <b>Клиент:</b> {$name}\n"
              . "📞 <b>Тел:</b> {$phone}\n"
              . "📍 <b>Адрес:</b> {$address}\n"
+             . ($deliveryDateTime ? "📅 <b>Дата и время получения:</b> {$deliveryDateTime}\n" : "")
              . ($comment ? "💬 <b>Коммент:</b> {$comment}\n" : "")
              . "\n📦 <b>СОСТАВ:</b>\n{$items_html}\n"
              . "💰 <b>ИТОГО:</b> {$total} BYN";
